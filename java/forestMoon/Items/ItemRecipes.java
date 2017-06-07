@@ -33,16 +33,11 @@ public class ItemRecipes {
         BlockSample = new BlockSample(Material.rock);
         SAMPLESWORD = EnumHelper.addToolMaterial("SampleSword", 1, 131, 1, 1000, 1);
         SampleSword = new SampleSword(SAMPLESWORD);
-		SAMPLEARMOR = EnumHelper.addArmorMaterial("SampleArmar", 33, new int[] { 3, 8, 6, 3 }, 10);
-//		SAMPLEARMOR.customCraftingMaterial = aluminium;
-
+		SAMPLEARMOR = EnumHelper.addArmorMaterial("SampleArmar", 33, new int[] { 20, 8, 6, 3 }, 10);
 		helmetSample = new ArmarSample(0);
 		chestPlateSample = new ArmarSample(1);
-
 		leggingsSample = new ArmarSample(2);
-
 		bootsSample = new ArmarSample(3);
-				
 
         return;
     }

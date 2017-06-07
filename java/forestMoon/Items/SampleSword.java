@@ -11,11 +11,9 @@ public class SampleSword extends ItemSword {
 
 		String name = "samplesword";
 
-		this.setCreativeTab(CreativeTabs.tabCombat);/*クリエイティブのタブ*/
-		this.setUnlocalizedName(name);/*システム名の登録*/
-		this.setTextureName("forestmoon:SampleSword");/*テクスチャの指定*/
-		//アイテムの登録。登録文字列はMOD内で被らなければ何でも良い。
-
+		this.setCreativeTab(CreativeTabs.tabCombat);
+		this.setUnlocalizedName(name);
+		this.setTextureName("forestmoon:SampleSword");
 		GameRegistry.registerItem(this, name);
 	}
 }
