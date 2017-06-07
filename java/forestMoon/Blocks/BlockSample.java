@@ -1,9 +1,9 @@
 package forestMoon.Blocks;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import forestMoon.ForestMoon;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 
 public class BlockSample extends Block{
 
@@ -11,7 +11,7 @@ public class BlockSample extends Block{
 		super(material);
 		String name = "SampleBlock";
 		//クリエイティブタブの登録
-		this.setCreativeTab(CreativeTabs.tabBlock);
+		this.setCreativeTab(ForestMoon.forestmoontab);
 		//硬さの設定
 		this.setHardness(5.0F);
 		//爆破耐性の設定

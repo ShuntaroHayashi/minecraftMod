@@ -8,7 +8,17 @@ import net.minecraft.item.ItemStack;
 
 public class Recipes {
 	public static void registry(){
-		 GameRegistry.addRecipe(
+		GameRegistry.addRecipe(
+		new ItemStack(ItemRecipes.BonePickaxe,1),
+		new Object[]
+			{
+				"xxx",
+				" y ",
+				" y ",
+				'x',Items.bone,
+				'y',Items.stick
+			});
+		GameRegistry.addRecipe(
 			 new ItemStack(ItemRecipes.SampleSword, 1),
 			 new Object[]{
 				 " x ",

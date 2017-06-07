@@ -1,7 +1,7 @@
 package forestMoon.Items;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.creativetab.CreativeTabs;
+import forestMoon.ForestMoon;
 import net.minecraft.item.Item;
 
 public class ItemSample1 extends Item{
@@ -9,7 +9,7 @@ public class ItemSample1 extends Item{
     {
         String name = "Sample1";
 
-        this.setCreativeTab( CreativeTabs.tabMisc );
+        this.setCreativeTab(ForestMoon.forestmoontab);
         this.setUnlocalizedName( name );
         maxStackSize = 32;
         this.setTextureName("forestmoon:maru");

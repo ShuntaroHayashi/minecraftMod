@@ -2,6 +2,7 @@ package forestMoon.Items;
 
 import forestMoon.ForestMoon;
 import forestMoon.Blocks.BlockSample;
+import forestMoon.Blocks.ColorBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Items;
@@ -17,10 +18,13 @@ public class ItemRecipes {
     public static Item ItemSample2;
     public static Item ItemSample3;
     public static Item ItemSample4;
+    public static Item BonePickaxe;
+    public static Item BoneShovel;
     public static Block BlockSample;
+    public static Block ColorBlock;
     public static ItemSword SampleSword;
 	public static ArmorMaterial SAMPLEARMOR;
-	public static ToolMaterial SAMPLESWORD;
+	public static ToolMaterial BONETOOL;
     public static Item helmetSample;
 	public static Item chestPlateSample;
 	public static Item leggingsSample;
@@ -33,9 +37,16 @@ public class ItemRecipes {
         ItemSample3 = new ItemSample3();
         ItemSample4 = new ItemSample4();
         BlockSample = new BlockSample(Material.rock);
-        SAMPLESWORD = EnumHelper.addToolMaterial("SampleSword", 1, 131, 1F, 1000F, 1);
-        SAMPLESWORD.setRepairItem(new ItemStack(Items.bone));
-        SampleSword = new SampleSword(SAMPLESWORD);
+        ColorBlock = new ColorBlock();
+//        	.setBlockName("ColorBlock")
+//    		.setBlockTextureName("forestmoon:ColorBlock");
+//    		GameRegistry.registerBlock(ColorBlock, ItemColorBlock.class, "ColorBlock");
+        BONETOOL = EnumHelper.addToolMaterial("SampleSword", 1, 55, 1500F, 1F, 1);
+//        名前、採掘レベル、耐久度、採掘速度、攻撃力、エンチャント
+        BONETOOL.setRepairItem(new ItemStack(Items.bone));
+        BonePickaxe = new BonePickaxe(BONETOOL);
+        BoneShovel = new BoneShovel(BONETOOL);
+        SampleSword = new SampleSword(BONETOOL);
 		SAMPLEARMOR = EnumHelper.addArmorMaterial("SampleArmar", 33, new int[] { 20, 8, 6, 3 }, 10);
 		helmetSample = new ArmarSample(0);
 		chestPlateSample = new ArmarSample(1);
