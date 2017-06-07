@@ -33,8 +33,8 @@ public class ItemRecipes {
         ItemSample3 = new ItemSample3();
         ItemSample4 = new ItemSample4();
         BlockSample = new BlockSample(Material.rock);
-        SAMPLESWORD = EnumHelper.addToolMaterial("SampleSword", 1, 131, 1F, 1000F, 1)
-        		.setRepairItem(new ItemStack(Items.bone));
+        SAMPLESWORD = EnumHelper.addToolMaterial("SampleSword", 1, 131, 1F, 1000F, 1);
+        SAMPLESWORD.setRepairItem(new ItemStack(Items.bone));
         SampleSword = new SampleSword(SAMPLESWORD);
 		SAMPLEARMOR = EnumHelper.addArmorMaterial("SampleArmar", 33, new int[] { 20, 8, 6, 3 }, 10);
 		helmetSample = new ArmarSample(0);
