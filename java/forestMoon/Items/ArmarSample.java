@@ -1,7 +1,7 @@
 package forestMoon.Items;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.creativetab.CreativeTabs;
+import forestMoon.ForestMoon;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -10,7 +10,7 @@ public class ArmarSample extends ItemArmor{
 
 	public ArmarSample(int type) {
 		super(ItemRecipes.SAMPLEARMOR, 0, type);
-		this.setCreativeTab(CreativeTabs.tabCombat);
+		this.setCreativeTab(ForestMoon.forestmoontab);
 		String name = null;
 		switch (type) {
 		case 0:

@@ -1,17 +1,23 @@
 package forestMoon.Items;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.creativetab.CreativeTabs;
+import forestMoon.ForestMoon;
 import net.minecraft.item.ItemSword;
+import net.minecraftforge.common.util.EnumHelper;
 
 public class SampleSword extends ItemSword {
 
 	public SampleSword(ToolMaterial material) {
-		super(material);
-
+		super(EnumHelper.addToolMaterial(material.name(),
+				material.getHarvestLevel(),
+				material.getMaxUses(),
+				material.getEfficiencyOnProperMaterial(),
+				100f,
+				material.getEnchantability())
+				);
+//		super(material);
 		String name = "samplesword";
-
-		this.setCreativeTab(CreativeTabs.tabCombat);
+		this.setCreativeTab(ForestMoon.forestmoontab);
 		this.setUnlocalizedName(name);
 		this.setTextureName("forestmoon:SampleSword");
 		GameRegistry.registerItem(this, name);
