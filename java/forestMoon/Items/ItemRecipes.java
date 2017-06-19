@@ -2,6 +2,7 @@ package forestMoon.Items;
 
 import forestMoon.ForestMoon;
 import forestMoon.Blocks.BlockSample;
+import forestMoon.Blocks.ChestSample;
 import forestMoon.Blocks.ColorBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -22,6 +23,8 @@ public class ItemRecipes {
     public static Item BoneShovel;
     public static Block BlockSample;
     public static Block ColorBlock;
+    public static Block ShopBlock;
+    public static Block chestSample;
     public static ItemSword SampleSword;
 	public static ArmorMaterial SAMPLEARMOR;
 	public static ToolMaterial BONETOOL;
@@ -29,6 +32,7 @@ public class ItemRecipes {
 	public static Item chestPlateSample;
 	public static Item leggingsSample;
 	public static Item bootsSample;
+
 
     public static void registry( ForestMoon mod )
     {
@@ -38,9 +42,8 @@ public class ItemRecipes {
         ItemSample4 = new ItemSample4();
         BlockSample = new BlockSample(Material.rock);
         ColorBlock = new ColorBlock();
-//        	.setBlockName("ColorBlock")
-//    		.setBlockTextureName("forestmoon:ColorBlock");
-//    		GameRegistry.registerBlock(ColorBlock, ItemColorBlock.class, "ColorBlock");
+        ShopBlock = new forestMoon.Blocks.ShopBlock(Material.rock);
+        chestSample = new ChestSample();
         BONETOOL = EnumHelper.addToolMaterial("SampleSword", 1, 55, 1500F, 1F, 1);
 //        名前、採掘レベル、耐久度、採掘速度、攻撃力、エンチャント
         BONETOOL.setRepairItem(new ItemStack(Items.bone));
