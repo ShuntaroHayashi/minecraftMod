@@ -7,7 +7,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import forestMoon.Items.ItemRecipes;
-import forestMoon.gui.ForestMoonGuiHandler;
+import forestMoon.client.gui.ForestMoonGuiHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 

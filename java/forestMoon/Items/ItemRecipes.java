@@ -1,9 +1,9 @@
 package forestMoon.Items;
 
 import forestMoon.ForestMoon;
-import forestMoon.Blocks.BlockSample;
-import forestMoon.Blocks.ChestSample;
-import forestMoon.Blocks.ColorBlock;
+import forestMoon.block.BlockSample;
+import forestMoon.block.ChestSample;
+import forestMoon.block.ColorBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Items;
@@ -42,7 +42,7 @@ public class ItemRecipes {
         ItemSample4 = new ItemSample4();
         BlockSample = new BlockSample(Material.rock);
         ColorBlock = new ColorBlock();
-        ShopBlock = new forestMoon.Blocks.ShopBlock(Material.rock);
+        ShopBlock = new forestMoon.block.ShopBlock(Material.rock);
         chestSample = new ChestSample();
         BONETOOL = EnumHelper.addToolMaterial("SampleSword", 1, 55, 1500F, 1F, 1);
 //        名前、採掘レベル、耐久度、採掘速度、攻撃力、エンチャント

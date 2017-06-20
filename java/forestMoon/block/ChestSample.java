@@ -1,10 +1,10 @@
-package forestMoon.Blocks;
+package forestMoon.block;
 
 import java.util.Random;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import forestMoon.ForestMoon;
-import forestMoon.entity.TileEntityChestSample;
+import forestMoon.client.entity.TileEntityChestSample;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;

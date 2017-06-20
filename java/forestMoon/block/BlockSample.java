@@ -1,4 +1,4 @@
-package forestMoon.Blocks;
+package forestMoon.block;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import forestMoon.ForestMoon;

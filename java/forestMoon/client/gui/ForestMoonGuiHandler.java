@@ -1,9 +1,9 @@
-package forestMoon.gui;
+package forestMoon.client.gui;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import forestMoon.ContainerChestSample;
 import forestMoon.GuiChestSample;
-import forestMoon.entity.TileEntityChestSample;
+import forestMoon.client.entity.TileEntityChestSample;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;

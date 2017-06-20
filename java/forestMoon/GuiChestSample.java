@@ -2,7 +2,7 @@ package forestMoon;
 
 import org.lwjgl.opengl.GL11;
 
-import forestMoon.entity.TileEntityChestSample;
+import forestMoon.client.entity.TileEntityChestSample;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
