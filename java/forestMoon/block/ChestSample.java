@@ -52,6 +52,8 @@ public class ChestSample extends Block implements ITileEntityProvider{
 //			}
 //		}
 //		return true;
+
+
 		// GUIを開く。
 		player.openGui(ForestMoon.instance, 1, world, x, y, z);
 		return true;
