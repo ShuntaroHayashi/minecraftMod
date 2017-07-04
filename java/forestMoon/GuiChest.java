@@ -2,19 +2,19 @@ package forestMoon;
 
 import org.lwjgl.opengl.GL11;
 
-import forestMoon.client.entity.TileEntityChestSample;
+import forestMoon.client.entity.TileEntityChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
-public class GuiChestSample extends GuiContainer{
-	private TileEntityChestSample tileEntity;
+public class GuiChest extends GuiContainer{
+	private TileEntityChest tileEntity;
 	// GUIのテクスチャの場所を指定する。今回はバニラのラージチェストと同じものを使う。
 //	private static final ResourceLocation GUITEXTURE = new ResourceLocation("textures/gui/container/generic_54.png");
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("forestmoon:textures/gui/container/shopGui.png");
 
-	public GuiChestSample(EntityPlayer player, TileEntityChestSample tileEnttiy) {
+	public GuiChest(EntityPlayer player, TileEntityChest tileEnttiy) {
 		super(new ContainerChestSample(player, tileEnttiy));
 		this.tileEntity = tileEnttiy;
 		ySize = 222;

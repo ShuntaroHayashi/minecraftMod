@@ -2,8 +2,8 @@ package forestMoon.client.gui;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import forestMoon.ContainerChestSample;
-import forestMoon.GuiChestSample;
-import forestMoon.client.entity.TileEntityChestSample;
+import forestMoon.GuiChest;
+import forestMoon.client.entity.TileEntityChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -14,8 +14,8 @@ public class ForestMoonGuiHandler implements IGuiHandler{
 		if (!world.blockExists(x, y, z))
 			return null;
 		TileEntity tileentity = world.getTileEntity(x, y, z);
-		if (tileentity instanceof TileEntityChestSample) {
-			return new ContainerChestSample(player, (TileEntityChestSample) tileentity);
+		if (tileentity instanceof TileEntityChest) {
+			return new ContainerChestSample(player, (TileEntityChest) tileentity);
 		}
 		return null;
 	}
@@ -25,8 +25,8 @@ public class ForestMoonGuiHandler implements IGuiHandler{
 		if (!world.blockExists(x, y, z))
 			return null;
 		TileEntity tileentity = world.getTileEntity(x, y, z);
-		if (tileentity instanceof TileEntityChestSample) {
-			return new GuiChestSample(player, (TileEntityChestSample) tileentity);
+		if (tileentity instanceof TileEntityChest) {
+			return new GuiChest(player, (TileEntityChest) tileentity);
 		}
 		return null;
 	}

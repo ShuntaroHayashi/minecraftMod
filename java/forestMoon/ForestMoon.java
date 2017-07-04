@@ -56,7 +56,7 @@ public class ForestMoon {
     {
     	Recipes.registry();
         //二箇所に登録するので、先にインスタンスを生成しておく。
-        SampleEntityPropertiesEventHandler eventHandler = new SampleEntityPropertiesEventHandler();
+        EntityPropertiesEventHandler eventHandler = new EntityPropertiesEventHandler();
 
         //Forge Eventの登録。EntityEvent.EntityConstructingとLivingDeathEventとEntityJoinWorldEvent
         MinecraftForge.EVENT_BUS.register(eventHandler);

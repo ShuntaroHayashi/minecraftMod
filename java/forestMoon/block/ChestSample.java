@@ -4,7 +4,7 @@ import java.util.Random;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import forestMoon.ForestMoon;
-import forestMoon.client.entity.TileEntityChestSample;
+import forestMoon.client.entity.TileEntityChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -29,31 +29,16 @@ public class ChestSample extends Block implements ITileEntityProvider{
 		this.setStepSound(soundTypeMetal);
 		isBlockContainer = true;
 		GameRegistry.registerBlock(this, name);
-		GameRegistry.registerTileEntity(TileEntityChestSample.class, "TileEntityChestSample");
+		GameRegistry.registerTileEntity(TileEntityChest.class, "TileEntityChestSample");
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileEntityChestSample();
+		return new TileEntityChest();
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		// TileEntityを取得し、プレイヤーが手にアイテムを持っていないなら取り出し、持っているなら入れる。
-//		TileEntity tileEntity = world.getTileEntity(x, y, z);
-//		if (tileEntity == null || !(tileEntity instanceof TileEntityChestSample))
-//			return false;
-//		TileEntityChestSample chest = (TileEntityChestSample) tileEntity;
-//		if (player.getHeldItem() == null) {
-//			player.inventory.mainInventory[player.inventory.currentItem] = chest.tryExportItemStack();
-//		} else {
-//			if (chest.tryImportItemStack(player.getHeldItem())) {
-//				player.inventory.mainInventory[player.inventory.currentItem] = null;
-//			}
-//		}
-//		return true;
-
-
 		// GUIを開く。
 		player.openGui(ForestMoon.instance, 1, world, x, y, z);
 		return true;
@@ -62,7 +47,7 @@ public class ChestSample extends Block implements ITileEntityProvider{
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
 		// TileEntityの内部にあるアイテムをドロップさせる。
-		TileEntityChestSample tileentity = (TileEntityChestSample) world.getTileEntity(x, y, z);
+		TileEntityChest tileentity = (TileEntityChest) world.getTileEntity(x, y, z);
 		if (tileentity != null) {
 			for (int i = 0; i < tileentity.getSizeInventory(); i++) {
 				ItemStack itemStack = tileentity.getStackInSlot(i);

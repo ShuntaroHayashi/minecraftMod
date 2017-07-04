@@ -15,7 +15,6 @@ public class SampleSword extends ItemSword {
 				100f,
 				material.getEnchantability())
 				);
-//		super(material);
 		String name = "samplesword";
 		this.setCreativeTab(ForestMoon.forestmoontab);
 		this.setUnlocalizedName(name);

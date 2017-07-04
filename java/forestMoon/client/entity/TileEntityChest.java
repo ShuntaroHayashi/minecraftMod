@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityChestSample extends TileEntity implements IInventory{
+public class TileEntityChest extends TileEntity implements IInventory{
 	protected ItemStack[] itemStacks = new ItemStack[54];
 
 	@Override
