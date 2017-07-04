@@ -1,4 +1,4 @@
-package forestMoon.entity;
+package forestMoon.client.entity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

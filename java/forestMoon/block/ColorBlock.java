@@ -1,4 +1,4 @@
-package forestMoon.Blocks;
+package forestMoon.block;
 
 import java.util.List;
 

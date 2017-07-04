@@ -1,6 +1,6 @@
 package forestMoon;
 
-import forestMoon.entity.TileEntityChestSample;
+import forestMoon.client.entity.TileEntityChestSample;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
