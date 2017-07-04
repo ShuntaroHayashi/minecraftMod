@@ -14,17 +14,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraftforge.common.util.EnumHelper;
 
-public class ItemRecipes {
+public class ItemRegister {
 	public static Item ItemSample1;
     public static Item ItemSample2;
     public static Item ItemSample3;
     public static Item ItemSample4;
     public static Item BonePickaxe;
     public static Item BoneShovel;
+    public static Item ItemCoin;
+
     public static Block BlockSample;
     public static Block ColorBlock;
     public static Block ShopBlock;
     public static Block chestSample;
+
     public static ItemSword SampleSword;
 	public static ArmorMaterial SAMPLEARMOR;
 	public static ToolMaterial BONETOOL;
@@ -49,6 +52,9 @@ public class ItemRecipes {
         BONETOOL.setRepairItem(new ItemStack(Items.bone));
         BonePickaxe = new BonePickaxe(BONETOOL);
         BoneShovel = new BoneShovel(BONETOOL);
+
+        ItemCoin = new ItemCoin();
+
         SampleSword = new SampleSword(BONETOOL);
 		SAMPLEARMOR = EnumHelper.addArmorMaterial("SampleArmar", 33, new int[] { 20, 8, 6, 3 }, 10);
 		helmetSample = new ArmarSample(0);

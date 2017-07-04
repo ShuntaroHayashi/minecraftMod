@@ -16,7 +16,8 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
 public class HUD {
-	public static final ResourceLocation icons = new ResourceLocation("forestmoon:textures/guis/coin_2.png");
+//	public static final ResourceLocation icons = new ResourceLocation("forestmoon:textures/guis/coin_2.png");
+	public static final ResourceLocation icons = new ResourceLocation("forestmoon:textures/guis/money.png");
 
     public static int top_height = 0;
     public static int left_height = 39;
@@ -98,6 +99,8 @@ public class HUD {
         }
 
         //if (money <= 10000000)
+        //表示のx,y リソース開始点x,y リソース終点x,y
+//        drawTexturedModalRect(left + m, top, 9, 0, 9, 9);//コイン
         drawTexturedModalRect(left + m, top, 9, 0, 9, 9);//コイン
         drawTexturedModalRect(left + 65, top, 0, 18, 9, 9);//M
         drawTexturedModalRect(left + 74, top, 9, 18, 9, 9);//P

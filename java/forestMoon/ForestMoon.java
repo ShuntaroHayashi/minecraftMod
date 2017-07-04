@@ -8,7 +8,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import forestMoon.Items.ItemRecipes;
+import forestMoon.Items.ItemRegister;
 import forestMoon.client.gui.ForestMoonGuiHandler;
 import forestMoon.client.gui.HUD;
 import forestMoon.proxy.CommonProxy;
@@ -32,7 +32,7 @@ public class ForestMoon {
     {
     	public Item getTabIconItem()
     	{
-    		return ItemRecipes.ItemSample1;
+    		return ItemRegister.ItemSample1;
     	}
     };
 
@@ -40,7 +40,7 @@ public class ForestMoon {
     @EventHandler
     public void preInit( FMLPreInitializationEvent e )
     {
-    	ItemRecipes.registry( this );
+    	ItemRegister.registry( this );
 		NetworkRegistry.INSTANCE.registerGuiHandler(ForestMoon.instance, new ForestMoonGuiHandler());
 
         if (e.getSide().isClient()) {

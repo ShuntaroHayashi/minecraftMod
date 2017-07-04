@@ -1,12 +1,17 @@
 package forestMoon;
 
+import java.util.Random;
+
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
+import forestMoon.Items.ItemRegister;
 import forestMoon.packet.MessagePlayerJoinInAnnouncement;
 import forestMoon.packet.MessagePlayerProperties;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import net.minecraftforge.event.entity.EntityEvent;
@@ -15,6 +20,8 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.world.BlockEvent;
 
 public class SampleEntityPropertiesEventHandler {
+
+	private Random random = new Random();
 
     /*IExtendedEntityPropertiesを登録する処理を呼び出す*/
     @SubscribeEvent
@@ -49,7 +56,49 @@ public class SampleEntityPropertiesEventHandler {
             //データの書き込み
             newEntityProperties.loadNBTData(playerData);
             ExtendedPlayerProperties.get(event.entityPlayer).setMoney(money / 2,event.entityPlayer);
-            System.out.println("money:" + money);
+//            System.out.println("money:" + money);
+            money /= 2;
+            EntityPlayer entityPlayer = event.original;
+
+        	for (int i = 0; i < 3; i++) {
+
+            	ItemStack itemStack = new ItemStack(ItemRegister.ItemCoin,0,2-i);
+				itemStack.setItemDamage(2-i);
+				int stackSize = 0;
+				while(money>metaToCoin(2-i)){
+					money -= metaToCoin(2-i);
+					System.out.println(money);
+					stackSize++;
+				}
+				itemStack.stackSize = stackSize;
+				if (itemStack != null) {
+					float f = random.nextFloat() * 0.6F + 0.1F;
+					float f1 = random.nextFloat() * 0.6F + 0.1F;
+					float f2 = random.nextFloat() * 0.6F + 0.1F;
+
+					while (itemStack.stackSize > 0) {
+						int j = random.nextInt(21) + 10;
+
+						if (j > itemStack.stackSize) {
+							j = itemStack.stackSize;
+						}
+
+						itemStack.stackSize -= j;
+
+						EntityItem entityItem = new EntityItem(entityPlayer.worldObj, entityPlayer.lastTickPosX + f, entityPlayer.lastTickPosY + f1, entityPlayer.lastTickPosZ + f2,
+								new ItemStack(itemStack.getItem(), j, itemStack.getItemDamage()));
+						System.out.println(itemStack.getItem().getUnlocalizedName() + "/" + j +"/" + itemStack.getItemDamage());
+
+
+						float f3 = 0.025F;
+						entityItem.motionX = (float) random.nextGaussian() * f3;
+						entityItem.motionY = (float) random.nextGaussian() * f3 + 0.1F;
+						entityItem.motionZ = (float) random.nextGaussian() * f3;
+						event.entityPlayer.worldObj.spawnEntityInWorld(entityItem);
+					}
+
+				}
+			}
 
         }
     }
@@ -99,6 +148,25 @@ public class SampleEntityPropertiesEventHandler {
 		}
 	}
 
+	private int metaToCoin(int meta) {
+		int work = 0;
+
+		switch (meta) {
+			case 0:work = 100;
+			break;
+
+			case 1:work=1000;
+			break;
+
+			case 2: work = 10000;
+			break;
+
+		default:
+			break;
+		}
+
+		return work;
+	}
 
     @SubscribeEvent
     /*リスポーン時に呼ばれるイベント。Serverとの同期を取る*/

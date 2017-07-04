@@ -24,3 +24,6 @@ tile.ColorBlock-12.name=灰色
 tile.ColorBlock-13.name=水色
 tile.ColorBlock-14.name=紫
 tile.ColorBlock-15.name=謎
+item.Coin.0.name=100mmコイン
+item.Coin.1.name=1000mmコイン
+item.Coin.2.name=10000mmコイン

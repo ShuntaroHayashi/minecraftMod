@@ -1,7 +1,7 @@
 package forestMoon;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import forestMoon.Items.ItemRecipes;
+import forestMoon.Items.ItemRegister;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 public class Recipes {
 	public static void registry(){
 		GameRegistry.addRecipe(
-		new ItemStack(ItemRecipes.BonePickaxe,1),
+		new ItemStack(ItemRegister.BonePickaxe,1),
 		new Object[]
 			{
 				"xxx",
@@ -19,7 +19,7 @@ public class Recipes {
 				'y',Items.stick
 			});
 		GameRegistry.addRecipe(
-			 new ItemStack(ItemRecipes.SampleSword, 1),
+			 new ItemStack(ItemRegister.SampleSword, 1),
 			 new Object[]{
 				 " x ",
 				 " x ",
@@ -28,7 +28,7 @@ public class Recipes {
 				 'y',Items.stick}
 			 );
         GameRegistry.addRecipe(
-            new ItemStack( ItemRecipes.ItemSample2, 1 ),
+            new ItemStack( ItemRegister.ItemSample2, 1 ),
             new Object[] {
                 " x ",
                 "y y",
@@ -37,7 +37,7 @@ public class Recipes {
             );
 
         GameRegistry.addRecipe(
-            new ItemStack( ItemRecipes.ItemSample3, 1 ),
+            new ItemStack( ItemRegister.ItemSample3, 1 ),
             new Object[] {
                 "x",
                 "y",
@@ -46,7 +46,7 @@ public class Recipes {
             );
 
         GameRegistry.addRecipe(
-            new ItemStack( ItemRecipes.ItemSample4, 9 ),
+            new ItemStack( ItemRegister.ItemSample4, 9 ),
             new Object[] {
                 "x",
                 "x",
@@ -55,14 +55,14 @@ public class Recipes {
             );
 
         GameRegistry.addRecipe(
-            new ItemStack( ItemRecipes.ItemSample1, 1 ),
+            new ItemStack( ItemRegister.ItemSample1, 1 ),
             new Object[] {
                 "x",
                 "y",
                 "z",
-                'x', ItemRecipes.ItemSample2,
-                'y', ItemRecipes.ItemSample3,
-                'z', ItemRecipes.ItemSample4 }
+                'x', ItemRegister.ItemSample2,
+                'y', ItemRegister.ItemSample3,
+                'z', ItemRegister.ItemSample4 }
             );
 
         return;

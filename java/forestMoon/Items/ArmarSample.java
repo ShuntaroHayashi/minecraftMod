@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 public class ArmarSample extends ItemArmor{
 
 	public ArmarSample(int type) {
-		super(ItemRecipes.SAMPLEARMOR, 0, type);
+		super(ItemRegister.SAMPLEARMOR, 0, type);
 		this.setCreativeTab(ForestMoon.forestmoontab);
 		String name = null;
 		switch (type) {
