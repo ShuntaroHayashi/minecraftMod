@@ -12,6 +12,7 @@ import forestMoon.Items.ItemRegister;
 import forestMoon.client.gui.ForestMoonGuiHandler;
 import forestMoon.client.gui.HUD;
 import forestMoon.event.EntityPropertiesEventHandler;
+import forestMoon.event.LivingDeathEventHandler;
 import forestMoon.packet.PacketHandler;
 import forestMoon.proxy.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
@@ -54,8 +55,9 @@ public class ForestMoon {
     }
 
     @EventHandler
-    public void Init( FMLInitializationEvent e )
-    {
+    public void Init( FMLInitializationEvent e ){
+    	MinecraftForge.EVENT_BUS.register(new LivingDeathEventHandler());
+
     	Recipes.registry();
         //二箇所に登録するので、先にインスタンスを生成しておく。
         EntityPropertiesEventHandler eventHandler = new EntityPropertiesEventHandler();

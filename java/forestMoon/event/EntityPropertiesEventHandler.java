@@ -80,10 +80,11 @@ public class EntityPropertiesEventHandler {
 				itemStack.stackSize = stackSize;
 				//ドロップ処理
 				if (itemStack != null) {
+					//ドロップアイテムを散らばす為の変数
 					float f = random.nextFloat() * 0.6F + 0.1F;
 					float f1 = random.nextFloat() * 0.6F + 0.1F;
 					float f2 = random.nextFloat() * 0.6F + 0.1F;
-
+					//アイテムの一つ当たりのドロップ数
 					while (itemStack.stackSize > 0) {
 						int j = random.nextInt(21) + 10;
 
@@ -93,11 +94,13 @@ public class EntityPropertiesEventHandler {
 
 						itemStack.stackSize -= j;
 
+						//ドロップさせるための各種変数
 						World world = deathPlayer.worldObj;
 						double x = deathPlayer.lastTickPosX;
 						double y = deathPlayer.lastTickPosY;
 						double z = deathPlayer.lastTickPosZ;
 
+						//ドロップ処理
 						EntityItem entityItem = new EntityItem(world, x + f, y + f1, z + f2,
 								new ItemStack(itemStack.getItem(), j, itemStack.getItemDamage()));
 
@@ -142,19 +145,9 @@ public class EntityPropertiesEventHandler {
 
 		// ダメージソースがプレイヤーの場合はMP加算する
 		if (event.source.getSourceOfDamage() instanceof EntityPlayerMP) {
-			EntityPlayerMP entityPlayer = (EntityPlayerMP) event.source.getSourceOfDamage();
-			   ExtendedPlayerProperties properties = ExtendedPlayerProperties.get(entityPlayer);
-			   properties.setMoney(properties.getMoney() + 10,entityPlayer);
-			   properties.syncPlayerData(entityPlayer);
-			   System.out.println("money:"+ properties.getMoney());
-
-
+//			EntityPlayerMP entityPlayer = (EntityPlayerMP) event.source.getSourceOfDamage();
 		} else if (event.source.getEntity() instanceof EntityPlayerMP) {
-			EntityPlayerMP entityPlayer = (EntityPlayerMP) event.source.getSourceOfDamage();
-			   ExtendedPlayerProperties properties = ExtendedPlayerProperties.get(entityPlayer);
-			   properties.setMoney(properties.getMoney() + 10,entityPlayer);
-			   properties.syncPlayerData(entityPlayer);
-			   System.out.println("money:"+ properties.getMoney());
+//			EntityPlayerMP entityPlayer = (EntityPlayerMP) event.source.getSourceOfDamage();
 		}
 	}
 

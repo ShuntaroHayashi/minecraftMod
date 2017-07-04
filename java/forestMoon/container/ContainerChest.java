@@ -1,4 +1,4 @@
-package forestMoon;
+package forestMoon.container;
 
 import forestMoon.client.entity.TileEntityChest;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,9 +21,7 @@ public class ContainerChest extends Container{
 		// スロットを設定する。
 		this.tileEntity = tileEntity;
 		//チェスト部分の設定
-//		for (int iy = 0; iy < 6; iy++) {
 		for (int iy = 0; iy < 3; iy++) {
-//			for (int ix = 0; ix < 9; ix++) {
 			for (int ix = 0; ix < 9; ix++) {
 				this.addSlotToContainer(new Slot(tileEntity, ix + (iy * 9), 8 + (ix * 18), 17 + (iy * 18)));
 				//Entity/スロットナンバー/x/y
