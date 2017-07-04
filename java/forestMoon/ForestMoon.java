@@ -11,6 +11,8 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import forestMoon.Items.ItemRegister;
 import forestMoon.client.gui.ForestMoonGuiHandler;
 import forestMoon.client.gui.HUD;
+import forestMoon.event.EntityPropertiesEventHandler;
+import forestMoon.packet.PacketHandler;
 import forestMoon.proxy.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -56,7 +58,7 @@ public class ForestMoon {
     {
     	Recipes.registry();
         //二箇所に登録するので、先にインスタンスを生成しておく。
-        SampleEntityPropertiesEventHandler eventHandler = new SampleEntityPropertiesEventHandler();
+        EntityPropertiesEventHandler eventHandler = new EntityPropertiesEventHandler();
 
         //Forge Eventの登録。EntityEvent.EntityConstructingとLivingDeathEventとEntityJoinWorldEvent
         MinecraftForge.EVENT_BUS.register(eventHandler);

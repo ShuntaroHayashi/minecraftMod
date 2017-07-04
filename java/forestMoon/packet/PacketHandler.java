@@ -1,12 +1,8 @@
-package forestMoon;
+package forestMoon.packet;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
-import forestMoon.packet.MessagePlayerJoinInAnnouncement;
-import forestMoon.packet.MessagePlayerJoinInAnoucementHandler;
-import forestMoon.packet.MessagePlayerProperties;
-import forestMoon.packet.MessagePlayerPropertiesHandler;
 
 public class PacketHandler {
     /*MOD固有のSimpleNetworkWrapperを取得。

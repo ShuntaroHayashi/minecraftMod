@@ -31,14 +31,30 @@ public class ItemCoin extends Item {
 
         return;
     }
+
+	public static int metaToCoin(int meta) {
+		int work = 0;
+		switch (meta) {
+			case 0:work = 100;
+			break;
+			case 1:work=1000;
+			break;
+			case 2: work = 10000;
+			break;
+		default:
+			break;
+		}
+
+		return work;
+	}
+
 	private IIcon[] iicon = new IIcon[3];
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iicon) {
-		int y = 100;
-		for (int i = 0; i < 3; i ++,y*=10) {
-			this.iicon[i] = iicon.registerIcon(this.getIconString() + "-" + y);
+		for (int i = 0; i < 3; i ++) {
+			this.iicon[i] = iicon.registerIcon(this.getIconString() + "-" + metaToCoin(i));
 		}
 	}
 

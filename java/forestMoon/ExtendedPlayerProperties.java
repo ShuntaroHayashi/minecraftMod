@@ -2,6 +2,7 @@ package forestMoon;
 
 //import sampleMod.packet.MessagePlayerProperties;
 import forestMoon.packet.MessagePlayerProperties;
+import forestMoon.packet.PacketHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -31,13 +32,6 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     public void saveNBTData(NBTTagCompound compound) {
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setInteger("money", getMoney());
-
-
-        //ItemStackの保存
-//        NBTTagCompound itemNBT = new NBTTagCompound();
-//        nbt.setTag("sampleItemStack", itemNBT);
-        //ItemStackの配列の保存
-
         compound.setTag(EXT_PROP_NAME, nbt);
     }
 
@@ -45,8 +39,6 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     public void loadNBTData(NBTTagCompound compound) {
         NBTTagCompound nbt = (NBTTagCompound)compound.getTag(EXT_PROP_NAME);
         this.money = nbt.getInteger("money");
-        //ItemStackの読み込み
-        //ItemStackの配列の読み込み
     }
 
     @Override
@@ -81,6 +73,8 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
 		this.money = money;
 	       PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties(player), (EntityPlayerMP)player);
 	}
+
+	//サーバーとの同期をとる
 	public void syncPlayerData(EntityPlayer player){
 		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties(player), (EntityPlayerMP)player);
 	}

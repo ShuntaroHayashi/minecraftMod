@@ -1,13 +1,13 @@
 package forestMoon;
 
-import forestMoon.client.entity.TileEntityChestSample;
+import forestMoon.client.entity.TileEntityChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerChestSample extends Container{
-	private TileEntityChestSample tileEntity;
+public class ContainerChest extends Container{
+	private TileEntityChest tileEntity;
 	/** アルミニウムチェストのインベントリの第一スロットの番号 */
 	private static final int index0 = 0;
 	/** プレイヤーのインベントリの第一スロットの番号 */
@@ -17,7 +17,7 @@ public class ContainerChestSample extends Container{
 	/** このコンテナの全体のスロット数 */
 	private static final int index3 = 63;//90
 
-	public ContainerChestSample(EntityPlayer player, TileEntityChestSample tileEntity) {
+	public ContainerChest(EntityPlayer player, TileEntityChest tileEntity) {
 		// スロットを設定する。
 		this.tileEntity = tileEntity;
 		//チェスト部分の設定

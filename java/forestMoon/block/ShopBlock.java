@@ -67,9 +67,6 @@ public class ShopBlock extends Block {
     public void registerBlockIcons(IIconRegister par1IconRegister)
     {
         this.TopIcon = par1IconRegister.registerIcon("samplemod:block_sample");
-//        this.SideIcon = par1IconRegister.registerIcon("forestmoon:shopItem");
-//        this.BottomIcon = par1IconRegister.registerIcon("forestmoon:hoshiblock");
-
         this.texture0 = par1IconRegister.registerIcon("forestmoon:0");
         this.texture1 = par1IconRegister.registerIcon("forestmoon:1");
         this.texture2 = par1IconRegister.registerIcon("forestmoon:2");
@@ -81,15 +78,6 @@ public class ShopBlock extends Block {
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int par1, int par2)
     {
-//         if(par1 == 0){
-//        	return BottomIcon;
-//         }else if( par1 == 1){
-//    	 	return TopIcon;
-//         }else if(par1 == 2){
-//        	return SideIcon;
-//         }else {
-//			return TopIcon;
-//		}
     	switch (par1) {
 		case 0:
 			return texture0;

@@ -1,25 +1,29 @@
-package forestMoon;
+package forestMoon.event;
 
 import java.util.Random;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
+import forestMoon.ExtendedPlayerProperties;
+import forestMoon.Items.ItemCoin;
 import forestMoon.Items.ItemRegister;
 import forestMoon.packet.MessagePlayerJoinInAnnouncement;
 import forestMoon.packet.MessagePlayerProperties;
+import forestMoon.packet.PacketHandler;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.world.BlockEvent;
 
-public class SampleEntityPropertiesEventHandler {
+public class EntityPropertiesEventHandler {
 
 	private Random random = new Random();
 
@@ -50,27 +54,31 @@ public class SampleEntityPropertiesEventHandler {
             //新しいカスタムデータ
             IExtendedEntityProperties newEntityProperties = event.entityPlayer.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME);
             NBTTagCompound playerData = new NBTTagCompound();
+
             //データの吸い出し
             oldEntityProperties.saveNBTData(playerData);
             Integer money = ExtendedPlayerProperties.get(event.original).getMoney();
             //データの書き込み
             newEntityProperties.loadNBTData(playerData);
             ExtendedPlayerProperties.get(event.entityPlayer).setMoney(money / 2,event.entityPlayer);
-//            System.out.println("money:" + money);
-            money /= 2;
-            EntityPlayer entityPlayer = event.original;
 
+
+            //コインドロップ処理
+            money /= 2;
+            EntityPlayer deathPlayer = event.original;
         	for (int i = 0; i < 3; i++) {
 
+        		//Itemの作成
             	ItemStack itemStack = new ItemStack(ItemRegister.ItemCoin,0,2-i);
 				itemStack.setItemDamage(2-i);
+				//ドロップ数計算
 				int stackSize = 0;
-				while(money>metaToCoin(2-i)){
-					money -= metaToCoin(2-i);
-					System.out.println(money);
+				while(money>ItemCoin.metaToCoin(2-i)){
+					money -= ItemCoin.metaToCoin(2-i);
 					stackSize++;
 				}
 				itemStack.stackSize = stackSize;
+				//ドロップ処理
 				if (itemStack != null) {
 					float f = random.nextFloat() * 0.6F + 0.1F;
 					float f1 = random.nextFloat() * 0.6F + 0.1F;
@@ -85,10 +93,13 @@ public class SampleEntityPropertiesEventHandler {
 
 						itemStack.stackSize -= j;
 
-						EntityItem entityItem = new EntityItem(entityPlayer.worldObj, entityPlayer.lastTickPosX + f, entityPlayer.lastTickPosY + f1, entityPlayer.lastTickPosZ + f2,
-								new ItemStack(itemStack.getItem(), j, itemStack.getItemDamage()));
-						System.out.println(itemStack.getItem().getUnlocalizedName() + "/" + j +"/" + itemStack.getItemDamage());
+						World world = deathPlayer.worldObj;
+						double x = deathPlayer.lastTickPosX;
+						double y = deathPlayer.lastTickPosY;
+						double z = deathPlayer.lastTickPosZ;
 
+						EntityItem entityItem = new EntityItem(world, x + f, y + f1, z + f2,
+								new ItemStack(itemStack.getItem(), j, itemStack.getItemDamage()));
 
 						float f3 = 0.025F;
 						entityItem.motionX = (float) random.nextGaussian() * f3;
@@ -114,7 +125,6 @@ public class SampleEntityPropertiesEventHandler {
    }
 	@SubscribeEvent
 	public void onLivingDeath(LivingDeathEvent event) {
-
 		// 別のMOD等でキャンセル済みの場合はなにもしない
 		if (event.isCancelable() && event.isCanceled()) {
 			return;
@@ -146,26 +156,6 @@ public class SampleEntityPropertiesEventHandler {
 			   properties.syncPlayerData(entityPlayer);
 			   System.out.println("money:"+ properties.getMoney());
 		}
-	}
-
-	private int metaToCoin(int meta) {
-		int work = 0;
-
-		switch (meta) {
-			case 0:work = 100;
-			break;
-
-			case 1:work=1000;
-			break;
-
-			case 2: work = 10000;
-			break;
-
-		default:
-			break;
-		}
-
-		return work;
 	}
 
     @SubscribeEvent

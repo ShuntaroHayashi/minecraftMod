@@ -49,6 +49,7 @@ public class ItemRegister {
         chestSample = new ChestSample();
         BONETOOL = EnumHelper.addToolMaterial("SampleSword", 1, 55, 1500F, 1F, 1);
 //        名前、採掘レベル、耐久度、採掘速度、攻撃力、エンチャント
+
         BONETOOL.setRepairItem(new ItemStack(Items.bone));
         BonePickaxe = new BonePickaxe(BONETOOL);
         BoneShovel = new BoneShovel(BONETOOL);
