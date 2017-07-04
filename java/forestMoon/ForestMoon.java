@@ -11,6 +11,8 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import forestMoon.Items.ItemRegister;
 import forestMoon.client.gui.ForestMoonGuiHandler;
 import forestMoon.client.gui.HUD;
+import forestMoon.event.EntityPropertiesEventHandler;
+import forestMoon.packet.PacketHandler;
 import forestMoon.proxy.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

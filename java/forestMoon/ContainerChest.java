@@ -6,7 +6,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerChestSample extends Container{
+public class ContainerChest extends Container{
 	private TileEntityChest tileEntity;
 	/** アルミニウムチェストのインベントリの第一スロットの番号 */
 	private static final int index0 = 0;
@@ -17,7 +17,7 @@ public class ContainerChestSample extends Container{
 	/** このコンテナの全体のスロット数 */
 	private static final int index3 = 63;//90
 
-	public ContainerChestSample(EntityPlayer player, TileEntityChest tileEntity) {
+	public ContainerChest(EntityPlayer player, TileEntityChest tileEntity) {
 		// スロットを設定する。
 		this.tileEntity = tileEntity;
 		//チェスト部分の設定

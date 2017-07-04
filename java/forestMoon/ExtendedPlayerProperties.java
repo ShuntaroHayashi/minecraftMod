@@ -2,6 +2,7 @@ package forestMoon;
 
 //import sampleMod.packet.MessagePlayerProperties;
 import forestMoon.packet.MessagePlayerProperties;
+import forestMoon.packet.PacketHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

@@ -1,14 +1,16 @@
-package forestMoon;
+package forestMoon.event;
 
 import java.util.Random;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
+import forestMoon.ExtendedPlayerProperties;
 import forestMoon.Items.ItemCoin;
 import forestMoon.Items.ItemRegister;
 import forestMoon.packet.MessagePlayerJoinInAnnouncement;
 import forestMoon.packet.MessagePlayerProperties;
+import forestMoon.packet.PacketHandler;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

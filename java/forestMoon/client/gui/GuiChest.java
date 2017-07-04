@@ -1,7 +1,8 @@
-package forestMoon;
+package forestMoon.client.gui;
 
 import org.lwjgl.opengl.GL11;
 
+import forestMoon.ContainerChest;
 import forestMoon.client.entity.TileEntityChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,7 +16,7 @@ public class GuiChest extends GuiContainer{
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("forestmoon:textures/gui/container/shopGui.png");
 
 	public GuiChest(EntityPlayer player, TileEntityChest tileEnttiy) {
-		super(new ContainerChestSample(player, tileEnttiy));
+		super(new ContainerChest(player, tileEnttiy));
 		this.tileEntity = tileEnttiy;
 		ySize = 222;
 	}
