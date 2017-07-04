@@ -2,8 +2,8 @@ package forestMoon.client.gui;
 
 import org.lwjgl.opengl.GL11;
 
-import forestMoon.ContainerChest;
 import forestMoon.client.entity.TileEntityChest;
+import forestMoon.container.ContainerChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
