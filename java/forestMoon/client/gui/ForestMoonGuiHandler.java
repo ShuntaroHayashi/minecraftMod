@@ -10,8 +10,9 @@ import net.minecraft.world.World;
 public class ForestMoonGuiHandler implements IGuiHandler{
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-		if (!world.blockExists(x, y, z))
+		if (!world.blockExists(x, y, z)){
 			return null;
+		}
 		TileEntity tileentity = world.getTileEntity(x, y, z);
 		if (tileentity instanceof TileEntityChest) {
 			return new ContainerChest(player, (TileEntityChest) tileentity);
@@ -21,8 +22,9 @@ public class ForestMoonGuiHandler implements IGuiHandler{
 
 	@Override
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-		if (!world.blockExists(x, y, z))
+		if (!world.blockExists(x, y, z)){
 			return null;
+		}
 		TileEntity tileentity = world.getTileEntity(x, y, z);
 		if (tileentity instanceof TileEntityChest) {
 			return new GuiChest(player, (TileEntityChest) tileentity);

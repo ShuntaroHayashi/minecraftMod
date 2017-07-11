@@ -7,10 +7,12 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import forestMoon.Items.ItemRegister;
 import forestMoon.client.gui.ForestMoonGuiHandler;
 import forestMoon.client.gui.HUD;
+import forestMoon.command.CommandRegister;
 import forestMoon.event.EntityPropertiesEventHandler;
 import forestMoon.event.LivingDeathEventHandler;
 import forestMoon.packet.PacketHandler;
@@ -22,12 +24,14 @@ import net.minecraftforge.common.MinecraftForge;
 @Mod( modid = ForestMoon.MODID, version = ForestMoon.VERSION ,useMetadata = true)
 
 public class ForestMoon {
+	//初期設定
 	@Mod.Instance( "ForestMoon" )
     public static final String MODID = "forestmoonmod";
     public static final String VERSION = "beta0.0.1";
 	@Instance(MODID)
 	public static ForestMoon instance;
 
+	//プロキシの設定
     @SidedProxy(clientSide = "forestMoon.proxy.ClientProxy", serverSide = "forestMoon.proxy.CommonProxy")
     public static CommonProxy proxy;
 
@@ -41,21 +45,20 @@ public class ForestMoon {
 
 
     @EventHandler
-    public void preInit( FMLPreInitializationEvent e )
-    {
+    public void preInit( FMLPreInitializationEvent event){
     	ItemRegister.registry( this );
 		NetworkRegistry.INSTANCE.registerGuiHandler(ForestMoon.instance, new ForestMoonGuiHandler());
 
-        if (e.getSide().isClient()) {
+        if (event.getSide().isClient()) {
             MinecraftForge.EVENT_BUS.register(new HUD());
         }
-
         //Messageの登録呼び出し
         PacketHandler.init();
+
     }
 
     @EventHandler
-    public void Init( FMLInitializationEvent e ){
+    public void Init( FMLInitializationEvent event ){
     	MinecraftForge.EVENT_BUS.register(new LivingDeathEventHandler());
 
     	Recipes.registry();
@@ -67,8 +70,11 @@ public class ForestMoon {
 
         //FML Eventの登録。PlayerRespawnEvent
         FMLCommonHandler.instance().bus().register(eventHandler);
+
+
     }
-
-
-
+    @EventHandler
+	public void serverStarting(FMLServerStartingEvent event){
+    	CommandRegister.registry(event);
+	}
 }

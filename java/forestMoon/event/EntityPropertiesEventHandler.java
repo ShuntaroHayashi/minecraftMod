@@ -57,7 +57,7 @@ public class EntityPropertiesEventHandler {
 
             //データの吸い出し
             oldEntityProperties.saveNBTData(playerData);
-            Integer money = ExtendedPlayerProperties.get(event.original).getMoney();
+            long money = ExtendedPlayerProperties.get(event.original).getMoney();
             //データの書き込み
             newEntityProperties.loadNBTData(playerData);
             ExtendedPlayerProperties.get(event.entityPlayer).setMoney(money / 2,event.entityPlayer);
@@ -65,16 +65,22 @@ public class EntityPropertiesEventHandler {
 
             //コインドロップ処理
             money /= 2;
+            float work = random.nextFloat();
+            if(work < 0.5){
+            	work = 0.5F;
+            }
+            money *= work;
+
             EntityPlayer deathPlayer = event.original;
-        	for (int i = 0; i < 3; i++) {
+        	for (int i = 0; i < 7; i++) {
 
         		//Itemの作成
-            	ItemStack itemStack = new ItemStack(ItemRegister.ItemCoin,0,2-i);
-				itemStack.setItemDamage(2-i);
+            	ItemStack itemStack = new ItemStack(ItemRegister.ItemCoin,0,6-i);
+				itemStack.setItemDamage(6-i);
 				//ドロップ数計算
 				int stackSize = 0;
-				while(money>ItemCoin.metaToCoin(2-i)){
-					money -= ItemCoin.metaToCoin(2-i);
+				while(money>ItemCoin.metaToCoin(6-i)){
+					money -= ItemCoin.metaToCoin(6-i);
 					stackSize++;
 				}
 				itemStack.stackSize = stackSize;

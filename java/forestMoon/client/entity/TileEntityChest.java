@@ -10,6 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 public class TileEntityChest extends TileEntity implements IInventory{
 	protected ItemStack[] itemStacks = new ItemStack[54];
 
+	//データの書き込み
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
@@ -24,7 +25,7 @@ public class TileEntityChest extends TileEntity implements IInventory{
 		}
 		nbt.setTag("Items", nbttaglist);
 	}
-
+	//データ読み取り
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);

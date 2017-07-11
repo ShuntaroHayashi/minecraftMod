@@ -29,7 +29,7 @@ public class ChestSample extends Block implements ITileEntityProvider{
 		this.setStepSound(soundTypeMetal);
 		isBlockContainer = true;
 		GameRegistry.registerBlock(this, name);
-		GameRegistry.registerTileEntity(TileEntityChest.class, "TileEntityChestSample");
+		GameRegistry.registerTileEntity(TileEntityChest.class, "TileEntityChest");
 	}
 
 	@Override

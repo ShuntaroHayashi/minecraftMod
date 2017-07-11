@@ -11,8 +11,6 @@ import net.minecraft.util.StatCollector;
 
 public class GuiChest extends GuiContainer{
 	private TileEntityChest tileEntity;
-	// GUIのテクスチャの場所を指定する。今回はバニラのラージチェストと同じものを使う。
-//	private static final ResourceLocation GUITEXTURE = new ResourceLocation("textures/gui/container/generic_54.png");
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("forestmoon:textures/gui/container/shopGui.png");
 
 	public GuiChest(EntityPlayer player, TileEntityChest tileEnttiy) {
@@ -24,7 +22,6 @@ public class GuiChest extends GuiContainer{
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		fontRendererObj.drawString(StatCollector.translateToLocal(tileEntity.getInventoryName()), 8, 6, 4210752);
-//		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 150 + 2, 4210752);
 	}
 
