@@ -127,10 +127,10 @@ public class EntityPropertiesEventHandler {
    @SubscribeEvent
    /*ブロックの破壊時*/
    public void breakBlock(BlockEvent.BreakEvent event){
-	   ExtendedPlayerProperties properties = ExtendedPlayerProperties.get(event.getPlayer());
-	   properties.setMoney(properties.getMoney() + 10,event.getPlayer());
-	   properties.syncPlayerData(event.getPlayer());
-	   System.out.println("money:"+ properties.getMoney());
+//	   ExtendedPlayerProperties properties = ExtendedPlayerProperties.get(event.getPlayer());
+//	   properties.setMoney(properties.getMoney() + 10,event.getPlayer());
+//	   properties.syncPlayerData(event.getPlayer());
+//	   System.out.println("money:"+ properties.getMoney());
    }
 	@SubscribeEvent
 	public void onLivingDeath(LivingDeathEvent event) {
