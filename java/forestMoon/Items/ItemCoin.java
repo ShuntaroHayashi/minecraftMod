@@ -96,7 +96,7 @@ public class ItemCoin extends Item {
     public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_)
     {
 		ExtendedPlayerProperties properties = ExtendedPlayerProperties.get(p_77659_3_);
-		properties.addMoney(metaToCoin(p_77659_1_.getItemDamage()));
+		properties.changeMoney(metaToCoin(p_77659_1_.getItemDamage()));
 		p_77659_1_.stackSize -= 1;
         return p_77659_1_;
     }

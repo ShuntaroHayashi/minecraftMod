@@ -44,7 +44,7 @@ public class CommandCoin extends CommandBase{
 				long money = Integer.parseInt(scanMoney);
 				if(properties.getMoney() >= money){
 					money = money - (money % 100);
-					properties.addMoney(-1 * money);
+					properties.changeMoney(-1 * money);
 					properties.syncPlayerData(player);
 
 					  //コインドロップ処理

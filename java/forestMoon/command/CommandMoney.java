@@ -51,7 +51,7 @@ public class CommandMoney extends CommandBase{
 				if (setFlag) {
 					properties.setMoney(money);
 				}else {
-					properties.addMoney(money);
+					properties.changeMoney(money);
 				}
 				properties.syncPlayerData(player);
 			}else{

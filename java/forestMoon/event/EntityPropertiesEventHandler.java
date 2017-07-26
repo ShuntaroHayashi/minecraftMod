@@ -49,6 +49,9 @@ public class EntityPropertiesEventHandler {
    public void onClonePlayer(net.minecraftforge.event.entity.player.PlayerEvent.Clone event) {
         //死亡時に呼ばれてるかどうか
         if (event.wasDeath) {
+
+        	System.out.println("死亡時/" + event.entityPlayer.getClass());
+
             //古いカスタムデータ
             IExtendedEntityProperties oldEntityProperties = event.original.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME);
             //新しいカスタムデータ

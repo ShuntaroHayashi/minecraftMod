@@ -77,14 +77,14 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
 	}
 	public void setMoney(long money,EntityPlayer player) {
 		setMoney(money);
-	    PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties(player), (EntityPlayerMP)player);
+		syncPlayerData(player);
 	}
 
-	public void addMoney(long addmoney) {
+	public void changeMoney(long addmoney) {
 		long work = this.money + addmoney;
 		setMoney(work);
 	}
-	public void addMoney(long addmoney,EntityPlayerMP player) {
+	public void changeMoney(long addmoney,EntityPlayer player) {
 		long work = this.money + addmoney;
 		setMoney(work,player);
 	}
