@@ -1,4 +1,4 @@
-package forestMoon.client.gui;
+package forestMoon.client.guicontainer;
 
 import org.lwjgl.opengl.GL11;
 

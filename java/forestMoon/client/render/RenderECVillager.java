@@ -1,4 +1,4 @@
-package forestMoon;
+package forestMoon.client.render;
 
 import net.minecraft.client.renderer.entity.RenderVillager;
 import net.minecraft.entity.Entity;

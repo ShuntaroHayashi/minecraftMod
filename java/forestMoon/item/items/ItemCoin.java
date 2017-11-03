@@ -1,4 +1,4 @@
-package forestMoon.Items;
+package forestMoon.item.items;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package forestMoon.Items;
+package forestMoon.item.items;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import forestMoon.client.entity.EntityECVillager;

@@ -1,4 +1,4 @@
-package forestMoon.Items;
+package forestMoon.item.items;
 
 import forestMoon.ForestMoon;
 import net.minecraft.entity.player.EntityPlayer;

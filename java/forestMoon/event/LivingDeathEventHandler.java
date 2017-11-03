@@ -1,7 +1,7 @@
 package forestMoon.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import forestMoon.Items.ItemRegister;
+import forestMoon.item.ItemRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.monster.EntityBlaze;
