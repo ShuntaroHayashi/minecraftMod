@@ -1,7 +1,8 @@
-package forestMoon.Items;
+package forestMoon.item.Items;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import forestMoon.ForestMoon;
+import forestMoon.item.ItemRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;

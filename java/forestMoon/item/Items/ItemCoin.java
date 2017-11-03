@@ -1,4 +1,4 @@
-package forestMoon.Items;
+package forestMoon.item.Items;
 
 import java.util.List;
 
@@ -36,16 +36,6 @@ public class ItemCoin extends Item {
 
 	public static long metaToCoin(int meta) {
 		int work = 100;
-//		switch (meta) {
-//			case 0:work = 100;
-//			break;
-//			case 1:work=1000;
-//			break;
-//			case 2: work = 10000;
-//			break;
-//		default:
-//			break;
-//		}
 		for(int i=0; i  < meta;i++){
 			work *= 10;
 		}

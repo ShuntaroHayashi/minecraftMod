@@ -1,4 +1,4 @@
-package forestMoon.Items;
+package forestMoon.item.Items;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlockWithMetadata;

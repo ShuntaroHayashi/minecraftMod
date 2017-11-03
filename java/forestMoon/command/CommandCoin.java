@@ -3,8 +3,8 @@ package forestMoon.command;
 import java.util.Random;
 
 import forestMoon.ExtendedPlayerProperties;
-import forestMoon.Items.ItemCoin;
-import forestMoon.Items.ItemRegister;
+import forestMoon.item.ItemRegister;
+import forestMoon.item.Items.ItemCoin;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.item.EntityItem;

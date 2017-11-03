@@ -13,13 +13,14 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import forestMoon.Items.ItemRegister;
-import forestMoon.client.ForestMoonGuiHandler;
 import forestMoon.client.entity.EntityECVillager;
 import forestMoon.client.gui.HUD;
+import forestMoon.client.render.RenderECVillager;
 import forestMoon.command.CommandRegister;
 import forestMoon.event.EntityPropertiesEventHandler;
 import forestMoon.event.LivingDeathEventHandler;
+import forestMoon.item.ItemRegister;
+import forestMoon.item.Recipes;
 import forestMoon.packet.PacketHandler;
 import forestMoon.proxy.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
@@ -40,7 +41,7 @@ public class ForestMoon {
 
 	//GUI_ID
 	public static final int SHOPING_GUI_ID = 0;
-	public static final int CHEST_GUI_ID = 10;
+	public static final int CHEST_GUI_ID = 1;
 
 	//プロキシの設定
     @SidedProxy(clientSide = "forestMoon.proxy.ClientProxy", serverSide = "forestMoon.proxy.CommonProxy")
@@ -58,7 +59,6 @@ public class ForestMoon {
     @EventHandler
     public void preInit( FMLPreInitializationEvent event){
     	ItemRegister.registry( this );
-//		NetworkRegistry.INSTANCE.registerGuiHandler(ForestMoon.instance, new ForestMoonGuiHandler());
 
         if (event.getSide().isClient()) {
             MinecraftForge.EVENT_BUS.register(new HUD());
