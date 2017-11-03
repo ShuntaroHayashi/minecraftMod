@@ -22,6 +22,8 @@ public class EntityECVillager extends EntityVillager  {
 	boolean flag = false;
 	ItemStack[] items = {new ItemStack(Items.apple),new ItemStack(Items.arrow)};
 	public Minecraft mc = Minecraft.getMinecraft();
+    private EntityPlayer buyingPlayer;
+
 
 	public EntityECVillager(World world){
 		super(world);
@@ -52,9 +54,9 @@ public class EntityECVillager extends EntityVillager  {
 	protected void applyEntityAttributes()
 	{
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.5D);
-		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(128D);
-		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(100D);
+//		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.5D);
+//		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(128D);
+//		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(100D);
 //		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(1.5D);
 		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(100.0D);
 	}
@@ -136,16 +138,30 @@ public class EntityECVillager extends EntityVillager  {
     		return super.attackEntityFrom(source, damage);
     	}
     }
+    public void setCustomer(EntityPlayer p_70932_1_)
+    {
+        this.buyingPlayer = p_70932_1_;
+    }
 
+    public EntityPlayer getCustomer()
+    {
+        return this.buyingPlayer;
+    }
+    public boolean isTrading()
+    {
+        return this.buyingPlayer != null;
+    }
+
+    //右クリック時
     @Override
     public boolean interact(EntityPlayer player){
-
-    	System.out.println("村人クリック/" + player.getClass());
     	int x = MathHelper.ceiling_double_int(player.posX);
     	int y = MathHelper.ceiling_double_int(player.posY);
     	int z = MathHelper.ceiling_double_int(player.posZ);
-		player.openGui(ForestMoon.instance, ForestMoon.MAIN_GUI_ID , player.worldObj, x, y, z);
-    	return true;
+    	//ショップGUIのオープン
+		player.openGui(ForestMoon.instance, ForestMoon.SHOPING_GUI_ID , player.worldObj, x, y, z);
+		return true;
+
     }
 
 }

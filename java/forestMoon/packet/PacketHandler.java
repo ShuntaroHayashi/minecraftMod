@@ -17,5 +17,6 @@ public class PacketHandler {
         * 第四引数：ClientとServerのどちらに送るか。送り先*/
         INSTANCE.registerMessage(MessagePlayerPropertiesHandler.class, MessagePlayerProperties.class, 0, Side.CLIENT);
         INSTANCE.registerMessage(MessagePlayerJoinInAnoucementHandler.class, MessagePlayerJoinInAnnouncement.class, 1, Side.SERVER);
+        INSTANCE.registerMessage(MessageInventoryHandler.class, MessageInventory.class, 2, Side.SERVER);
     }
 }

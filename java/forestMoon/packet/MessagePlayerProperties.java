@@ -17,6 +17,7 @@ public class MessagePlayerProperties implements IMessage {
         this.data = new NBTTagCompound();
         //EntityPlayerからIExtendedEntityPropertiesを取得。
         ExtendedPlayerProperties.get(entityPlayer).saveNBTData(data);
+
     }
 
     @Override

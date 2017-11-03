@@ -39,9 +39,7 @@ public class ForestMoon {
 	public static ForestMoon instance;
 
 	//GUI_ID
-	public static final int MAIN_GUI_ID = 0;
-	public static final int SELL_GUI_ID = 1;
-	public static final int BUY_GUI_ID = 2;
+	public static final int SHOPING_GUI_ID = 0;
 	public static final int CHEST_GUI_ID = 10;
 
 	//プロキシの設定
