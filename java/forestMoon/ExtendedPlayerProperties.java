@@ -14,7 +14,7 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
    MOD内で複数のIExtendedEntityPropertiesを使う場合は、別の文字列をそれぞれ割り当てること。*/
     public final static String EXT_PROP_NAME = "playerMoneyData";
 
-    private int money = 0;
+    private long money = 0;
     private int displayMoney = 0;
     private int countMoney = 0;
 
@@ -31,7 +31,7 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     @Override
     public void saveNBTData(NBTTagCompound compound) {
         NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setInteger("money", getMoney());
+        nbt.setLong("money", getMoney());
         compound.setTag(EXT_PROP_NAME, nbt);
     }
 
@@ -63,15 +63,30 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
 	public void setCountMoney(int countMoney) {
 		this.countMoney = countMoney;
 	}
-	public int getMoney() {
+	public long getMoney() {
 		return money;
 	}
-	public void setMoney(int money) {
-		this.money = money;
+	public void setMoney(long money) {
+		if (money < 0) {
+			this.money = 0;
+		}else if(money > 1000000000){
+			this.money = 999999999;
+		}else {
+			this.money = money;
+		}
 	}
-	public void setMoney(int money,EntityPlayer player) {
-		this.money = money;
-	       PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties(player), (EntityPlayerMP)player);
+	public void setMoney(long money,EntityPlayer player) {
+		setMoney(money);
+		syncPlayerData(player);
+	}
+
+	public void changeMoney(long addmoney) {
+		long work = this.money + addmoney;
+		setMoney(work);
+	}
+	public void changeMoney(long addmoney,EntityPlayer player) {
+		long work = this.money + addmoney;
+		setMoney(work,player);
 	}
 
 	//サーバーとの同期をとる

@@ -22,6 +22,7 @@ public class ItemRegister {
     public static Item BonePickaxe;
     public static Item BoneShovel;
     public static Item ItemCoin;
+    public static Item ECVillagerEgg;
 
     public static Block BlockSample;
     public static Block ColorBlock;
@@ -43,6 +44,7 @@ public class ItemRegister {
         ItemSample2 = new ItemSample2();
         ItemSample3 = new ItemSample3();
         ItemSample4 = new ItemSample4();
+        ECVillagerEgg = new ItemECVillagerEgg();
         BlockSample = new BlockSample(Material.rock);
         ColorBlock = new ColorBlock();
         ShopBlock = new forestMoon.block.ShopBlock(Material.rock);

@@ -52,12 +52,12 @@ public class ContainerChest extends Container{
 			ItemStack itemStack1 = slot.getStack();
 			itemStack = itemStack1.copy();
 			if (index0 <= slotNumber && slotNumber < index1) {
-				// アルミニウムチェストのインベントリならプレイヤーのインベントリに移動。
+				// チェストのインベントリならプレイヤーのインベントリに移動。
 				if (!this.mergeItemStack(itemStack1, index1, index3, true)) {
 					return null;
 				}
 			} else {
-				// プレイヤーのインベントリならアルミニウムチェストのインベントリに移動。
+				// プレイヤーのインベントリならチェストのインベントリに移動。
 				if (!this.mergeItemStack(itemStack1, index0, index1, false)) {
 					return null;
 				}
@@ -75,4 +75,5 @@ public class ContainerChest extends Container{
 		}
 		return itemStack;
 	}
+
 }

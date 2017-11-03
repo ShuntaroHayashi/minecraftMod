@@ -29,7 +29,7 @@ public class ChestSample extends Block implements ITileEntityProvider{
 		this.setStepSound(soundTypeMetal);
 		isBlockContainer = true;
 		GameRegistry.registerBlock(this, name);
-		GameRegistry.registerTileEntity(TileEntityChest.class, "TileEntityChestSample");
+		GameRegistry.registerTileEntity(TileEntityChest.class, "TileEntityChest");
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class ChestSample extends Block implements ITileEntityProvider{
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		// GUIを開く。
-		player.openGui(ForestMoon.instance, 1, world, x, y, z);
+		player.openGui(ForestMoon.instance, ForestMoon.CHEST_GUI_ID, world, x, y, z);
 		return true;
 	}
 

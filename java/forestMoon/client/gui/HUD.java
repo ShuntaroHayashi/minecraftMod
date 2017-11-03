@@ -66,7 +66,7 @@ public class HUD {
         int top = height - GuiIngameForge.right_height;//left_height-10+air;
         GuiIngameForge.right_height += 10;
 
-        int money = 0;
+        long money = 0;
 
         if (minecraft.thePlayer != null) {
         	ExtendedPlayerProperties pmp = ExtendedPlayerProperties.get(minecraft.thePlayer);
@@ -78,21 +78,23 @@ public class HUD {
 
         //金持ち
         int m = 0;
-        if (String.valueOf(money).length() == 8) {
+/*        if (String.valueOf(money).length() == 9) {
             m = -8;
-        } else if (String.valueOf(money).length() == 9) {
+        } else*/ if (String.valueOf(money).length() == 10) {
+            m = -8;
+        }else if (String.valueOf(money).length() == 11) {
             m = -16;
-        } else if (String.valueOf(money).length() == 10) {
+        }else if (String.valueOf(money).length() == 12) {
             m = -24;
         }
 
         //if (money <= 10000000)
         //表示のx,y リソース開始点x,y リソース終点x,y
-        drawTexturedModalRect(left + m, top, 9, 0, 9, 9);//コイン
-        drawTexturedModalRect(left + 65, top, 0, 18, 9, 9);//M
-        drawTexturedModalRect(left + 74, top, 9, 18, 9, 9);//P
+        drawTexturedModalRect(left + m, top, 9, 0, 9, 9);//\
+//        drawTexturedModalRect(left + 65, top, 0, 18, 9, 9);//M
+//        drawTexturedModalRect(left + 74, top, 9, 18, 9, 9);//M
 
-        left += 56;
+        left += 72;
 
         for (int i = 1; i <= String.valueOf(money).length() && i <= 10; i += 1) {
             String s = String.valueOf(money).substring(String.valueOf(money).length() - i, String.valueOf(money).length() - i + 1);
