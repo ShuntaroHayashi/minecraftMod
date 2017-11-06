@@ -3,11 +3,12 @@ package forestMoon.packet;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
+import forestMoon.ForestMoon;
 
 public class PacketHandler {
     /*MOD固有のSimpleNetworkWrapperを取得。
     * 文字列は他のMODと被らないようにMOD_IDを指定しておくと良い*/
-    public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel("forestMoon");
+    public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(ForestMoon.MODID);
 
     public static void init() {
         /*Messageクラスの登録。

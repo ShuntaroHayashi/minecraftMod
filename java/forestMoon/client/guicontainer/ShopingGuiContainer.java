@@ -20,11 +20,9 @@ import net.minecraft.util.StatCollector;
 @SideOnly(Side.CLIENT)
 public class ShopingGuiContainer extends GuiContainer{
 	 private static final ResourceLocation TEXTURE = new ResourceLocation("forestmoon", "textures/guis/buyGui.png");
-//	 private EntityPlayer player;
-	 private static ShopingContainer buyContainer;
-//	 private GuiButton buyButton;
-//	 private GuiButton sellButton;
-	 private static final int RED_FLOWER = 0;
+	 private static ShopingContainer shopingContainer;
+	 private final int RED_FLOWER_BUY = 0;
+	 private final int RED_FLOWER_SELL = 1;
 	 private int moneyX = 0;
 	 private int moneyY = 0;
 	 private EntityPlayerMP playerMP;
@@ -32,7 +30,7 @@ public class ShopingGuiContainer extends GuiContainer{
 
 
 	public ShopingGuiContainer(EntityPlayer player) {
-		super(buyContainer = new ShopingContainer(player.inventory, true, player));
+		super(shopingContainer = new ShopingContainer(player.inventory, true, player));
 //		this.player = player;
 		this.allowUserInput = true;
 
@@ -40,7 +38,8 @@ public class ShopingGuiContainer extends GuiContainer{
 		moneyY = this.guiTop + this.ySize - 92;
 
 		playerMP = MinecraftServer.getServer().getConfigurationManager().func_152612_a(player.getCommandSenderName());
-		properties = new ExtendedPlayerProperties().get(playerMP);
+		new ExtendedPlayerProperties();
+		properties = ExtendedPlayerProperties.get(playerMP);
 
 	}
 
@@ -63,13 +62,11 @@ public class ShopingGuiContainer extends GuiContainer{
 
     	fontRendererObj.drawString(StatCollector.translateToLocal("買い物"), 8, 6, 4210752);
     	fontRendererObj.drawString(StatCollector.translateToLocal("何を買う？"), 8, 30, 4210752);
-    	fontRendererObj.drawString(StatCollector.translateToLocal("￥" + properties.getMoney()), getMoneyPosition(), moneyY, 4210752);
+    	fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), getMoneyPosition(), moneyY, 4210752);
 
     	buttonList.clear();
-//    	buttonList.add(buyButton = new GuiButton(RED_FLOWER, this.guiLeft + this.xSize/2 - 4, this.guiTop +4, this.xSize/2, 20, "ポピー ￥100"));
-    	buttonList.add(new GuiButton(RED_FLOWER, this.guiLeft + this.xSize/2 - 4, this.guiTop +4, this.xSize/2, 20, "ポピー ￥100"));
-//    	buttonList.add(sellButton = new GuiButton(1,this.guiLeft+ this.xSize/2 - 4, this.guiTop + 40, this.xSize/2,20,"ポピー ￥100"));
-    	buttonList.add(new GuiButton(1,this.guiLeft+ this.xSize/2 - 4, this.guiTop + 40, this.xSize/2,20,"ポピー ￥100"));
+    	buttonList.add(new GuiButton(RED_FLOWER_BUY, this.guiLeft + this.xSize/2 - 4, this.guiTop +4, this.xSize/2, 20, "ポピー ￥100"));
+    	buttonList.add(new GuiButton(RED_FLOWER_SELL,this.guiLeft+ this.xSize/2 - 4, this.guiTop + 40, this.xSize/2,20,"ポピー ￥100"));
 
     }
 
@@ -99,11 +96,11 @@ public class ShopingGuiContainer extends GuiContainer{
     			price = 0;
 				itemStack = null;
 			break;
-    		case RED_FLOWER:
+    		case RED_FLOWER_BUY:
 				price = -100;
 				itemStack = new ItemStack(Blocks.red_flower,1,0);
 			break;
-    		case 1:
+    		case RED_FLOWER_SELL:
     			price  = 100;
     			itemStack = new ItemStack(Blocks.red_flower,1,0);
     			break;
@@ -128,23 +125,23 @@ public class ShopingGuiContainer extends GuiContainer{
 
 			properties.changeMoney(price);
 
-			fontRendererObj.drawString(StatCollector.translateToLocal("￥" + properties.getMoney()), getMoneyPosition(), moneyY, 4210752);
+			fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), getMoneyPosition(), moneyY, 4210752);
 			properties.syncPlayerData(playerMP);
 		}
     }
 
     //販売処理
     private void sell(ItemStack itemStack,int price){
-    	for(int i = 0; i< buyContainer.inventorySlots.size();i++){
-			if(buyContainer.getItemStack(i) != null){
-				if(itemStack.getItem() == buyContainer.getItemStack(i).getItem()){
+    	for(int i = 0; i< shopingContainer.inventorySlots.size();i++){
+			if(shopingContainer.getItemStack(i) != null){
+				if(itemStack.getItem() == shopingContainer.getItemStack(i).getItem()){
 					properties.changeMoney(price);
     				properties.syncPlayerData(playerMP);
 
-					itemStack.stackSize = buyContainer.getItemStack(i).stackSize - 1;
-    				buyContainer.slotChange(i, itemStack,price);
+					itemStack.stackSize = shopingContainer.getItemStack(i).stackSize - 1;
+    				shopingContainer.slotChange(i, itemStack,price);
 
-    				fontRendererObj.drawString(StatCollector.translateToLocal("￥" + properties.getMoney()), getMoneyPosition(), moneyY, 4210752);
+    				fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), getMoneyPosition(), moneyY, 4210752);
 
     				break;
     			}

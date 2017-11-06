@@ -1,4 +1,51 @@
-item.ItemSample1.name=maru
-item.ItemSample2.name=batu
-item.ItemSample3.name=hoshi
-item.ItemSample4.name=sikaku
+//Item
+item.ItemSample1.name=circle
+item.ItemSample2.name=cross
+item.ItemSample3.name=star
+item.ItemSample4.name=square
+item.helmetSample.name=helmetSample
+item.chestPlateSample.name=chestPlateSample
+item.leggingsSample.name=leggingsSample
+item.bootsSample.name=bootsSample
+item.VilaggerEgg.name=flowerVilaggerSpownEgg
+item.samplesword.name=boneSword
+item.Coin.0.name=100MMCoin
+item.Coin.1.name=1thousandMMCoin
+item.Coin.2.name=10thousandMMCoin
+item.Coin.3.name=100thousandMMCoin
+item.Coin.4.name=1millionMMCoin
+item.Coin.5.name=10millionMMCoin
+item.Coin.6.name=100millionMMCoin
+//Block
+tile.SampleBlock.name=starBlock
+tile.ColorBlock-0.name=white
+tile.ColorBlock-1.name=black
+tile.ColorBlock-2.name=orange
+tile.ColorBlock-3.name=redPurple
+tile.ColorBlock-4.name=yellow
+tile.ColorBlock-5.name=yellowGreen
+tile.ColorBlock-6.name=green
+tile.ColorBlock-7.name=red
+tile.ColorBlock-8.name=pink
+tile.ColorBlock-9.name=skyColor
+tile.ColorBlock-10.name=blue
+tile.ColorBlock-11.name=brown
+tile.ColorBlock-12.name=gray
+tile.ColorBlock-13.name=lightBlue
+tile.ColorBlock-14.name=purple
+tile.ColorBlock-15.name=謎
+tile.ChestSample.name=ChestSample
+//container
+container.forestmoon.ChestSample=chestSample
+//fixed phrase
+comandError_1=§cValue is bigger than possession money
+comandError_2=§cValue is too large
+comandMoney_1=changed
+comandMoney_2='s money to
+comandMoney_3= dollar
+comandMoney_Error=§c/money [player] [set] <num>
+comandCoin_1=converted
+comandCoin_2='s money to
+comandCoin_3= coins
+comandCoin_Error=§c/coin [player] [num]
+money=＄

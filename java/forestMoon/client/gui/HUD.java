@@ -73,14 +73,11 @@ public class HUD {
         	if(pmp != null){
         		money = pmp.getMoney();
         	}
-//        	System.out.println("renderMoney:" + money);
         }
 
-        //金持ち
+        //表示桁数合わせ
         int m = 0;
-/*        if (String.valueOf(money).length() == 9) {
-            m = -8;
-        } else*/ if (String.valueOf(money).length() == 10) {
+        if (String.valueOf(money).length() == 10) {
             m = -8;
         }else if (String.valueOf(money).length() == 11) {
             m = -16;
@@ -88,11 +85,8 @@ public class HUD {
             m = -24;
         }
 
-        //if (money <= 10000000)
         //表示のx,y リソース開始点x,y リソース終点x,y
         drawTexturedModalRect(left + m, top, 9, 0, 9, 9);//\
-//        drawTexturedModalRect(left + 65, top, 0, 18, 9, 9);//M
-//        drawTexturedModalRect(left + 74, top, 9, 18, 9, 9);//M
 
         left += 72;
 
