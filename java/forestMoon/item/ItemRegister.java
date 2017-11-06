@@ -1,9 +1,19 @@
-package forestMoon.Items;
+package forestMoon.item;
 
 import forestMoon.ForestMoon;
 import forestMoon.block.BlockSample;
 import forestMoon.block.ChestSample;
 import forestMoon.block.ColorBlock;
+import forestMoon.item.items.ArmarSample;
+import forestMoon.item.items.BonePickaxe;
+import forestMoon.item.items.BoneShovel;
+import forestMoon.item.items.ItemCoin;
+import forestMoon.item.items.ItemECVillagerEgg;
+import forestMoon.item.items.ItemSample1;
+import forestMoon.item.items.ItemSample2;
+import forestMoon.item.items.ItemSample3;
+import forestMoon.item.items.ItemSample4;
+import forestMoon.item.items.SampleSword;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Items;

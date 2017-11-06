@@ -5,6 +5,7 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.StatCollector;
 
 public class CommandMoney extends CommandBase{
 
@@ -24,6 +25,7 @@ public class CommandMoney extends CommandBase{
 		EntityPlayerMP player = getCommandSenderAsPlayer(p_71515_1_);;
 		boolean setFlag = false;
 		String scanMoney="";
+		ChatComponentText chatText;
 
 		if(0 < p_71515_2_.length  && p_71515_2_.length <= 3){
 			if(p_71515_2_.length == 1){
@@ -54,11 +56,18 @@ public class CommandMoney extends CommandBase{
 					properties.changeMoney(money);
 				}
 				properties.syncPlayerData(player);
+				chatText =new ChatComponentText(
+						StatCollector.translateToLocal("comandMoney_1")
+						+ player.getCommandSenderName()
+						+ StatCollector.translateToLocal("comandMoney_2")
+						+ properties.getMoney()
+						+ StatCollector.translateToLocal("comandMoney_3"));
 			}else{
-				player.addChatMessage(new ChatComponentText("Num value is too large"));
+				chatText = new ChatComponentText(StatCollector.translateToLocal("comandError_2"));
 			}
 		}else {
-			player.addChatMessage(new ChatComponentText("Invalid argument"));
+			chatText = new ChatComponentText(StatCollector.translateToLocal("comandMoney_Error"));
 		}
+		player.addChatMessage(chatText);
 	}
 }

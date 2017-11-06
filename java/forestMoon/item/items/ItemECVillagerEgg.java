@@ -1,9 +1,9 @@
-package forestMoon.Items;
+package forestMoon.item.items;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import forestMoon.ForestMoon;
 import forestMoon.client.entity.EntityECVillager;
 import net.minecraft.block.BlockLiquid;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,11 +18,11 @@ public class ItemECVillagerEgg extends Item{
 
 	public ItemECVillagerEgg() {
 		//クリエイティブタブの登録
-		this.setCreativeTab(CreativeTabs.tabMaterials);
+		this.setCreativeTab(ForestMoon.forestmoontab);
 		//システム名の登録
 		this.setUnlocalizedName("VilaggerEgg");
 		//テクスチャ名の登録
-		this.setTextureName("aluminiummod:aluminiumEgg");
+		this.setTextureName("");
 		//GameRegistryへの登録
 		GameRegistry.registerItem(this, "VillagerEgg");
 	}

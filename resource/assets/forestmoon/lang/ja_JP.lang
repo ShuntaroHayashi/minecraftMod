@@ -1,3 +1,4 @@
+//アイテム
 item.Sample1.name=まる
 item.Sample2.name=ばつ
 item.Sample3.name=ほし
@@ -6,8 +7,17 @@ item.helmetSample.name=ヘルメットサンプル
 item.chestPlateSample.name=チェストプレートサンプル
 item.leggingsSample.name=レギンスサンプル
 item.bootsSample.name=ブーツサンプル
-tile.SampleBlock.name=スター
+item.VilaggerEgg.name=花屋スポーンエッグ
 item.samplesword.name=ボーンソード
+item.Coin.0.name=100mmコイン
+item.Coin.1.name=1000mmコイン
+item.Coin.2.name=1万mmコイン
+item.Coin.3.name=10万mmコイン
+item.Coin.4.name=100万mmコイン
+item.Coin.5.name=1000万mmコイン
+item.Coin.6.name=1億mmコイン
+//ブロック
+tile.SampleBlock.name=スター
 tile.ColorBlock-0.name=白
 tile.ColorBlock-1.name=黒
 tile.ColorBlock-2.name=オレンジ
@@ -25,11 +35,17 @@ tile.ColorBlock-13.name=水色
 tile.ColorBlock-14.name=紫
 tile.ColorBlock-15.name=謎
 tile.ChestSample.name=チェストサンプル
-item.Coin.0.name=100mmコイン
-item.Coin.1.name=1000mmコイン
-item.Coin.2.name=1万mmコイン
-item.Coin.3.name=10万mmコイン
-item.Coin.4.name=100万mmコイン
-item.Coin.5.name=1000万mmコイン
-item.Coin.6.name=1億mmコイン
-container.ChestSample=チェストサンプル
+//コンテイナー
+container.forestmoon.ChestSample=チェストサンプル
+//定型文
+comandError_1=§c入力された値が所持金よりも多いです
+comandError_2=§c入力された値が大きすぎます
+comandMoney_1=
+comandMoney_2=の所持金を
+comandMoney_3=円に変更しました
+comandMoney_Error=§c/money [プレイヤー] [set] <値>
+comandCoin_1=
+comandCoin_2=の所持金を
+comandCoin_3=コインに変換しました
+comandCoin_Error=§c/coin [プレイヤー] <値>
+money=￥

@@ -3,14 +3,15 @@ package forestMoon.command;
 import java.util.Random;
 
 import forestMoon.ExtendedPlayerProperties;
-import forestMoon.Items.ItemCoin;
-import forestMoon.Items.ItemRegister;
+import forestMoon.item.ItemRegister;
+import forestMoon.item.items.ItemCoin;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class CommandCoin extends CommandBase{
@@ -26,24 +27,32 @@ public class CommandCoin extends CommandBase{
 		return "CommandCoin";
 	}
 
+	public int getRequiredPermissionLevel()
+    {
+        return 0;
+    }
+
+
 	@Override
 	public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_) {
 		Random random = new Random();
 		EntityPlayerMP player = getCommandSenderAsPlayer(p_71515_1_);;
 		String scanMoney="";
+		ChatComponentText chatText;
 		//引数の確認
 		if(0 < p_71515_2_.length  && p_71515_2_.length <= 2){
 			if(p_71515_2_.length == 1){
 				scanMoney = p_71515_2_[0];
 			}else if(p_71515_2_.length == 2){
-				player = getPlayer(p_71515_1_, p_71515_2_[1]);
-				scanMoney = p_71515_2_[0];
+				player = getPlayer(p_71515_1_, p_71515_2_[0]);
+				scanMoney = p_71515_2_[1];
 			}
 			if(scanMoney.length() <= 10){
 				ExtendedPlayerProperties properties = ExtendedPlayerProperties.get(player);
 				long money = Integer.parseInt(scanMoney);
+				money -= (money % 100);
+				long chatMoney = money;
 				if(properties.getMoney() >= money){
-					money = money - (money % 100);
 					properties.changeMoney(-1 * money);
 					properties.syncPlayerData(player);
 
@@ -56,7 +65,6 @@ public class CommandCoin extends CommandBase{
 						//ドロップ数計算
 						int stackSize = 0;
 						while(money>=ItemCoin.metaToCoin(6-i)){
-							System.out.println(money);
 							money -= ItemCoin.metaToCoin(6-i);
 							stackSize++;
 						}
@@ -96,15 +104,23 @@ public class CommandCoin extends CommandBase{
 
 						}
 					}
+		        	chatText = new ChatComponentText(
+		        			StatCollector.translateToLocal("comandCoin_1")
+		        			+ player.getCommandSenderName()
+		        			+ StatCollector.translateToLocal("comandCoin_2")
+		        			+ chatMoney
+		        			+ StatCollector.translateToLocal("comandCoin_3")
+		        			);
 				}else{
-					player.addChatMessage(new ChatComponentText("Value is bigger than possession money"));
+					chatText = new ChatComponentText(StatCollector.translateToLocal("comandError_1"));
 				}
 			}else{
-				player.addChatMessage(new ChatComponentText("Num value is too large"));
+				chatText = new ChatComponentText(StatCollector.translateToLocal("comandError_2"));
 			}
 		}else {
-			player.addChatMessage(new ChatComponentText("Invalid argument"));
+			chatText = new ChatComponentText(StatCollector.translateToLocal("comandCoin_Error"));
 		}
+		player.addChatMessage(chatText);
 
 	}
 }
