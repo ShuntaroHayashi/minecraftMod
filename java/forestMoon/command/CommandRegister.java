@@ -1,6 +1,8 @@
 package forestMoon.command;
 
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import forestMoon.command.commands.CommandCoin;
+import forestMoon.command.commands.CommandMoney;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 

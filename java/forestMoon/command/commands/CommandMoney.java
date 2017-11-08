@@ -1,4 +1,4 @@
-package forestMoon.command;
+package forestMoon.command.commands;
 
 import forestMoon.ExtendedPlayerProperties;
 import net.minecraft.command.CommandBase;
@@ -57,11 +57,12 @@ public class CommandMoney extends CommandBase{
 				}
 				properties.syncPlayerData(player);
 				chatText =new ChatComponentText(
-						StatCollector.translateToLocal("comandMoney_1")
-						+ player.getCommandSenderName()
-						+ StatCollector.translateToLocal("comandMoney_2")
-						+ properties.getMoney()
-						+ StatCollector.translateToLocal("comandMoney_3"));
+					StatCollector.translateToLocal("comandMoney_1")
+					+ player.getCommandSenderName()
+					+ StatCollector.translateToLocal("comandMoney_2")
+					+ properties.getMoney()
+					+ StatCollector.translateToLocal("comandMoney_3")
+				);
 			}else{
 				chatText = new ChatComponentText(StatCollector.translateToLocal("comandError_2"));
 			}
