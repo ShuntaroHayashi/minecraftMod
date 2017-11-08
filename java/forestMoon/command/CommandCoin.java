@@ -27,6 +27,7 @@ public class CommandCoin extends CommandBase{
 		return "CommandCoin";
 	}
 
+	//OP権限のないユーザーにも使用可能にする
 	public int getRequiredPermissionLevel()
     {
         return 0;

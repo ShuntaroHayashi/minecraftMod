@@ -26,7 +26,7 @@ public class CommandMoney extends CommandBase{
 		boolean setFlag = false;
 		String scanMoney="";
 		ChatComponentText chatText;
-
+		//引数の確認
 		if(0 < p_71515_2_.length  && p_71515_2_.length <= 3){
 			if(p_71515_2_.length == 1){
 				scanMoney = p_71515_2_[0];
@@ -43,11 +43,11 @@ public class CommandMoney extends CommandBase{
 				scanMoney = p_71515_2_[1];
 				setFlag = true;
 			}
-			int length = 9;
+			int maxLength = 9;
 			if (scanMoney.substring(0, 1).equals("-")) {
-				length = 10;
+				maxLength = 10;
 			}
-			if(scanMoney.length() <= length){
+			if(scanMoney.length() <= maxLength){
 				ExtendedPlayerProperties properties = ExtendedPlayerProperties.get(player);
 				long money = Integer.parseInt(scanMoney);
 				if (setFlag) {

@@ -28,36 +28,28 @@ public class EntityECVillager extends EntityVillager  {
 	public EntityECVillager(World world){
 		super(world);
 		/*EntiyのAIを登録する*/
+		this.tasks.taskEntries.clear();//superの登録を削除
 //			this.tasks.addTask(1, new EntityAISwimming(this));
-//
 //			this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPig.class, 1.0D, false));
-//
 //	        this.tasks.addTask(2, new EntityAIAvoidEntity(this, EntityOcelot.class, 6.0F, 1.0D, 1.2D));
-//
 //	        this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.0D, false));
-//
 //	        this.tasks.addTask(4, new EntityAIWander(this, 0.8D));
-//
 //	        this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-//
 //	        this.tasks.addTask(6, new EntityAILookIdle(this));
-//
 //	        this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityPig.class, 1,false));
-//
 //	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 1, true));
 //	        this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
+
 
 	}
 
 	/**MOBの速度やHPを変更するメソッド*/
 	@Override
-	protected void applyEntityAttributes()
-	{
+	protected void applyEntityAttributes(){
 		super.applyEntityAttributes();
-//		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.5D);
-//		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(128D);
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.5D);
+		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(128D);
 //		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(100D);
-//		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(1.5D);
 		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(100.0D);
 	}
 
@@ -65,7 +57,7 @@ public class EntityECVillager extends EntityVillager  {
 	@Override
     public EnumCreatureAttribute getCreatureAttribute() {
 	   return EnumCreatureAttribute.UNDEFINED;
-	   }
+	  }
 
 	/**MOBのドロップアイテムを返すメソッド*/
     @Override
@@ -76,29 +68,15 @@ public class EntityECVillager extends EntityVillager  {
     /**MOBのドロップアイテムをドロップさせるメソッド*/
     @Override
     protected void dropFewItems(boolean isCanDropRare, int fortuneLv){
-//        Item item = this.getDropItem();
-//        int amount = 1;
-//        if(isCanDropRare && this.rand.nextBoolean()){
-//        	item = Item.getItemFromBlock(Blocks.stained_glass);
-//        }
-//        if(fortuneLv > 0){
-//        	amount += fortuneLv;
-//        }
-//        int damage = this.rand.nextInt(16);
-//        for(int i = 0; i < amount; i++){
-//        	this.entityDropItem(new ItemStack(item, amount, damage), 0.0F);
-//        }
     }
 
     /**Tickごとに呼ばれるメソッド*/
     @Override
-    public void onUpdate()
-    {
+    public void onUpdate(){
     	int x = (int) this.posX;
     	int y = (int) this.posY;
     	int z = (int) this.posZ;
-    	if(this.worldObj.getBlock(x, y - 1, z).getMaterial() == Material.iron)
-    	{
+    	if(this.worldObj.getBlock(x, y - 1, z).getMaterial() == Material.iron){
     		this.worldObj.createExplosion(this, x, y, z, 3F, true);
     	}
 
@@ -106,14 +84,11 @@ public class EntityECVillager extends EntityVillager  {
     }
 
     /**MOB死亡時に呼ばれるメソッド*/
-    public void onDeath(DamageSource source)
-    {
+    public void onDeath(DamageSource source){
     	super.onDeath(source);
-    	if(source.getSourceOfDamage() != null && source.getSourceOfDamage() instanceof EntityPlayer)
-    	{
+    	if(source.getSourceOfDamage() != null && source.getSourceOfDamage() instanceof EntityPlayer){
     		EntityPlayer player = (EntityPlayer) source.getSourceOfDamage();
-    		 if(!this.worldObj.isRemote)
-    		 {
+    		 if(!this.worldObj.isRemote){
 				   player.addChatMessage(new ChatComponentText("You slayed."));
 				   player.triggerAchievement(AchievementList.mineWood);
     		 }
@@ -122,33 +97,26 @@ public class EntityECVillager extends EntityVillager  {
 
     /**ダメージを食らうか否かを判定するメソッド*/
     @Override
-    public boolean attackEntityFrom(DamageSource source, float damage)
-    {
-    	if(source.isExplosion())
-    	{
+    public boolean attackEntityFrom(DamageSource source, float damage){
+    	if(source.isExplosion()){
     		return false;
     	}
-    	else if(source.isFireDamage())
-    	{
+    	else if(source.isFireDamage()){
 //    		return super.attackEntityFrom(source, damage * 2);
     		return false;
     	}
-    	else
-    	{
+    	else{
     		return super.attackEntityFrom(source, damage);
     	}
     }
-    public void setCustomer(EntityPlayer p_70932_1_)
-    {
+    public void setCustomer(EntityPlayer p_70932_1_){
         this.buyingPlayer = p_70932_1_;
     }
 
-    public EntityPlayer getCustomer()
-    {
+    public EntityPlayer getCustomer(){
         return this.buyingPlayer;
     }
-    public boolean isTrading()
-    {
+    public boolean isTrading(){
         return this.buyingPlayer != null;
     }
 
@@ -163,5 +131,4 @@ public class EntityECVillager extends EntityVillager  {
 		return true;
 
     }
-
 }
