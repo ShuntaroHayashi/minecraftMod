@@ -17,14 +17,15 @@ import net.minecraft.world.World;
 public class ItemECVillagerEgg extends Item{
 
 	public ItemECVillagerEgg() {
+		String name = "VillagerEgg";
 		//クリエイティブタブの登録
 		this.setCreativeTab(ForestMoon.forestmoontab);
 		//システム名の登録
-		this.setUnlocalizedName("VilaggerEgg");
+		this.setUnlocalizedName(name);
 		//テクスチャ名の登録
-		this.setTextureName("");
+		this.setTextureName("forestmoon:"+name);
 		//GameRegistryへの登録
-		GameRegistry.registerItem(this, "VillagerEgg");
+		GameRegistry.registerItem(this, name);
 	}
 
 
