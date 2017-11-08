@@ -48,10 +48,8 @@ public class ForestMoon {
     @SidedProxy(clientSide = "forestMoon.proxy.ClientProxy", serverSide = "forestMoon.proxy.CommonProxy")
     public static CommonProxy proxy;
 
-	public static CreativeTabs forestmoontab = new CreativeTabs( "forestmoontab" )
-    {
-    	public Item getTabIconItem()
-    	{
+	public static CreativeTabs forestmoontab = new CreativeTabs( "forestmoontab" ) {
+    	public Item getTabIconItem(){
     		return ItemRegister.ItemSample1;
     	}
     };
@@ -60,14 +58,11 @@ public class ForestMoon {
     @EventHandler
     public void preInit( FMLPreInitializationEvent event){
     	ItemRegister.registry( this );
-//		NetworkRegistry.INSTANCE.registerGuiHandler(ForestMoon.instance, new ForestMoonGuiHandler());
-
         if (event.getSide().isClient()) {
             MinecraftForge.EVENT_BUS.register(new HUD());
         }
         //Messageの登録呼び出し
         PacketHandler.init();
-
     }
 
     @EventHandler
@@ -75,6 +70,7 @@ public class ForestMoon {
     	MinecraftForge.EVENT_BUS.register(new LivingDeathEventHandler());
 
     	Recipes.registry();
+
         //二箇所に登録するので、先にインスタンスを生成しておく。
         EntityPropertiesEventHandler eventHandler = new EntityPropertiesEventHandler();
 
@@ -95,13 +91,10 @@ public class ForestMoon {
         }
 
         NetworkRegistry.INSTANCE.registerGuiHandler(ForestMoon.instance, new ForestMoonGuiHandler());
-
-
     }
 
 	@SideOnly(Side.CLIENT)
-	public void render()
-	{
+	public void render(){
 		RenderingRegistry.registerEntityRenderingHandler(EntityECVillager.class, new RenderECVillager());
 	}
 

@@ -39,8 +39,6 @@ public class EntityECVillager extends EntityVillager  {
 //	        this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityPig.class, 1,false));
 //	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 1, true));
 //	        this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
-
-
 	}
 
 	/**MOBの速度やHPを変更するメソッド*/
@@ -79,7 +77,6 @@ public class EntityECVillager extends EntityVillager  {
     	if(this.worldObj.getBlock(x, y - 1, z).getMaterial() == Material.iron){
     		this.worldObj.createExplosion(this, x, y, z, 3F, true);
     	}
-
     	super.onUpdate();
     }
 
