@@ -17,6 +17,7 @@ public class GuiChest extends GuiContainer{
 		super(new ContainerChest(player, tileEnttiy));
 		this.tileEntity = tileEnttiy;
 		ySize = 222;
+
 	}
 
 	@Override

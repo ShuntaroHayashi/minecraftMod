@@ -1,4 +1,4 @@
-package forestMoon.command;
+package forestMoon.command.commands;
 
 import java.util.Random;
 
@@ -27,6 +27,7 @@ public class CommandCoin extends CommandBase{
 		return "CommandCoin";
 	}
 
+	//OP権限のないユーザーにも使用可能にする
 	public int getRequiredPermissionLevel()
     {
         return 0;
@@ -105,12 +106,12 @@ public class CommandCoin extends CommandBase{
 						}
 					}
 		        	chatText = new ChatComponentText(
-		        			StatCollector.translateToLocal("comandCoin_1")
-		        			+ player.getCommandSenderName()
-		        			+ StatCollector.translateToLocal("comandCoin_2")
-		        			+ chatMoney
-		        			+ StatCollector.translateToLocal("comandCoin_3")
-		        			);
+	        			StatCollector.translateToLocal("comandCoin_1")
+	        			+ player.getCommandSenderName()
+	        			+ StatCollector.translateToLocal("comandCoin_2")
+	        			+ chatMoney
+	        			+ StatCollector.translateToLocal("comandCoin_3")
+        			);
 				}else{
 					chatText = new ChatComponentText(StatCollector.translateToLocal("comandError_1"));
 				}
