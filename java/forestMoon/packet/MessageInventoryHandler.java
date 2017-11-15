@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-public class MessageInventoryHandler implements IMessageHandler<MessageInventory, IMessage> {
+public class MessageInventoryHandler implements IMessageHandler<MessageInventory, IMessage>	 {
 	 @Override//IMessageHandlerのメソッド
 	    public IMessage onMessage(MessageInventory message, MessageContext ctx) {
 	        //クライアントへ送った際に、EntityPlayerインスタンスはこのように取れる。

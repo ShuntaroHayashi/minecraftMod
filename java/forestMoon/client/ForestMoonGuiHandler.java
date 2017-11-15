@@ -29,10 +29,11 @@ public class ForestMoonGuiHandler implements IGuiHandler{
 		return null;
 	}
 
+
 	@Override
 	public Object getClientGuiElement(final int id,final EntityPlayer player,final World world,final int x,final int y,final int z) {
 		if(id == ForestMoon.SHOPING_GUI_ID){
-			return new ShopingGuiContainer(player);
+			return new ShopingGuiContainer(player,z);
 		}else if (id == ForestMoon.CHEST_GUI_ID) {
 			if (!world.blockExists(x, y, z)){
 				return null;

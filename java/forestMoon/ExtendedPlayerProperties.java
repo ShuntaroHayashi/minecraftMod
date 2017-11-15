@@ -3,6 +3,7 @@ package forestMoon;
 //import sampleMod.packet.MessagePlayerProperties;
 import forestMoon.packet.MessagePlayerProperties;
 import forestMoon.packet.PacketHandler;
+import forestMoon.shoping.ShopingItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -15,8 +16,7 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     public final static String EXT_PROP_NAME = "playerMoneyData";
 
     private long money = 0;
-    private int displayMoney = 0;
-    private int countMoney = 0;
+    private ShopingItem[] shopingItems;
 
     /*EntityPlayerにIExtendedEntityPropertiesを登録。登録文字列はMOD固有のものを割り当てること*/
     public static void register(EntityPlayer player) {
@@ -50,19 +50,6 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     * ExtendedPlayerProperties.get(playerインスタンス).setSampleInt(sample)
     * と呼び出す。*/
 
-    public int getDisplayMoney() {
-        return displayMoney;
-    }
-
-    public void setDisplayMoney(int money) {
-        this.displayMoney = money;
-    }
-	public int getCountMoney() {
-		return countMoney;
-	}
-	public void setCountMoney(int countMoney) {
-		this.countMoney = countMoney;
-	}
 	public long getMoney() {
 		return money;
 	}
@@ -87,6 +74,14 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
 	public void changeMoney(long addmoney,EntityPlayer player) {
 		long work = this.money + addmoney;
 		setMoney(work,player);
+	}
+
+	public ShopingItem[] getShopingItems() {
+		return shopingItems;
+	}
+
+	public void setShopingItems(ShopingItem[] shopingItems) {
+		this.shopingItems = shopingItems;
 	}
 
 	//サーバーとの同期をとる

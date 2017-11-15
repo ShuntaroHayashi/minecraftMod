@@ -35,6 +35,8 @@ tile.ColorBlock-13.name=水色
 tile.ColorBlock-14.name=紫
 tile.ColorBlock-15.name=謎
 tile.ChestSample.name=チェストサンプル
+//エンティティー
+entity.forestmoonmod.Villager.name=村人
 //コンテイナー
 container.forestmoon.ChestSample=チェストサンプル
 //定型文

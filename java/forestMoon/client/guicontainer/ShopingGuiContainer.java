@@ -4,7 +4,10 @@ package forestMoon.client.guicontainer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import forestMoon.ExtendedPlayerProperties;
+import forestMoon.client.entity.EntityECVillager;
 import forestMoon.container.ShopingContainer;
+import forestMoon.shoping.ShopingItem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
@@ -25,14 +28,17 @@ public class ShopingGuiContainer extends GuiContainer{
 	 private final int RED_FLOWER_SELL = 1;
 	 private int moneyX = 0;
 	 private int moneyY = 0;
+	 private ShopingItem[] shopingItems;
+	 private int profession;
+	 private EntityPlayer player;
+	 private EntityECVillager villager;
 	 private EntityPlayerMP playerMP;
 	 private ExtendedPlayerProperties properties;
 
-
 	public ShopingGuiContainer(EntityPlayer player) {
 		super(shopingContainer = new ShopingContainer(player.inventory, true, player));
-//		this.player = player;
 		this.allowUserInput = true;
+		this.player = player;
 
 		moneyX = this.guiLeft + this.xSize - 18;
 		moneyY = this.guiTop + this.ySize - 92;
@@ -40,6 +46,15 @@ public class ShopingGuiContainer extends GuiContainer{
 		playerMP = MinecraftServer.getServer().getConfigurationManager().func_152612_a(player.getCommandSenderName());
 		new ExtendedPlayerProperties();
 		properties = ExtendedPlayerProperties.get(playerMP);
+
+	}
+
+	public ShopingGuiContainer(EntityPlayer player,int id){
+		this(player);
+
+//		EntityECVillager villager = (EntityECVillager)Minecraft.getMinecraft().theWorld.getEntityByID(id);
+		villager = (EntityECVillager)(Minecraft.getMinecraft().getIntegratedServer().getEntityWorld().getEntityByID(id));
+		this.readItemToEntity(villager);
 
 	}
 
@@ -65,6 +80,10 @@ public class ShopingGuiContainer extends GuiContainer{
     	fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), getMoneyPosition(), moneyY, 4210752);
 
     	buttonList.clear();
+
+//    	for(int i=0;i<shopingItems.length;i++){
+//
+//    	}
     	buttonList.add(new GuiButton(RED_FLOWER_BUY, this.guiLeft + this.xSize/2 - 4, this.guiTop +4, this.xSize/2, 20, "ポピー ￥100"));
     	buttonList.add(new GuiButton(RED_FLOWER_SELL,this.guiLeft+ this.xSize/2 - 4, this.guiTop + 40, this.xSize/2,20,"ポピー ￥100"));
 
@@ -127,6 +146,8 @@ public class ShopingGuiContainer extends GuiContainer{
 
 			fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), getMoneyPosition(), moneyY, 4210752);
 			properties.syncPlayerData(playerMP);
+
+			shopingItems[0].setBuy(shopingItems[0].getBuy()+1);
 		}
     }
 
@@ -164,15 +185,39 @@ public class ShopingGuiContainer extends GuiContainer{
     		money /= 10;
     	}
 		return moneyX - work;
+    }
+
+
+    private void readItemToEntity(EntityECVillager villager){
+
+    	System.out.println(villager);
+
+    	this.shopingItems = villager.getShopingItems();
+    	this.profession = villager.getProfession();
+
+    	for (ShopingItem item : shopingItems) {
+			System.out.println(item);
+		}
 
     }
+
     //終了時処理
     public void onGuiClosed()
     {
-        if (this.mc.thePlayer != null)
-        {
+        if (this.mc.thePlayer != null){
             this.inventorySlots.onContainerClosed(this.mc.thePlayer);
+
+            this.guiClose();
         }
+    }
+    public void guiClose(){
+    	System.out.println(player);
+        for (ShopingItem item : shopingItems) {
+			item.setBuy(item.getBuy()+100);
+			item.setSell(item.getSell()+50);
+		}
+
+            villager.setShopingItems(shopingItems);
     }
 
 }

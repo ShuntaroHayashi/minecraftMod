@@ -1,6 +1,7 @@
 package forestMoon.event;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import forestMoon.client.entity.EntityECVillager;
 import forestMoon.item.ItemRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
@@ -19,7 +20,10 @@ import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
 public class LivingDeathEventHandler {
 	@SubscribeEvent
@@ -52,5 +56,18 @@ public class LivingDeathEventHandler {
 			ItemStack itemStack = new ItemStack(ItemRegister.ItemCoin, 1, 3);
 			event.entityLiving.entityDropItem(itemStack, 1);
 		}
+	}
+	@SubscribeEvent
+	public void onLivingSpawnEvent(LivingSpawnEvent event){
+		EntityLivingBase living = event.entityLiving;
+		if(living instanceof EntityECVillager){
+//			System.out.println(living);
+		}
+	}
+	@SubscribeEvent
+	public void onEntityJoinWorldEvent(EntityJoinWorldEvent event){
+	}
+	@SubscribeEvent
+	public void onEntityConstructingEvent(EntityConstructing event){
 	}
 }
