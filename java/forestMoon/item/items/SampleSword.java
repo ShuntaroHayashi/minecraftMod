@@ -12,7 +12,7 @@ public class SampleSword extends ItemSword {
 				material.getHarvestLevel(),
 				material.getMaxUses(),
 				material.getEfficiencyOnProperMaterial(),
-				100f,
+				1000f,
 				material.getEnchantability())
 				);
 		String name = "samplesword";

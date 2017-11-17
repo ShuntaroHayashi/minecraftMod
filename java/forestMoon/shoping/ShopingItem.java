@@ -10,6 +10,7 @@ public class ShopingItem {
 	public ShopingItem(ItemStack itemStack, int buy, int sell) {
 		super();
 		this.itemStack = itemStack;
+		this.itemStack.stackSize = 1;
 		this.buy = buy;
 		this.sell = sell;
 	}

@@ -51,3 +51,4 @@ comandCoin_2=の所持金を
 comandCoin_3=コインに変換しました
 comandCoin_Error=§c/coin [プレイヤー] <値>
 money=￥
+shopingError_1=§c個数欄に整数以外が入力されました
