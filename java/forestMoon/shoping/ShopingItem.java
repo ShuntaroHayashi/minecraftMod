@@ -14,7 +14,7 @@ public class ShopingItem {
 		this.buy = buy;
 		this.sell = sell;
 	}
-//getter
+	//getter
 	public ItemStack getItemStack(){
 		return itemStack;
 	}
@@ -24,7 +24,7 @@ public class ShopingItem {
 	public int getSell() {
 		return sell;
 	}
-//setter
+	//setter
 	public void setBuy(int buy) {
 		this.buy = buy;
 	}

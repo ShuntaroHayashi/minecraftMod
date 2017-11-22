@@ -7,25 +7,15 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class VillagerShopingItem {
-	private String[] professions = {"flower","fruit"};
+	private String[] professions = {"villager_proffesion_flower","villager_proffesion_fruit"};
 
 	public VillagerShopingItem() {
-
 	}
-
-	public int getProfessionNum(String name){
-		for(int i=0;i<professions.length;i++){
-			if (professions[i].equals(name)) {
-				return i;
-			}
-		}
-		return 0;
-	}
-
+	//整数から職業名を取得
 	public String getProfessionName(int professionNum){
 		return professions[professionNum];
 	}
-
+	//各職業に対応したアイテムの設定ｌ、初期値段の設定
 	public ArrayList<ShopingItem> getProfessionItems(int profession){
 		ArrayList<ShopingItem> shopingItems = new ArrayList<ShopingItem>();
 
@@ -43,6 +33,7 @@ public class VillagerShopingItem {
 		return shopingItems;
 	}
 
+	//現在設定されている職業数
 	public int getProfessionSize(){
 		return professions.length;
 	}

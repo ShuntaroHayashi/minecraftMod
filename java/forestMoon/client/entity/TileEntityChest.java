@@ -7,10 +7,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityChest extends TileEntity implements IInventory{
+public class TileEntityChest extends TileEntity implements IInventory {
 	protected ItemStack[] itemStacks = new ItemStack[54];
 
-	//データの書き込み
+	// データの書き込み
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
@@ -25,7 +25,8 @@ public class TileEntityChest extends TileEntity implements IInventory{
 		}
 		nbt.setTag("Items", nbttaglist);
 	}
-	//データ読み取り
+
+	// データ読み取り
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
@@ -97,14 +98,17 @@ public class TileEntityChest extends TileEntity implements IInventory{
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64.0D;
+		return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false
+				: player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64.0D;
 	}
 
 	@Override
-	public void openInventory() {}
+	public void openInventory() {
+	}
 
 	@Override
-	public void closeInventory() {}
+	public void closeInventory() {
+	}
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack itemStack) {

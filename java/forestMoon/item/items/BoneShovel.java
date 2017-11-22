@@ -14,8 +14,6 @@ public class BoneShovel extends ItemSpade{
 		this.setUnlocalizedName(name);
 		this.setTextureName("forestmoon:"+name);
 		GameRegistry.registerItem(this, name);
-
-
 	}
 
 }
