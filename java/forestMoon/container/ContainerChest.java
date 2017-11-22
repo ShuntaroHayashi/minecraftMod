@@ -6,34 +6,34 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerChest extends Container{
+public class ContainerChest extends Container {
 	private TileEntityChest tileEntity;
 	/** アルミニウムチェストのインベントリの第一スロットの番号 */
 	private static final int index0 = 0;
 	/** プレイヤーのインベントリの第一スロットの番号 */
-	private static final int index1 = 27;//54
+	private static final int index1 = 27;// 54
 	/** クイックスロットの第一スロットの番号 */
-	private static final int index2 = 54;//81
+	private static final int index2 = 54;// 81
 	/** このコンテナの全体のスロット数 */
-	private static final int index3 = 63;//90
+	private static final int index3 = 63;// 90
 
 	public ContainerChest(EntityPlayer player, TileEntityChest tileEntity) {
 		// スロットを設定する。
 		this.tileEntity = tileEntity;
-		//チェスト部分の設定
+		// チェスト部分の設定
 		for (int iy = 0; iy < 3; iy++) {
 			for (int ix = 0; ix < 9; ix++) {
 				this.addSlotToContainer(new Slot(tileEntity, ix + (iy * 9), 8 + (ix * 18), 17 + (iy * 18)));
-				//Entity/スロットナンバー/x/y
+				// Entity/スロットナンバー/x/y
 			}
 		}
-			//プレイヤーインベントリーの設定
+		// プレイヤーインベントリーの設定
 		for (int iy = 0; iy < 3; iy++) {
 			for (int ix = 0; ix < 9; ix++) {
 				this.addSlotToContainer(new Slot(player.inventory, ix + (iy * 9) + 9, 8 + (ix * 18), 84 + (iy * 18)));
 			}
 		}
-		//クイックスロットの設定
+		// クイックスロットの設定
 		for (int ix = 0; ix < 9; ix++) {
 			this.addSlotToContainer(new Slot(player.inventory, ix, 8 + (ix * 18), 142));
 		}

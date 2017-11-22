@@ -9,12 +9,12 @@ public class SampleSword extends ItemSword {
 
 	public SampleSword(ToolMaterial material) {
 		super(EnumHelper.addToolMaterial(material.name(),
-				material.getHarvestLevel(),
-				material.getMaxUses(),
-				material.getEfficiencyOnProperMaterial(),
-				100f,
-				material.getEnchantability())
-				);
+			material.getHarvestLevel(),
+			material.getMaxUses(),
+			material.getEfficiencyOnProperMaterial(),
+			1000f,
+			material.getEnchantability())
+		);
 		String name = "samplesword";
 		this.setCreativeTab(ForestMoon.forestmoontab);
 		this.setUnlocalizedName(name);

@@ -35,6 +35,8 @@ tile.ColorBlock-13.name=水色
 tile.ColorBlock-14.name=紫
 tile.ColorBlock-15.name=謎
 tile.ChestSample.name=チェストサンプル
+//エンティティー
+entity.forestmoonmod.Villager.name=村人
 //コンテイナー
 container.forestmoon.ChestSample=チェストサンプル
 //定型文
@@ -49,3 +51,7 @@ comandCoin_2=の所持金を
 comandCoin_3=コインに変換しました
 comandCoin_Error=§c/coin [プレイヤー] <値>
 money=￥
+shopingError_1=§c個数欄に整数以外が入力されました
+//村人役職
+villager_proffesion_flower=花屋
+villager_proffesion_fruit=果物屋
