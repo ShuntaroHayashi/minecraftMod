@@ -34,7 +34,7 @@ public class ShopingGuiContainer extends GuiContainer{
 	private int moneyX = 0;
 	private int moneyY = 0;
 	private ShopingItem[] shopingItems;
-	private int profession;
+	private int profession = 0;
 	private EntityPlayer player;
 	private EntityECVillager villager;
 	private EntityPlayerMP playerMP;
@@ -50,7 +50,8 @@ public class ShopingGuiContainer extends GuiContainer{
 		this.allowUserInput = true;
 		this.player = player;
 
-		moneyX = this.guiLeft + this.xSize - 18;
+//		moneyX = this.guiLeft + this.xSize - 18;
+		moneyX = this.guiLeft + 8;
 		moneyY = this.guiTop + this.ySize - 92;
 
 		playerMP = MinecraftServer.getServer().getConfigurationManager().func_152612_a(player.getCommandSenderName());
@@ -72,7 +73,7 @@ public class ShopingGuiContainer extends GuiContainer{
 	public void initGui() {
 		super.initGui();
 
-		textField = new GuiTextField(fontRendererObj,(this.xSize - 20) / 2 , 65, 20, 15);
+		textField = new GuiTextField(fontRendererObj,(this.xSize ) / 2 + 18, 65, 20, 15);
 		textField.setFocused(true);
 		textField.setText("");
 		textField.setMaxStringLength(3);
@@ -93,7 +94,8 @@ public class ShopingGuiContainer extends GuiContainer{
 
 		VillagerShopingItem shopingItem = new VillagerShopingItem();
 		fontRendererObj.drawString(StatCollector.translateToLocal(shopingItem.getProfessionName(profession)), 8, 6, 4210752);
-		fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), getMoneyPosition(), moneyY, 4210752);
+		fontRendererObj.drawString(StatCollector.translateToLocal("個数:"),(this.xSize) / 2 - 4, 70, 4210752);
+		fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX, moneyY, 4210752);
 
 		textField.setEnabled(true);
 		textField.drawTextBox();
@@ -183,7 +185,7 @@ public class ShopingGuiContainer extends GuiContainer{
 
 		properties.changeMoney(price * stackSize * -1);
 
-		fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), getMoneyPosition(), moneyY, 4210752);
+		fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX, moneyY, 4210752);
 		properties.syncPlayerData(playerMP);
 
 	}
@@ -201,7 +203,7 @@ public class ShopingGuiContainer extends GuiContainer{
 						itemStack.stackSize = slotItem.stackSize - num;
 						shopingContainer.slotChange(index, itemStack);
 
-						fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), getMoneyPosition(), moneyY, 4210752);
+						fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX, moneyY, 4210752);
 
 					break;
 					}else{
@@ -212,7 +214,7 @@ public class ShopingGuiContainer extends GuiContainer{
 						itemStack.stackSize = 0;
 
 						shopingContainer.slotChange(index, itemStack);
-						fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), getMoneyPosition(), moneyY, 4210752);
+						fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX, moneyY, 4210752);
 
 					}
 				}
@@ -267,7 +269,7 @@ public class ShopingGuiContainer extends GuiContainer{
 		return moneyX - work;
 	}
 
-	//NBTデータの読み取り
+	//データの読み取り
 	private void readItemToEntity(EntityECVillager villager){
 		this.shopingItems = villager.getShopingItems();
 		this.profession = villager.getProfession();

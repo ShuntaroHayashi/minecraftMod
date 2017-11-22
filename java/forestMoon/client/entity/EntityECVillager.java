@@ -126,7 +126,6 @@ public class EntityECVillager extends EntityVillager {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void writeEntityToNBT(NBTTagCompound p_70014_1_) {
-		System.out.println("writeEntityFromNBT:IN");
 		super.writeEntityToNBT(p_70014_1_);
 		NBTTagList itemList = new NBTTagList();
 		int[] buy = new int[shopingItems.length];
@@ -151,7 +150,6 @@ public class EntityECVillager extends EntityVillager {
 	// NBTDataの読み込み
 	@Override
 	public void readEntityFromNBT(NBTTagCompound p_70037_1_) {
-		System.out.println("readEntityFromNBT:IN");
 		super.readEntityFromNBT(p_70037_1_);
 		// NBTに情報が書き込んであるのかの確認（スポーン時か確認）
 		if (p_70037_1_.hasKey("item")) {
@@ -166,11 +164,6 @@ public class EntityECVillager extends EntityVillager {
 			}
 
 			this.profession = p_70037_1_.getInteger("profession");
-			System.out.println(this);
-			for (ShopingItem item : shopingItems) {
-				System.out.println(item);
-			}
-
 		} else {
 			// 初期設定
 			this.firstSetting();
@@ -217,5 +210,11 @@ public class EntityECVillager extends EntityVillager {
 	public void setShopingItems(ShopingItem[] shopingItems) {
 		this.shopingItems = shopingItems;
 	}
+
+	public int getProfession() {
+		return profession;
+	}
+
+
 
 }

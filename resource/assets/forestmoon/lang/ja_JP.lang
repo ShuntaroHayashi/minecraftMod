@@ -53,5 +53,5 @@ comandCoin_Error=§c/coin [プレイヤー] <値>
 money=￥
 shopingError_1=§c個数欄に整数以外が入力されました
 //村人役職
-vilagger_proffesion_flower=花屋
+villager_proffesion_flower=花屋
 villager_proffesion_fruit=果物屋

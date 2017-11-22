@@ -13,7 +13,11 @@ public class VillagerShopingItem {
 	}
 	//整数から職業名を取得
 	public String getProfessionName(int professionNum){
-		return professions[professionNum];
+		try {
+			return professions[professionNum];
+		} catch (Exception e) {
+			return professionNum + "";
+		}
 	}
 	//各職業に対応したアイテムの設定ｌ、初期値段の設定
 	public ArrayList<ShopingItem> getProfessionItems(int profession){
