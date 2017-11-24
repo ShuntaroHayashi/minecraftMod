@@ -17,7 +17,6 @@ public class MessageInventoryHandler implements IMessageHandler<MessageInventory
 		// サーバーへ送った際に、EntityPlayerインスタンス（EntityPlayerMPインスタンス）はこのように取れる。
 		// EntityPlayer entityPlayer = ctx.getServerHandler().playerEntity;
 		// Do something.
-
 		// サーバーでのEntityPlayer取得
 		EntityPlayer entityPlayer = ctx.getServerHandler().playerEntity;
 

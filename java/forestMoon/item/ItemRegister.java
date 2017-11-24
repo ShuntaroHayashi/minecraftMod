@@ -16,11 +16,9 @@ import forestMoon.item.items.ItemSample4;
 import forestMoon.item.items.SampleSword;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraftforge.common.util.EnumHelper;
 
@@ -60,7 +58,7 @@ public class ItemRegister {
 		BONETOOL = EnumHelper.addToolMaterial("SampleSword", 1, 55, 1500F, 1F, 1);
 		// 名前、採掘レベル、耐久度、採掘速度、攻撃力、エンチャント
 
-		BONETOOL.setRepairItem(new ItemStack(Items.bone));
+//		BONETOOL.setRepairItem(new ItemStack(Items.bone));
 		BonePickaxe = new BonePickaxe(BONETOOL);
 		BoneShovel = new BoneShovel(BONETOOL);
 

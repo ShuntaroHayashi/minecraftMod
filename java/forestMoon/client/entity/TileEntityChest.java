@@ -5,10 +5,14 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityChest extends TileEntity implements IInventory {
 	protected ItemStack[] itemStacks = new ItemStack[54];
+	private String name = "NONE";
 
 	// データの書き込み
 	@Override
@@ -24,12 +28,14 @@ public class TileEntityChest extends TileEntity implements IInventory {
 			nbttaglist.appendTag(nbt1);
 		}
 		nbt.setTag("Items", nbttaglist);
+		nbt.setString("name", name);
 	}
 
 	// データ読み取り
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
+		System.out.println("readToNBT in");
 		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
 		itemStacks = new ItemStack[54];
 		for (int i = 0; i < nbttaglist.tagCount(); i++) {
@@ -39,6 +45,7 @@ public class TileEntityChest extends TileEntity implements IInventory {
 				itemStacks[b0] = ItemStack.loadItemStackFromNBT(nbt1);
 			}
 		}
+		name = nbt.getString("name");
 	}
 
 	@Override
@@ -115,4 +122,30 @@ public class TileEntityChest extends TileEntity implements IInventory {
 		return true;
 	}
 
+	@Override
+	public Packet getDescriptionPacket() {
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        this.writeToNBT(nbtTagCompound);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, nbtTagCompound);
+	}
+
+	@Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        this.readFromNBT(pkt.func_148857_g());
+    }
+
+	/*
+	 * プレイヤー名文字列のゲッターとセッター。
+	 */
+	public String getAdminName(){
+		return this.name;
+	}
+
+	public void setAdminName(String par1){
+		this.name = par1;
+	}
+
+	public int getMetadata(){
+		return this.worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+	}
 }

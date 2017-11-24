@@ -13,17 +13,15 @@ import net.minecraft.nbt.NBTTagList;
 
 public class ShopingContainer extends Container{
 
-	private EntityPlayer player;
+	public EntityPlayer player;
 	public InventoryPlayer inventoryPlayer;
 	private VilaggerInventory inventory;
 	private int lastSlotNumber;
 
 	public ShopingContainer(final InventoryPlayer p_i1819_1_, boolean p_i1819_2_, EntityPlayer player) {
-
-		inventoryPlayer = p_i1819_1_;
+		this.inventoryPlayer = p_i1819_1_;
 		this.player = player;
-
-		inventory = new VilaggerInventory();
+		this.inventory = new VilaggerInventory();
 
 		//販売アイテム
 		for(int iy=0;iy<2;iy++){

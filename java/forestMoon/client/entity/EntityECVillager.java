@@ -6,10 +6,11 @@ import java.util.Random;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import forestMoon.ForestMoon;
+import forestMoon.packet.MessageVillager;
+import forestMoon.packet.PacketHandler;
 import forestMoon.shoping.ShopingItem;
 import forestMoon.shoping.VillagerShopingItem;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityVillager;
@@ -29,7 +30,7 @@ public class EntityECVillager extends EntityVillager {
 	int profession;
 
 	ShopingItem[] shopingItems;
-	public Minecraft mc = Minecraft.getMinecraft();
+//	public Minecraft mc = Minecraft.getMinecraft();
 
 	public EntityECVillager(World world) {
 		super(world);
@@ -145,6 +146,8 @@ public class EntityECVillager extends EntityVillager {
 		p_70014_1_.setTag("item", itemList);
 		p_70014_1_.setIntArray("buy", buy);
 		p_70014_1_.setIntArray("sell", sell);
+
+		PacketHandler.INSTANCE.sendToServer(new MessageVillager(this.shopingItems,this.profession,this.getEntityId()));
 	}
 
 	// NBTDataの読み込み
@@ -214,7 +217,5 @@ public class EntityECVillager extends EntityVillager {
 	public int getProfession() {
 		return profession;
 	}
-
-
 
 }

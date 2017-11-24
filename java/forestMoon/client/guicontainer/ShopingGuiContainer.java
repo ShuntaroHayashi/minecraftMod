@@ -9,21 +9,20 @@ import forestMoon.ExtendedPlayerProperties;
 import forestMoon.client.entity.EntityECVillager;
 import forestMoon.client.gui.MyGuiButton;
 import forestMoon.container.ShopingContainer;
+import forestMoon.packet.MessagePlayerPropertieToServer;
+import forestMoon.packet.MessageSpawnItemstack;
+import forestMoon.packet.PacketHandler;
 import forestMoon.shoping.ShopingItem;
 import forestMoon.shoping.VillagerShopingItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-import net.minecraft.world.World;
 
 @SideOnly(Side.CLIENT)
 public class ShopingGuiContainer extends GuiContainer{
@@ -37,7 +36,6 @@ public class ShopingGuiContainer extends GuiContainer{
 	private int profession = 0;
 	private EntityPlayer player;
 	private EntityECVillager villager;
-	private EntityPlayerMP playerMP;
 	private ExtendedPlayerProperties properties;
 	private GuiTextField textField;
 	private GuiTextField itemField;
@@ -50,20 +48,20 @@ public class ShopingGuiContainer extends GuiContainer{
 		this.allowUserInput = true;
 		this.player = player;
 
-//		moneyX = this.guiLeft + this.xSize - 18;
 		moneyX = this.guiLeft + 8;
 		moneyY = this.guiTop + this.ySize - 92;
 
-		playerMP = MinecraftServer.getServer().getConfigurationManager().func_152612_a(player.getCommandSenderName());
 		new ExtendedPlayerProperties();
-		properties = ExtendedPlayerProperties.get(playerMP);
-
-	 }
+		properties = ExtendedPlayerProperties.get(player);
+	}
 
 	public ShopingGuiContainer(EntityPlayer player,int id){
 		this(player);
 
-		villager = (EntityECVillager)(Minecraft.getMinecraft().getIntegratedServer().getEntityWorld().getEntityByID(id));
+		//多分ここ　packetを使用してデータを取得する　
+//		villager = (EntityECVillager)(Minecraft.getMinecraft().getIntegratedServer().getEntityWorld().getEntityByID(id));
+		villager = (EntityECVillager)(Minecraft.getMinecraft().theWorld.getEntityByID(id));
+
 		this.readItemToEntity(villager);
 
 		shopingContainer.ItemSet(shopingItems);
@@ -174,19 +172,21 @@ public class ShopingGuiContainer extends GuiContainer{
 		if(stackSize >= 1 ){
 			itemStack.stackSize = stackSize;
 
-			World world = playerMP.worldObj;
-			double x = playerMP.lastTickPosX;
-			double y = playerMP.lastTickPosY;
-			double z = playerMP.lastTickPosZ;
+//			World world = MinecraftServer.getServer().getEntityWorld();
+			double x = player.lastTickPosX;
+			double y = player.lastTickPosY;
+			double z = player.lastTickPosZ;
 
-			EntityItem entityItem = new EntityItem(world, x, y, z, itemStack);
-			world.spawnEntityInWorld(entityItem);
+//			EntityItem entityItem = new EntityItem(world, x, y, z, itemStack);
+//
+//			world.spawnEntityInWorld(entityItem);
+			PacketHandler.INSTANCE.sendToServer(new MessageSpawnItemstack(itemStack, x, y, z));
 		}
 
 		properties.changeMoney(price * stackSize * -1);
 
 		fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX, moneyY, 4210752);
-		properties.syncPlayerData(playerMP);
+		PacketHandler.INSTANCE.sendToServer(new MessagePlayerPropertieToServer(player));
 
 	}
 
@@ -198,7 +198,7 @@ public class ShopingGuiContainer extends GuiContainer{
 				if(itemStack.getItem() == slotItem.getItem()){
 					if(slotItem.stackSize >= num ){
 						properties.changeMoney(price * num);
-						properties.syncPlayerData(playerMP);
+						PacketHandler.INSTANCE.sendToServer(new MessagePlayerPropertieToServer(player));
 
 						itemStack.stackSize = slotItem.stackSize - num;
 						shopingContainer.slotChange(index, itemStack);
@@ -208,7 +208,7 @@ public class ShopingGuiContainer extends GuiContainer{
 					break;
 					}else{
 						properties.changeMoney(price * slotItem.stackSize);
-						properties.syncPlayerData(playerMP);
+						PacketHandler.INSTANCE.sendToServer(new MessagePlayerPropertieToServer(player));
 
 						num -= slotItem.stackSize;
 						itemStack.stackSize = 0;
@@ -257,18 +257,6 @@ public class ShopingGuiContainer extends GuiContainer{
 		textField.textboxKeyTyped(c, i);
 	}
 
-	//所持金表示位置計算
-	private int getMoneyPosition(){
-		long money = properties.getMoney();
-		int work = 0;
-
-		while(money >= 100){
-			work += 4;
-			money /= 10;
-		}
-		return moneyX - work;
-	}
-
 	//データの読み取り
 	private void readItemToEntity(EntityECVillager villager){
 		this.shopingItems = villager.getShopingItems();
@@ -285,8 +273,6 @@ public class ShopingGuiContainer extends GuiContainer{
 	//買い物終了時に取引内容に応じて値段を変動
 	public void guiClose(){
 		for (ShopingItem item : shopingItems) {
-	//			item.setBuy(item.getBuy()+100);
-	//			item.setSell(item.getSell()+50);
 		}
 		villager.setShopingItems(shopingItems);
 	}
