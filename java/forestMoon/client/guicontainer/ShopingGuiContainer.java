@@ -11,6 +11,7 @@ import forestMoon.client.gui.MyGuiButton;
 import forestMoon.container.ShopingContainer;
 import forestMoon.packet.MessagePlayerPropertieToServer;
 import forestMoon.packet.MessageSpawnItemstack;
+import forestMoon.packet.MessageVillager;
 import forestMoon.packet.PacketHandler;
 import forestMoon.shoping.ShopingItem;
 import forestMoon.shoping.VillagerShopingItem;
@@ -40,6 +41,8 @@ public class ShopingGuiContainer extends GuiContainer{
 	private GuiTextField textField;
 	private GuiTextField itemField;
 	private ShopingItem currentItem;
+	private String itemStr = "";
+	private String buyStr="";
 
 	//コンストラクター
 	public ShopingGuiContainer(EntityPlayer player) {
@@ -58,10 +61,9 @@ public class ShopingGuiContainer extends GuiContainer{
 	public ShopingGuiContainer(EntityPlayer player,int id){
 		this(player);
 
-		//多分ここ　packetを使用してデータを取得する　
+
 //		villager = (EntityECVillager)(Minecraft.getMinecraft().getIntegratedServer().getEntityWorld().getEntityByID(id));
 		villager = (EntityECVillager)(Minecraft.getMinecraft().theWorld.getEntityByID(id));
-
 		this.readItemToEntity(villager);
 
 		shopingContainer.ItemSet(shopingItems);
@@ -76,10 +78,10 @@ public class ShopingGuiContainer extends GuiContainer{
 		textField.setText("");
 		textField.setMaxStringLength(3);
 
-		itemField = new GuiTextField(fontRendererObj, 4, 48, (this.xSize / 4) * 3 -10, 15);
-		itemField.setFocused(false);
-		itemField.setText("");
-		itemField.setMaxStringLength(200);
+//		itemField = new GuiTextField(fontRendererObj, 4, 48, (this.xSize / 4) * 3 -10, 15);
+//		itemField.setFocused(false);
+//		itemField.setText("");
+//		itemField.setMaxStringLength(200);
 
 		buttonList.add(new MyGuiButton(BUY_BUTTON, this.guiLeft + (this.xSize/4) * 3 - 4, this.guiTop +49, this.xSize/4, 15, "買う"));
 		buttonList.add(new MyGuiButton(SELL_BUTTON,this.guiLeft + (this.xSize/4) * 3 - 4, this.guiTop + 65, this.xSize/4,15,"売る"));
@@ -91,6 +93,8 @@ public class ShopingGuiContainer extends GuiContainer{
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseZ) {
 
 		VillagerShopingItem shopingItem = new VillagerShopingItem();
+		fontRendererObj.drawString(itemStr, 4, 48, 4210752);
+		fontRendererObj.drawString(buyStr, 4, 57, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal(shopingItem.getProfessionName(profession)), 8, 6, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal("個数:"),(this.xSize) / 2 - 4, 70, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX, moneyY, 4210752);
@@ -98,8 +102,8 @@ public class ShopingGuiContainer extends GuiContainer{
 		textField.setEnabled(true);
 		textField.drawTextBox();
 
-		itemField.setEnabled(true);
-		itemField.drawTextBox();
+//		itemField.setEnabled(true);
+//		itemField.drawTextBox();
 
 		super.drawGuiContainerForegroundLayer(mouseX, mouseZ);
 
@@ -232,10 +236,10 @@ public class ShopingGuiContainer extends GuiContainer{
 			if(shopingContainer.getLastSlotNumber() < shopingItems.length){
 				ShopingItem item = shopingItems[ shopingContainer.getLastSlotNumber()];
 				currentItem = item;
-
-				String string = new String(item.getItemStack().getDisplayName()+" 売値"+item.getBuy()+" 買値" + item.getSell());
-
-				itemField.setText(string);
+//				String string = new String(item.getItemStack().getDisplayName()+" 売値"+item.getBuy()+" 買値" + item.getSell());
+//				itemField.setText(string);
+				itemStr = new String(item.getItemStack().getDisplayName());
+				buyStr = new String(StatCollector.translateToLocal("buy") + item.getBuy() + " " + StatCollector.translateToLocal("sell") + item.getSell());
 			}
 		}
 	}
@@ -273,8 +277,11 @@ public class ShopingGuiContainer extends GuiContainer{
 	//買い物終了時に取引内容に応じて値段を変動
 	public void guiClose(){
 		for (ShopingItem item : shopingItems) {
+			item.setBuy(item.getBuy()+10);
+			item.setSell(item.getSell()+5);
 		}
 		villager.setShopingItems(shopingItems);
+		PacketHandler.INSTANCE.sendToServer(new MessageVillager(villager.getShopingItems(), villager.getProfession(), villager.getEntityId()));
 	}
 
 }

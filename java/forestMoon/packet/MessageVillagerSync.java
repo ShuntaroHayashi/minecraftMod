@@ -8,14 +8,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-public class MessageVillager implements IMessage{
+public class MessageVillagerSync implements IMessage{
 	ShopingItem[] items;
 	int profession;
 	int id;
-	public MessageVillager() {
+
+	public MessageVillagerSync() {
 	}
 
-	public MessageVillager(ShopingItem[] items,int profesion,int id) {
+	public MessageVillagerSync(ShopingItem[] items,int profesion,int id) {
 		this.items = items;
 		this.profession = profesion;
 		this.id = id;

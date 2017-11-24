@@ -10,8 +10,6 @@ public class MessagePlayerPropertiesToServerHandler implements IMessageHandler<M
 
 	@Override
 	public IMessage onMessage(MessagePlayerPropertieToServer message, MessageContext ctx) {
-
-		System.out.println("test");
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 		ExtendedPlayerProperties.get(player).loadNBTData(message.data);
 		return null;

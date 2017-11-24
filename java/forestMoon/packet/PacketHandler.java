@@ -23,5 +23,7 @@ public class PacketHandler {
 		INSTANCE.registerMessage(MessagePlayerPropertiesToServerHandler.class,MessagePlayerPropertieToServer.class , 3, Side.SERVER);
 		INSTANCE.registerMessage(MessageVillagerHandler.class, MessageVillager.class, 4, Side.SERVER);
 		INSTANCE.registerMessage(MessageSpawnItemStackHandler.class, MessageSpawnItemstack.class, 5, Side.SERVER);
+		INSTANCE.registerMessage(MessageVillagerSyncToServerHandler.class, MessageVillagerSyncToServer.class, 6, Side.SERVER);
+		INSTANCE.registerMessage(MessageVillagerSyncHandler.class, MessageVillagerSync.class, 7, Side.CLIENT);
 	}
 }

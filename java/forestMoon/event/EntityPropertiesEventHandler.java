@@ -6,10 +6,12 @@ import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import forestMoon.ExtendedPlayerProperties;
+import forestMoon.client.entity.EntityECVillager;
 import forestMoon.item.ItemRegister;
 import forestMoon.item.items.ItemCoin;
 import forestMoon.packet.MessagePlayerJoinInAnnouncement;
 import forestMoon.packet.MessagePlayerProperties;
+import forestMoon.packet.MessageVillagerSyncToServer;
 import forestMoon.packet.PacketHandler;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,6 +43,8 @@ public class EntityPropertiesEventHandler {
 		if (event.world.isRemote && event.entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.entity;
 			PacketHandler.INSTANCE.sendToServer(new MessagePlayerJoinInAnnouncement(player));
+		}else if (event.world.isRemote && event.entity instanceof EntityECVillager) {
+				PacketHandler.INSTANCE.sendToServer(new MessageVillagerSyncToServer(event.entity.getEntityId()));
 		}
 	}
 

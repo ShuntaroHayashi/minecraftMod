@@ -39,6 +39,8 @@ tile.ChestSample.name=チェストサンプル
 entity.forestmoonmod.Villager.name=村人
 //コンテイナー
 container.forestmoon.ChestSample=チェストサンプル
+buy=売値:
+sell=買値:
 //定型文
 comandError_1=§c入力された値が所持金よりも多いです
 comandError_2=§c入力された値が大きすぎます

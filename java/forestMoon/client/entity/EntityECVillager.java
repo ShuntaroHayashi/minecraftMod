@@ -3,11 +3,7 @@ package forestMoon.client.entity;
 import java.util.ArrayList;
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import forestMoon.ForestMoon;
-import forestMoon.packet.MessageVillager;
-import forestMoon.packet.PacketHandler;
 import forestMoon.shoping.ShopingItem;
 import forestMoon.shoping.VillagerShopingItem;
 import net.minecraft.block.material.Material;
@@ -35,9 +31,9 @@ public class EntityECVillager extends EntityVillager {
 	public EntityECVillager(World world) {
 		super(world);
 
-		// System.out.println("constraktor:IN");
-		// firstSetting();
 		this.firstSetting();
+
+		// System.out.println("constraktor:IN");
 
 		/* EntiyのAIを登録する */
 		this.tasks.taskEntries.clear();// superの登録を削除
@@ -124,7 +120,6 @@ public class EntityECVillager extends EntityVillager {
 	}
 
 	// NBTDataの書き込み
-	@SideOnly(Side.CLIENT)
 	@Override
 	public void writeEntityToNBT(NBTTagCompound p_70014_1_) {
 		super.writeEntityToNBT(p_70014_1_);
@@ -146,8 +141,6 @@ public class EntityECVillager extends EntityVillager {
 		p_70014_1_.setTag("item", itemList);
 		p_70014_1_.setIntArray("buy", buy);
 		p_70014_1_.setIntArray("sell", sell);
-
-		PacketHandler.INSTANCE.sendToServer(new MessageVillager(this.shopingItems,this.profession,this.getEntityId()));
 	}
 
 	// NBTDataの読み込み
