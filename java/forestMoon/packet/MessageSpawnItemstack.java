@@ -11,16 +11,18 @@ public class MessageSpawnItemstack implements IMessage{
 	double x;
 	double y;
 	double z;
+	int num;
 
 	public MessageSpawnItemstack() {
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
 
-	public MessageSpawnItemstack(ItemStack item, double x, double y, double z) {
+	public MessageSpawnItemstack(ItemStack item, double x, double y, double z,int num) {
 		this.item = item;
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.num = num;
 	}
 
 	@Override
@@ -30,6 +32,7 @@ public class MessageSpawnItemstack implements IMessage{
 		x = compound.getDouble("x");
 		y = compound.getDouble("y");
 		z = compound.getDouble("z");
+		num = compound.getInteger("num");
 		item = ItemStack.loadItemStackFromNBT(compound.getCompoundTag("item"));
 	}
 
@@ -43,6 +46,7 @@ public class MessageSpawnItemstack implements IMessage{
 		compound.setDouble("x", x);
 		compound.setDouble("y", y);
 		compound.setDouble("z", z);
+		compound.setInteger("num", num);
 		compound.setTag("item", itemCompound);
 
 		ByteBufUtils.writeTag(buf, compound);

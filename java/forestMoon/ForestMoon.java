@@ -25,18 +25,16 @@ import forestMoon.item.Recipes;
 import forestMoon.packet.PacketHandler;
 import forestMoon.proxy.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.Item;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = ForestMoon.MODID, version = ForestMoon.VERSION, useMetadata = true)
 
 public class ForestMoon {
 	// 初期設定
-	@Mod.Instance("ForestMoon")
-	public static final String MODID = "forestmoonmod";
-	public static final String VERSION = "beta0.0.1";
+	@Mod.Instance("EconomicsCraft")
+	public static final String MODID = "economicscraft";
+	public static final String VERSION = "beta1.1.0";
 	@Instance(MODID)
 	public static ForestMoon instance;
 
@@ -83,7 +81,7 @@ public class ForestMoon {
 		// Entityを登録する
 		EntityRegistry.registerModEntity(EntityECVillager.class, "Villager", 0, this, 250, 1, false);
 		// Entityの自然スポーンを登録する
-		EntityRegistry.addSpawn(EntityECVillager.class, 20, 1, 4, EnumCreatureType.creature, BiomeGenBase.plains);
+		//EntityRegistry.addSpawn(EntityECVillager.class, 20, 1, 4, EnumCreatureType.creature, BiomeGenBase.plains);
 		/*
 		 * EntityのRenderを登録する Client側でのみ登録するため、今回はif文で処理をする。
 		 */

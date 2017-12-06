@@ -13,6 +13,7 @@ public class MessageSpawnItemStackHandler implements IMessageHandler<MessageSpaw
 	public IMessage onMessage(MessageSpawnItemstack message, MessageContext ctx) {
 //		Minecraft.getMinecraft().getIntegratedServer().getEntityWorld()
 		World world = MinecraftServer.getServer().getEntityWorld();
+		message.item.stackSize = message.num;
 		EntityItem entityItem = new EntityItem(world, message.x, message.y, message.z,message.item);
 		world.spawnEntityInWorld(entityItem);
 

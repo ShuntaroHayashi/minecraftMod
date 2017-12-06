@@ -23,14 +23,13 @@ import net.minecraft.world.World;
 public class EntityECVillager extends EntityVillager {
 
 	// boolean flag = false;
-	int profession;
+	int economicsProfession = -1;
 
 	ShopingItem[] shopingItems;
 //	public Minecraft mc = Minecraft.getMinecraft();
 
 	public EntityECVillager(World world) {
 		super(world);
-
 		this.firstSetting();
 
 		// System.out.println("constraktor:IN");
@@ -53,6 +52,9 @@ public class EntityECVillager extends EntityVillager {
 		// this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this,
 		// EntityPlayer.class, 1, true));
 		// this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
+	}
+	public EntityECVillager(World world,int profession) {
+		this(world);
 	}
 
 	/** MOBの速度やHPを変更するメソッド */
@@ -137,7 +139,7 @@ public class EntityECVillager extends EntityVillager {
 				itemList.appendTag(compound);
 			}
 		}
-		p_70014_1_.setInteger("profession", profession);
+		p_70014_1_.setInteger("profession", economicsProfession);
 		p_70014_1_.setTag("item", itemList);
 		p_70014_1_.setIntArray("buy", buy);
 		p_70014_1_.setIntArray("sell", sell);
@@ -158,8 +160,7 @@ public class EntityECVillager extends EntityVillager {
 				ItemStack itemStack = ItemStack.loadItemStackFromNBT(compound);
 				shopingItems[i] = new ShopingItem(itemStack, buy[i], sell[i]);
 			}
-
-			this.profession = p_70037_1_.getInteger("profession");
+			this.economicsProfession = p_70037_1_.getInteger("profession");
 		} else {
 			// 初期設定
 			this.firstSetting();
@@ -168,10 +169,14 @@ public class EntityECVillager extends EntityVillager {
 
 	// 初期設定（スポーン時）
 	private void firstSetting() {
-		Random rnd = new Random();
 		VillagerShopingItem villagerShopingItem = new VillagerShopingItem();
-		this.profession = rnd.nextInt(villagerShopingItem.getProfessionSize());
-		ArrayList<ShopingItem> shopItems = villagerShopingItem.getProfessionItems(profession);
+		if(this.economicsProfession == -1) {
+			Random rnd = new Random();
+			this.economicsProfession = rnd.nextInt(villagerShopingItem.getProfessionSize());
+		}else {
+
+		}
+		ArrayList<ShopingItem> shopItems = villagerShopingItem.getProfessionItems(this.economicsProfession);
 		this.shopingItems = new ShopingItem[shopItems.size()];
 
 		for (int i = 0; i < shopItems.size(); i++) {
@@ -207,8 +212,11 @@ public class EntityECVillager extends EntityVillager {
 		this.shopingItems = shopingItems;
 	}
 
-	public int getProfession() {
-		return profession;
+	public int getEconomicsProfession() {
+		return this.economicsProfession;
+	}
+	public void  setEconomicsProfession(int profession) {
+		this.economicsProfession = profession;
 	}
 
 }

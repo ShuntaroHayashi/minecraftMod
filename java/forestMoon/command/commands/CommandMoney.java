@@ -26,7 +26,7 @@ public class CommandMoney extends CommandBase {
 		boolean setFlag = false;
 		String scanMoney = "";
 		ChatComponentText chatText;
-		// 引数の確認
+		// 引数の数の確認
 		if (0 < p_71515_2_.length && p_71515_2_.length <= 3) {
 			if (p_71515_2_.length == 1) {
 				scanMoney = p_71515_2_[0];
@@ -34,14 +34,19 @@ public class CommandMoney extends CommandBase {
 				if (p_71515_2_[0].equals("set")) {
 					setFlag = true;
 					scanMoney = p_71515_2_[1];
-				} else {
-					player = getPlayer(p_71515_1_, p_71515_2_[1]);
-					scanMoney = p_71515_2_[0];
+				}else if (p_71515_2_[0].equals("add")) {
+					scanMoney = p_71515_2_[1];
+				}
+				else {
+					player = getPlayer(p_71515_1_, p_71515_2_[0]);
+					scanMoney = p_71515_2_[1];
 				}
 			} else if (p_71515_2_.length == 3) {
-				player = getPlayer(p_71515_1_, p_71515_2_[2]);
-				scanMoney = p_71515_2_[1];
-				setFlag = true;
+				if(p_71515_2_[1].equals("set")) {
+					setFlag = true;
+				}
+				scanMoney = p_71515_2_[2];
+				player = getPlayer(p_71515_1_, p_71515_2_[0]);
 			}
 			int maxLength = 9;
 			if (scanMoney.substring(0, 1).equals("-")) {
@@ -56,9 +61,10 @@ public class CommandMoney extends CommandBase {
 					properties.changeMoney(money);
 				}
 				properties.syncPlayerData(player);
-				chatText = new ChatComponentText(StatCollector.translateToLocal("comandMoney_1")
-						+ player.getCommandSenderName() + StatCollector.translateToLocal("comandMoney_2")
-						+ properties.getMoney() + StatCollector.translateToLocal("comandMoney_3"));
+				chatText = new ChatComponentText( StatCollector.translateToLocalFormatted("comandMoney", player.getCommandSenderName(),properties.getMoney()));
+//				chatText = new ChatComponentText(StatCollector.translateToLocal("comandMoney_1")
+//						+ player.getCommandSenderName() + StatCollector.translateToLocal("comandMoney_2")
+//						+ properties.getMoney() + StatCollector.translateToLocal("comandMoney_3"));
 			} else {
 				chatText = new ChatComponentText(StatCollector.translateToLocal("comandError_2"));
 			}

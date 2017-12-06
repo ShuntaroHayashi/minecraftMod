@@ -39,18 +39,18 @@ tile.ChestSample.name=チェストサンプル
 entity.forestmoonmod.Villager.name=村人
 //コンテイナー
 container.forestmoon.ChestSample=チェストサンプル
+//GUI
+buy_button=買う
+sell_button=売る
+shopingGui_num=個数：
 buy=売値:
 sell=買値:
 //定型文
 comandError_1=§c入力された値が所持金よりも多いです
 comandError_2=§c入力された値が大きすぎます
-comandMoney_1=
-comandMoney_2=の所持金を
-comandMoney_3=円に変更しました
-comandMoney_Error=§c/money [プレイヤー] [set] <値>
-comandCoin_1=
-comandCoin_2=の所持金を
-comandCoin_3=コインに変換しました
+comandMonew=%sの所持金を%d円に変更しました
+comandMoney_Error=§c/money [プレイヤー] [set|add] <値>
+comandCoin=%sの所持金を%dコインに変更しました
 comandCoin_Error=§c/coin [プレイヤー] <値>
 money=￥
 shopingError_1=§c個数欄に整数以外が入力されました

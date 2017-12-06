@@ -39,7 +39,6 @@ public class ShopingGuiContainer extends GuiContainer{
 	private EntityECVillager villager;
 	private ExtendedPlayerProperties properties;
 	private GuiTextField textField;
-	private GuiTextField itemField;
 	private ShopingItem currentItem;
 	private String itemStr = "";
 	private String buyStr="";
@@ -61,8 +60,6 @@ public class ShopingGuiContainer extends GuiContainer{
 	public ShopingGuiContainer(EntityPlayer player,int id){
 		this(player);
 
-
-//		villager = (EntityECVillager)(Minecraft.getMinecraft().getIntegratedServer().getEntityWorld().getEntityByID(id));
 		villager = (EntityECVillager)(Minecraft.getMinecraft().theWorld.getEntityByID(id));
 		this.readItemToEntity(villager);
 
@@ -78,13 +75,8 @@ public class ShopingGuiContainer extends GuiContainer{
 		textField.setText("");
 		textField.setMaxStringLength(3);
 
-//		itemField = new GuiTextField(fontRendererObj, 4, 48, (this.xSize / 4) * 3 -10, 15);
-//		itemField.setFocused(false);
-//		itemField.setText("");
-//		itemField.setMaxStringLength(200);
-
-		buttonList.add(new MyGuiButton(BUY_BUTTON, this.guiLeft + (this.xSize/4) * 3 - 4, this.guiTop +49, this.xSize/4, 15, "買う"));
-		buttonList.add(new MyGuiButton(SELL_BUTTON,this.guiLeft + (this.xSize/4) * 3 - 4, this.guiTop + 65, this.xSize/4,15,"売る"));
+		buttonList.add(new MyGuiButton(BUY_BUTTON, this.guiLeft + (this.xSize/4) * 3 - 4, this.guiTop +49, this.xSize/4, 15, StatCollector.translateToLocal("buy_button")));
+		buttonList.add(new MyGuiButton(SELL_BUTTON,this.guiLeft + (this.xSize/4) * 3 - 4, this.guiTop + 65, this.xSize/4,15,StatCollector.translateToLocal("sell_button")));
 
 	}
 
@@ -96,14 +88,11 @@ public class ShopingGuiContainer extends GuiContainer{
 		fontRendererObj.drawString(itemStr, 4, 48, 4210752);
 		fontRendererObj.drawString(buyStr, 4, 57, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal(shopingItem.getProfessionName(profession)), 8, 6, 4210752);
-		fontRendererObj.drawString(StatCollector.translateToLocal("個数:"),(this.xSize) / 2 - 4, 70, 4210752);
+		fontRendererObj.drawString(StatCollector.translateToLocal("shopingGui_num"),(this.xSize) / 2 - 4, 70, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX, moneyY, 4210752);
 
 		textField.setEnabled(true);
 		textField.drawTextBox();
-
-//		itemField.setEnabled(true);
-//		itemField.drawTextBox();
 
 		super.drawGuiContainerForegroundLayer(mouseX, mouseZ);
 
@@ -174,17 +163,13 @@ public class ShopingGuiContainer extends GuiContainer{
 		}
 
 		if(stackSize >= 1 ){
-			itemStack.stackSize = stackSize;
-
-//			World world = MinecraftServer.getServer().getEntityWorld();
 			double x = player.lastTickPosX;
 			double y = player.lastTickPosY;
 			double z = player.lastTickPosZ;
 
 //			EntityItem entityItem = new EntityItem(world, x, y, z, itemStack);
-//
 //			world.spawnEntityInWorld(entityItem);
-			PacketHandler.INSTANCE.sendToServer(new MessageSpawnItemstack(itemStack, x, y, z));
+			PacketHandler.INSTANCE.sendToServer(new MessageSpawnItemstack(itemStack, x, y, z,stackSize));
 		}
 
 		properties.changeMoney(price * stackSize * -1);
@@ -264,7 +249,7 @@ public class ShopingGuiContainer extends GuiContainer{
 	//データの読み取り
 	private void readItemToEntity(EntityECVillager villager){
 		this.shopingItems = villager.getShopingItems();
-		this.profession = villager.getProfession();
+		this.profession = villager.getEconomicsProfession();
 	}
 
 	//終了時処理
