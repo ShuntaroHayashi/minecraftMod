@@ -63,14 +63,14 @@ public class PlayerShopingContainer extends Container{
 
 	@Override
 	public boolean canDragIntoSlot(Slot slot){
-		if(slot.getSlotIndex() < 27 ){
+		if(slot.getSlotIndex() < index1 ){
 			return false;
 		}
 		return true;
 	}
 	public String slotItemToString(int index) {
 		String str = "";
-		if (0 <= index && index < 27) {
+		if (index0 <= index && index < index1) {
 			try {
 				if(tileEntity.getStackInSlot(index) != null) {
 					if (tileEntity.getStackInSlot(index).stackSize > 0) {

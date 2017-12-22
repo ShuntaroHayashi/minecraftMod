@@ -24,7 +24,7 @@ public class ItemCoin extends Item {
 		this.setCreativeTab(ForestMoon.forestmoontab);
 		this.setUnlocalizedName(name);
 		maxStackSize = 64;
-		this.setTextureName("forestmoon:Coin");
+		this.setTextureName("forestmoon:"+name);
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 

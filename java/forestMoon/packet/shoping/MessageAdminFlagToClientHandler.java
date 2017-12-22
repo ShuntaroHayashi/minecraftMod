@@ -16,7 +16,7 @@ public class MessageAdminFlagToClientHandler implements IMessageHandler<MessageA
 		if(tileEntity instanceof TileEntityChest) {
 			try {
 				TileEntityChest tileEntityChest = (TileEntityChest)tileEntity;
-				((TileEntityChest) tileEntity).setAdminFlag(message.adminFlag);
+				tileEntityChest.setAdminFlag(message.adminFlag);
 			} catch (Exception e) {
 				// TODO: handle exception
 			}

@@ -18,14 +18,11 @@ public class MessageShopingSyncToServerHandler implements IMessageHandler<Messag
 			if(message.syncFlag){
 				tileEntityChest.setAdminName(message.adminName);
 				tileEntityChest.setSellPrices(message.sellPrices);
-				System.out.println("set server adminName at:"+ tileEntityChest.getAdminName());
 
 				return null;
 			}else {
 				if(!tileEntityChest.getAdminName().equals("NONE")) {
-					System.out.println("send client adminName:" + tileEntityChest.getAdminName());
 					PacketHandler.INSTANCE.sendToAll(new MessageShopingSyncToClient(tileEntityChest.getAdminName(),tileEntityChest.getSellPrices(),tileEntityChest.getEarnings(), message.x, message.y, message.z));
-//					return new MessageShopingSyncToClient(tileEntityChest.getAdminName(),tileEntityChest.getSellPrices(),tileEntityChest.getEarnings(), message.x, message.y, message.z);
 				}
 			}
 		}

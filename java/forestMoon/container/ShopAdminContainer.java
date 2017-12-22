@@ -52,7 +52,7 @@ public class ShopAdminContainer extends Container {
 
 	@Override
 	public boolean canDragIntoSlot(Slot slot){
-		if(slot.getSlotIndex() < 27 && tileEntity.getAdminName().equals(player.getCommandSenderName())){
+		if(slot.getSlotIndex() < index1 && tileEntity.getAdminName().equals(player.getCommandSenderName())){
 			return false;
 		}
 		return true;
@@ -72,7 +72,7 @@ public class ShopAdminContainer extends Container {
 
 	public String slotItemToString(int index) {
 		String str = "";
-		if (0 <= index && index < 27) {
+		if (index0 <= index && index < index1) {
 			try {
 				if(tileEntity.getStackInSlot(index) != null) {
 					str = StatCollector.translateToLocalFormatted("playerShop_itemName", tileEntity.getStackInSlot(index).getDisplayName(),tileEntity.getSellPrice(lastSlotNumber));

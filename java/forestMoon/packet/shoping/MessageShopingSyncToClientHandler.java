@@ -12,12 +12,11 @@ public class MessageShopingSyncToClientHandler implements IMessageHandler<Messag
 	public IMessage onMessage(MessageShopingSyncToClient message, MessageContext ctx) {
 		try {
 			TileEntityChest tileEntity = (TileEntityChest)Minecraft.getMinecraft().theWorld.getTileEntity((int)message.x, (int)message.y, (int)message.z);
-			System.out.println("client adminName:" + tileEntity.getAdminName()+"\n server adminName:" + message.adminName);
 			tileEntity.setSellPrices(message.sellPrices);
 			tileEntity.setAdminName(message.adminName);
 			tileEntity.setEarnings(message.earings);
 		} catch (Exception e) {
-			System.err.println(e);
+			e.printStackTrace();
 		}
 		return null;
 	}

@@ -47,7 +47,6 @@ public class TileEntityChest extends TileEntity implements IInventory {
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		System.out.println("x:"+xCoord + " y" + yCoord + " z:" + zCoord);
 		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
 		itemStacks = new ItemStack[27];
 		for (int i = 0; i < nbttaglist.tagCount(); i++) {
@@ -60,7 +59,6 @@ public class TileEntityChest extends TileEntity implements IInventory {
 		name = nbt.getString("name");
 		earnings = nbt.getInteger("buyMoney");
 		sellPrices = nbt.getIntArray("sellPrices");
-//		PacketHandler.INSTANCE.sendToServer(new MessageShopingSyncToServer(this.xCoord, this.yCoord, this.zCoord));
 	}
 
 	@Override
