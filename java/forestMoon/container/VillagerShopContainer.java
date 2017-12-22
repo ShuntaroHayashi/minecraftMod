@@ -11,14 +11,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-public class ShopingContainer extends Container{
+public class VillagerShopContainer extends Container{
 
 	public EntityPlayer player;
 	public InventoryPlayer inventoryPlayer;
 	private VilaggerInventory inventory;
 	private int lastSlotNumber;
 
-	public ShopingContainer(final InventoryPlayer p_i1819_1_, boolean p_i1819_2_, EntityPlayer player) {
+	public VillagerShopContainer(final InventoryPlayer p_i1819_1_, boolean p_i1819_2_, EntityPlayer player) {
 		this.inventoryPlayer = p_i1819_1_;
 		this.player = player;
 		this.inventory = new VilaggerInventory();

@@ -41,5 +41,4 @@ public class ArmarSample extends ItemArmor{
 		return "forestmoon:textures/model/armar/Sample_layer_1.1.png";
 	}
 
-
 }

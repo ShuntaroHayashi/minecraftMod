@@ -3,13 +3,13 @@ package forestMoon.client.guicontainer;
 import org.lwjgl.opengl.GL11;
 
 import forestMoon.ExtendedPlayerProperties;
-import forestMoon.client.entity.TileEntityChest;
 import forestMoon.client.gui.MyGuiButton;
-import forestMoon.container.PlayerShopingContainer;
+import forestMoon.container.PlayerShopContainer;
 import forestMoon.packet.PacketHandler;
 import forestMoon.packet.player.MessagePlayerPropertieToServer;
-import forestMoon.packet.shoping.MessageShopingSyncToServer;
+import forestMoon.packet.shoping.MessagePlayerShopSyncToServer;
 import forestMoon.packet.shoping.MessageSpawnItemstack;
+import forestMoon.tileEntity.TileEntityShop;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,28 +17,27 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
-public class PlayerShopingGuiContainer extends GuiContainer{
+public class PlayerShopGuiContainer extends GuiContainer{
 
 	private EntityPlayer player;
-	private TileEntityChest tileEntity;
+	private TileEntityShop tileEntity;
 	private String shopName;
 	private String itemName ="";
 	private ExtendedPlayerProperties properties;
 	private int moneyX,moneyY;
-	private static PlayerShopingContainer container;
+	private static PlayerShopContainer container;
 	private static final ResourceLocation GUITEXTURE = new ResourceLocation("forestmoon:textures/gui/container/shopGui_2.png");
 
 
 
-	public PlayerShopingGuiContainer(EntityPlayer player, TileEntityChest tileEntity) {
-		super(container = new PlayerShopingContainer(tileEntity, player));
+	public PlayerShopGuiContainer(EntityPlayer player, TileEntityShop tileEntity) {
+		super(container = new PlayerShopContainer(tileEntity, player));
 		this.player = player;
 		this.tileEntity = tileEntity;
 		ySize = 235;
 		shopName = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("shop_name"), tileEntity.getAdminName());
 
-		PacketHandler.INSTANCE.sendToServer(new MessageShopingSyncToServer(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord));
-
+		PacketHandler.INSTANCE.sendToServer(new MessagePlayerShopSyncToServer(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord));
 
 		new ExtendedPlayerProperties();
 		properties = ExtendedPlayerProperties.get(player);
@@ -64,7 +63,7 @@ public class PlayerShopingGuiContainer extends GuiContainer{
 
 		super.drawGuiContainerForegroundLayer(p_146979_1_, p_146979_2_);
 
-		if(tileEntity.isAdminFlag()) {
+		if(tileEntity.isShopSettingFlag()) {
 			player.closeScreen();
 		}
 	}
@@ -84,7 +83,7 @@ public class PlayerShopingGuiContainer extends GuiContainer{
 		int price;
 
 		if(button.id == 0) {
-			if(!itemName.equals("") && tileEntity.getStackInSlot(container.getLastSlotNumber()).stackSize > 0 && !tileEntity.isAdminFlag()) {
+			if(!itemName.equals("") && tileEntity.getStackInSlot(container.getLastSlotNumber()).stackSize > 0 && !tileEntity.isShopSettingFlag()) {
 				price = tileEntity.getSellPrice(container.getLastSlotNumber());
 				itemStack = tileEntity.getStackInSlot(container.getLastSlotNumber());
 				buy(itemStack, price);

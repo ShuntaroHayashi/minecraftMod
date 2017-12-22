@@ -1,10 +1,8 @@
-package forestMoon.client.entity;
+package forestMoon.tileEntity;
 
 import forestMoon.packet.PacketHandler;
-import forestMoon.packet.shoping.MessageEarningsSyncToServer;
-import forestMoon.packet.shoping.MessageFlagSync;
-import forestMoon.packet.shoping.MessageShopingSyncToServer;
-import forestMoon.packet.shoping.MessageTileEntitySync;
+import forestMoon.packet.shoping.MessageClickFlagSync;
+import forestMoon.packet.shoping.MessagePlayerShopSyncToServer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -15,14 +13,14 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityChest extends TileEntity implements IInventory {
-	protected ItemStack[] itemStacks = new ItemStack[27];
-	private String name = "NONE";
-	private int earnings = 0;
-	private boolean slotClickFlag = true;
-	private boolean shopChangeFlag = false;
-	private boolean adminFlag = false;
-	private int[] sellPrices = new int[27];
+public class TileEntityShop extends TileEntity implements IInventory {
+	protected ItemStack[] itemStacks = new ItemStack[27];//売り物
+	private String name = "NONE";//ショップ管理者名
+	private int earnings = 0;//売り上げ
+	private boolean slotClickFlag = true;//スロットにアクセスできるかのフラグ
+	private boolean shopSettingFlag = false;//ショップを設定中かのフラグ
+	private int[] sellPrices = new int[27];//価格一覧
+
 
 	// データの書き込み
 	@Override
@@ -40,7 +38,7 @@ public class TileEntityChest extends TileEntity implements IInventory {
 		nbt.setTag("Items", nbttaglist);
 		nbt.setString("name", name);
 		nbt.setIntArray("sellPrices", sellPrices);
-		nbt.setInteger("buyMoney", earnings);
+		nbt.setInteger("earnings", earnings);
 	}
 
 	// データ読み取り
@@ -57,15 +55,17 @@ public class TileEntityChest extends TileEntity implements IInventory {
 			}
 		}
 		name = nbt.getString("name");
-		earnings = nbt.getInteger("buyMoney");
+		earnings = nbt.getInteger("earnings");
 		sellPrices = nbt.getIntArray("sellPrices");
 	}
 
+	//インベントリのサイズを返す
 	@Override
 	public int getSizeInventory() {
 		return 27;
 	}
 
+	//スロットナンバーに応じたアイテムを返す
 	@Override
 	public ItemStack getStackInSlot(int slot) {
 		return itemStacks[slot];
@@ -108,7 +108,7 @@ public class TileEntityChest extends TileEntity implements IInventory {
 
 	@Override
 	public String getInventoryName() {
-		return "container.forestmoon.ChestSample";
+		return "container.forestmoon.PlayerShop";
 	}
 
 	@Override
@@ -137,27 +137,28 @@ public class TileEntityChest extends TileEntity implements IInventory {
 
 	@Override
 	public Packet getDescriptionPacket() {
-        NBTTagCompound nbtTagCompound = new NBTTagCompound();
-        this.writeToNBT(nbtTagCompound);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, nbtTagCompound);
+		NBTTagCompound nbtTagCompound = new NBTTagCompound();
+		this.writeToNBT(nbtTagCompound);
+		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, nbtTagCompound);
 	}
+
 	@Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-        this.readFromNBT(pkt.func_148857_g());
-    }
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+		this.readFromNBT(pkt.func_148857_g());
+	}
 
 	/*
 	 * プレイヤー名文字列のゲッターとセッター。
 	 */
-	public String getAdminName(){
+	public String getAdminName() {
 		return this.name;
 	}
 
-	public void setAdminName(String par1){
+	public void setAdminName(String par1) {
 		this.name = par1;
 	}
 
-	public int getMetadata(){
+	public int getMetadata() {
 		return this.worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
 	}
 
@@ -184,31 +185,39 @@ public class TileEntityChest extends TileEntity implements IInventory {
 	public void setSlotClickFlag(boolean slotClickFlag) {
 		this.slotClickFlag = slotClickFlag;
 		if (worldObj.isRemote) {
-			PacketHandler.INSTANCE.sendToServer(new MessageFlagSync(xCoord, yCoord, zCoord, slotClickFlag));
+			PacketHandler.INSTANCE.sendToServer(new MessageClickFlagSync(xCoord, yCoord, zCoord, slotClickFlag));
 		}
 	}
 
-	public int  buy(int index, int num) {
+	public int buy(int index, int num) {
 		ItemStack itemStack = this.getStackInSlot(index);
-		if(itemStack.stackSize > num) {
+		if (itemStack.stackSize > num) {
 			itemStack.stackSize = itemStack.stackSize - num;
 			itemStacks[index] = itemStack;
-		}else {
+		} else {
 			num -= itemStack.stackSize;
 			itemStack.stackSize = 0;
-//			itemStacks[index] = itemStack;
 			itemStacks[index] = null;
 			sellPrices[index] = 0;
 		}
 		earnings += (sellPrices[index] * num);
-		if(worldObj.isRemote) {
-			PacketHandler.INSTANCE.sendToServer(new MessageEarningsSyncToServer(xCoord, yCoord, zCoord, earnings));
-			PacketHandler.INSTANCE.sendToServer(new MessageTileEntitySync(xCoord, yCoord, zCoord, itemStacks));
+		if (worldObj.isRemote) {
+			// PacketHandler.INSTANCE.sendToServer(new
+			// MessageEarningsSyncToServer(xCoord, yCoord, zCoord, earnings));
+			// PacketHandler.INSTANCE.sendToServer(new
+			// MessageTileEntitySync(xCoord, yCoord, zCoord, itemStacks));
+			PacketHandler.INSTANCE.sendToServer(
+					new MessagePlayerShopSyncToServer(xCoord, yCoord, zCoord, name, sellPrices, earnings, itemStacks));
 		}
 		return num;
 	}
 
-
+	public void sendServer() {
+		if (worldObj.isRemote) {
+			PacketHandler.INSTANCE.sendToServer(
+					new MessagePlayerShopSyncToServer(xCoord, yCoord, zCoord, name, sellPrices, earnings, itemStacks));
+		}
+	}
 
 	public int[] getSellPrices() {
 		return sellPrices;
@@ -216,9 +225,7 @@ public class TileEntityChest extends TileEntity implements IInventory {
 
 	public void setSellPrices(int[] sellPrices) {
 		this.sellPrices = sellPrices;
-		if(worldObj.isRemote) {
-			PacketHandler.INSTANCE.sendToServer(new MessageShopingSyncToServer(xCoord, yCoord, zCoord, name, sellPrices));
-		}
+
 	}
 
 	public void setSellPrice(int index, int price) {
@@ -228,13 +235,10 @@ public class TileEntityChest extends TileEntity implements IInventory {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(worldObj.isRemote) {
-			PacketHandler.INSTANCE.sendToServer(new MessageShopingSyncToServer(xCoord, yCoord, zCoord, name, sellPrices));
-		}
 	}
 
 	public int getSellPrice(int index) {
-		if (0<= index && index < 27) {
+		if (0 <= index && index < 27) {
 			try {
 				return sellPrices[index];
 			} catch (Exception e) {
@@ -244,23 +248,12 @@ public class TileEntityChest extends TileEntity implements IInventory {
 		return -1;
 	}
 
-	public boolean isShopChangeFlag() {
-		return shopChangeFlag;
+	public boolean isShopSettingFlag() {
+		return shopSettingFlag;
 	}
 
-	public void setShopChangeFlag(boolean shopChangeFlag) {
-		this.shopChangeFlag = shopChangeFlag;
+	public void setShopSettingFlag(boolean shopSettingFlag) {
+		this.shopSettingFlag = shopSettingFlag;
 	}
-
-	public boolean isAdminFlag() {
-		return adminFlag;
-	}
-
-	public void setAdminFlag(boolean adminFlag) {
-		this.adminFlag = adminFlag;
-	}
-
-
-
 
 }

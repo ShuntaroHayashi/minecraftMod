@@ -5,14 +5,14 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class MessageAdminFlagToClient implements IMessage{
+public class MessageShopSettingFlagToServer implements IMessage{
 	int x,y,z;
 	boolean adminFlag;
 
-	public MessageAdminFlagToClient() {
+	public MessageShopSettingFlagToServer() {
 	}
 
-	public MessageAdminFlagToClient(int x, int y, int z, boolean adminFlag) {
+	public MessageShopSettingFlagToServer(int x, int y, int z, boolean adminFlag) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -39,4 +39,6 @@ public class MessageAdminFlagToClient implements IMessage{
 
 		ByteBufUtils.writeTag(buf, compound);
 	}
+
+
 }

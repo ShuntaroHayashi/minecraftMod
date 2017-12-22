@@ -4,9 +4,9 @@ import java.util.Random;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import forestMoon.ForestMoon;
-import forestMoon.client.entity.TileEntityChest;
 import forestMoon.packet.PacketHandler;
-import forestMoon.packet.shoping.MessageShopingSyncToServer;
+import forestMoon.packet.shoping.MessagePlayerShopSyncToServer;
+import forestMoon.tileEntity.TileEntityShop;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -17,12 +17,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class ChestSample extends Block implements ITileEntityProvider{
+public class PlayerShopBlock extends Block implements ITileEntityProvider{
 	private Random random = new Random();
 
-	public ChestSample(){
+	public PlayerShopBlock(){
 		super(Material.rock);
-		String name = "ChestSample";
+		String name = "PlayerShopBlock";
 		this.setBlockName(name);
 		this.setBlockTextureName("forestmoon:"+name);
 		this.setCreativeTab(ForestMoon.forestmoontab);
@@ -31,12 +31,12 @@ public class ChestSample extends Block implements ITileEntityProvider{
 		this.setStepSound(soundTypeMetal);
 		isBlockContainer = true;
 		GameRegistry.registerBlock(this, name);
-		GameRegistry.registerTileEntity(TileEntityChest.class, "TileEntityChest");
+		GameRegistry.registerTileEntity(TileEntityShop.class, "TileEntityShop");
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileEntityChest();
+		return new TileEntityShop();
 	}
 
 	@Override
@@ -44,19 +44,17 @@ public class ChestSample extends Block implements ITileEntityProvider{
 		// GUIを開く。
 
 		if (world.isRemote) {
-			PacketHandler.INSTANCE.sendToServer(new MessageShopingSyncToServer(x, y, z));
+			PacketHandler.INSTANCE.sendToServer(new MessagePlayerShopSyncToServer(x, y, z));
 		}
 
 		player.openGui(ForestMoon.instance, ForestMoon.CHEST_GUI_ID, world, x, y, z);
 		return true;
 	}
 
-
-
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
 		// TileEntityの内部にあるアイテムをドロップさせる。
-		TileEntityChest tileentity = (TileEntityChest) world.getTileEntity(x, y, z);
+		TileEntityShop tileentity = (TileEntityShop) world.getTileEntity(x, y, z);
 		if (tileentity != null) {
 			for (int i = 0; i < tileentity.getSizeInventory(); i++) {
 				ItemStack itemStack = tileentity.getStackInSlot(i);

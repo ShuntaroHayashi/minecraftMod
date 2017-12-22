@@ -1,14 +1,14 @@
 package forestMoon.container;
 
-import forestMoon.client.entity.TileEntityChest;
+import forestMoon.tileEntity.TileEntityShop;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
-public class ShopAdminContainer extends Container {
-	private TileEntityChest tileEntity;
+public class PlayerShopAdminContainer extends Container {
+	private TileEntityShop tileEntity;
 	/** アルミニウムチェストのインベントリの第一スロットの番号 */
 	private static final int index0 = 0;
 	/** プレイヤーのインベントリの第一スロットの番号 */
@@ -21,7 +21,7 @@ public class ShopAdminContainer extends Container {
 	private EntityPlayer player;
 	private int lastSlotNumber = -999;
 
-	public ShopAdminContainer(EntityPlayer player, TileEntityChest tileEntity) {
+	public PlayerShopAdminContainer(EntityPlayer player, TileEntityShop tileEntity) {
 		// スロットを設定する。
 		this.tileEntity = tileEntity;
 		this.player = player;
@@ -76,7 +76,6 @@ public class ShopAdminContainer extends Container {
 			try {
 				if(tileEntity.getStackInSlot(index) != null) {
 					str = StatCollector.translateToLocalFormatted("playerShop_itemName", tileEntity.getStackInSlot(index).getDisplayName(),tileEntity.getSellPrice(lastSlotNumber));
-//					str = StatCollector.translateToLocal(tileEntity.getStackInSlot(index).getDisplayName()) + "price:" + tileEntity.getSellPrice(lastSlotNumber);
 				}
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -87,12 +86,6 @@ public class ShopAdminContainer extends Container {
 	}
 
 	public void onContainerClosed(EntityPlayer p_75134_1_){
-		if(tileEntity.getAdminName().equals("NONE")) {
-
-		}else {
-//			PacketHandler.INSTANCE.sendToServer(new MessageShopingSyncToServer(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, tileEntity.getAdminName()));
-		}
-
 		super.onContainerClosed(p_75134_1_);
 	}
 

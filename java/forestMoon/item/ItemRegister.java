@@ -2,7 +2,7 @@ package forestMoon.item;
 
 import forestMoon.ForestMoon;
 import forestMoon.block.BlockSample;
-import forestMoon.block.ChestSample;
+import forestMoon.block.PlayerShopBlock;
 import forestMoon.block.ColorBlock;
 import forestMoon.item.items.ArmarSample;
 import forestMoon.item.items.BonePickaxe;
@@ -54,7 +54,7 @@ public class ItemRegister {
 		BlockSample = new BlockSample(Material.rock);
 		ColorBlock = new ColorBlock();
 		ShopBlock = new forestMoon.block.ShopBlock(Material.rock);
-		chestSample = new ChestSample();
+		chestSample = new PlayerShopBlock();
 		BONETOOL = EnumHelper.addToolMaterial("SampleSword", 1, 55, 1500F, 1F, 1);
 		// 名前、採掘レベル、耐久度、採掘速度、攻撃力、エンチャント
 

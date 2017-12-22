@@ -8,7 +8,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import forestMoon.ExtendedPlayerProperties;
 import forestMoon.client.entity.EntityECVillager;
 import forestMoon.client.gui.MyGuiButton;
-import forestMoon.container.ShopingContainer;
+import forestMoon.container.VillagerShopContainer;
 import forestMoon.packet.PacketHandler;
 import forestMoon.packet.player.MessagePlayerPropertieToServer;
 import forestMoon.packet.shoping.MessageSpawnItemstack;
@@ -26,9 +26,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
 @SideOnly(Side.CLIENT)
-public class ShopingGuiContainer extends GuiContainer{
+public class VillagerShopGuiContainer extends GuiContainer{
 	private static final ResourceLocation TEXTURE = new ResourceLocation("forestmoon", "textures/guis/buyGui.png");
-	private static ShopingContainer shopingContainer;
+	private static VillagerShopContainer shopingContainer;
 	private final int BUY_BUTTON = 0;
 	private final int SELL_BUTTON = 1;
 	private int moneyX = 0;
@@ -44,8 +44,8 @@ public class ShopingGuiContainer extends GuiContainer{
 	private String buyStr="";
 
 	//コンストラクター
-	public ShopingGuiContainer(EntityPlayer player) {
-		super(shopingContainer = new ShopingContainer(player.inventory, true, player));
+	public VillagerShopGuiContainer(EntityPlayer player) {
+		super(shopingContainer = new VillagerShopContainer(player.inventory, true, player));
 
 		this.allowUserInput = true;
 		this.player = player;
@@ -57,7 +57,7 @@ public class ShopingGuiContainer extends GuiContainer{
 		properties = ExtendedPlayerProperties.get(player);
 	}
 
-	public ShopingGuiContainer(EntityPlayer player,int id){
+	public VillagerShopGuiContainer(EntityPlayer player,int id){
 		this(player);
 
 		villager = (EntityECVillager)(Minecraft.getMinecraft().theWorld.getEntityByID(id));

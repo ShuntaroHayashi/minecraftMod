@@ -34,11 +34,11 @@ tile.ColorBlock-12.name=灰色
 tile.ColorBlock-13.name=水色
 tile.ColorBlock-14.name=紫
 tile.ColorBlock-15.name=謎
-tile.ChestSample.name=チェストサンプル
+tile.PlayerShopBlock.name=プレイヤーショップブロック
 //エンティティー
 entity.forestmoonmod.Villager.name=村人
 //コンテイナー
-container.forestmoon.ChestSample=チェストサンプル
+container.forestmoon.PlayerShop=プレイヤーショップ
 shop_name=%sのお店
 //GUI
 buy_button=買う

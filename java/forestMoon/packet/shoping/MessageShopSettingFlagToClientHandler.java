@@ -3,22 +3,22 @@ package forestMoon.packet.shoping;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import forestMoon.client.entity.TileEntityChest;
+import forestMoon.tileEntity.TileEntityShop;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 
-public class MessageAdminFlagToClientHandler implements IMessageHandler<MessageAdminFlagToClient, IMessage>{
+public class MessageShopSettingFlagToClientHandler implements IMessageHandler<MessageShopSettingFlagToClient, IMessage>{
 
 	@Override
-	public IMessage onMessage(MessageAdminFlagToClient message, MessageContext ctx) {
+	public IMessage onMessage(MessageShopSettingFlagToClient message, MessageContext ctx) {
 		System.out.println("test flsg:"+message.adminFlag);
 		TileEntity tileEntity = Minecraft.getMinecraft().theWorld.getTileEntity(message.x, message.y, message.z);
-		if(tileEntity instanceof TileEntityChest) {
+		if(tileEntity instanceof TileEntityShop) {
 			try {
-				TileEntityChest tileEntityChest = (TileEntityChest)tileEntity;
-				tileEntityChest.setAdminFlag(message.adminFlag);
+				TileEntityShop tileEntityChest = (TileEntityShop)tileEntity;
+				tileEntityChest.setShopSettingFlag(message.adminFlag);
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			}
 		}
 

@@ -5,41 +5,38 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class MessageEarningsSyncToServer implements IMessage{
+public class MessageShopSettingFlagToClient implements IMessage{
+	int x,y,z;
+	boolean adminFlag;
 
-	int x,y,z,earnings;
-
-	public MessageEarningsSyncToServer() {
+	public MessageShopSettingFlagToClient() {
 	}
 
-	public MessageEarningsSyncToServer(int x, int y, int z, int earnings) {
+	public MessageShopSettingFlagToClient(int x, int y, int z, boolean adminFlag) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.earnings = earnings;
+		this.adminFlag = adminFlag;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		NBTTagCompound compound = ByteBufUtils.readTag(buf);
-
+		this.adminFlag = compound.getBoolean("adminFlag");
 		this.x = compound.getInteger("x");
 		this.y = compound.getInteger("y");
 		this.z = compound.getInteger("z");
-		this.earnings = compound.getInteger("earnings");
-
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
 		NBTTagCompound compound = new NBTTagCompound();
 
+		compound.setBoolean("adminFlag", adminFlag);
 		compound.setInteger("x", x);
 		compound.setInteger("y", y);
 		compound.setInteger("z", z);
-		compound.setInteger("earnings", earnings);
 
 		ByteBufUtils.writeTag(buf, compound);
 	}
-
 }

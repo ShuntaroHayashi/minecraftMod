@@ -34,11 +34,11 @@ tile.ColorBlock-12.name=gray
 tile.ColorBlock-13.name=lightBlue
 tile.ColorBlock-14.name=purple
 tile.ColorBlock-15.name=?
-tile.ChestSample.name=ChestSample
+tile.PlayerShopBlock.name=PlayerShopBlock
 //entity
 entity.forestmoonmod.Villager.name=villager
 //container
-container.forestmoon.ChestSample=chestSample
+container.forestmoon.PlayerShop=playerShop
 shop_name=%s's shop
 //GUI
 buy_button=buy

@@ -1,14 +1,14 @@
 package forestMoon.container;
 
-import forestMoon.client.entity.TileEntityChest;
+import forestMoon.tileEntity.TileEntityShop;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
-public class PlayerShopingContainer extends Container{
-	private TileEntityChest tileEntity;
+public class PlayerShopContainer extends Container{
+	private TileEntityShop tileEntity;
 
 	private static final int index0 = 0;
 	private static final int index1 = 27;
@@ -20,7 +20,7 @@ public class PlayerShopingContainer extends Container{
 
 
 
-	public PlayerShopingContainer(TileEntityChest tileEntity, EntityPlayer player) {
+	public PlayerShopContainer(TileEntityShop tileEntity, EntityPlayer player) {
 		super();
 		this.tileEntity = tileEntity;
 		this.player = player;
