@@ -22,7 +22,7 @@ public class MessageShopSettingFlagToClient implements IMessage {
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		NBTTagCompound compound = ByteBufUtils.readTag(buf);
-		this.shopSettingFlag = compound.getBoolean("shopSettintgFlag");
+		this.shopSettingFlag = compound.getBoolean("shopSettingFlag");
 		this.x = compound.getInteger("x");
 		this.y = compound.getInteger("y");
 		this.z = compound.getInteger("z");

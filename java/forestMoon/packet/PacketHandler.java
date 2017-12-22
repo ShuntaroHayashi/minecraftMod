@@ -22,8 +22,8 @@ import forestMoon.packet.shoping.MessageShopSettingFlagToClient;
 import forestMoon.packet.shoping.MessageShopSettingFlagToClientHandler;
 import forestMoon.packet.shoping.MessageShopSettingFlagToServer;
 import forestMoon.packet.shoping.MessageShopSettingFlagToServerHandler;
-import forestMoon.packet.shoping.MessageSpawnItemStackHandler;
 import forestMoon.packet.shoping.MessageSpawnItemStack;
+import forestMoon.packet.shoping.MessageSpawnItemStackHandler;
 import forestMoon.packet.villager.MessageVillager;
 import forestMoon.packet.villager.MessageVillagerHandler;
 import forestMoon.packet.villager.MessageVillagerSync;
@@ -43,17 +43,24 @@ public class PacketHandler {
 		 * 第三引数：登録番号。255個まで 第四引数：ClientとServerのどちらに送るか。送り先
 		 */
 		INSTANCE.registerMessage(MessagePlayerPropertiesHandler.class, MessagePlayerProperties.class, 0, Side.CLIENT);
-		INSTANCE.registerMessage(MessagePlayerJoinInAnoucementHandler.class, MessagePlayerJoinInAnnouncement.class, 1,Side.SERVER);
+		INSTANCE.registerMessage(MessagePlayerJoinInAnoucementHandler.class, MessagePlayerJoinInAnnouncement.class, 1,
+				Side.SERVER);
 		INSTANCE.registerMessage(MessageInventoryHandler.class, MessageInventory.class, 2, Side.SERVER);
-		INSTANCE.registerMessage(MessagePlayerPropertiesToServerHandler.class,MessagePlayerPropertieToServer.class , 3, Side.SERVER);
+		INSTANCE.registerMessage(MessagePlayerPropertiesToServerHandler.class, MessagePlayerPropertieToServer.class, 3,
+				Side.SERVER);
 		INSTANCE.registerMessage(MessageVillagerHandler.class, MessageVillager.class, 4, Side.SERVER);
 		INSTANCE.registerMessage(MessageSpawnItemStackHandler.class, MessageSpawnItemStack.class, 5, Side.SERVER);
-		INSTANCE.registerMessage(MessageVillagerSyncToServerHandler.class, MessageVillagerSyncToServer.class, 6, Side.SERVER);
+		INSTANCE.registerMessage(MessageVillagerSyncToServerHandler.class, MessageVillagerSyncToServer.class, 6,
+				Side.SERVER);
 		INSTANCE.registerMessage(MessageVillagerSyncHandler.class, MessageVillagerSync.class, 7, Side.CLIENT);
-		INSTANCE.registerMessage(MessagePlayerShopSyncToServerHandler.class, MessagePlayerShopSyncToServer.class, 8, Side.SERVER);
-		INSTANCE.registerMessage(MessagePlayerShopSyncToClientHandler.class, MessagePlayerShopSyncToClient.class, 9, Side.CLIENT);
+		INSTANCE.registerMessage(MessagePlayerShopSyncToServerHandler.class, MessagePlayerShopSyncToServer.class, 8,
+				Side.SERVER);
+		INSTANCE.registerMessage(MessagePlayerShopSyncToClientHandler.class, MessagePlayerShopSyncToClient.class, 9,
+				Side.CLIENT);
 		INSTANCE.registerMessage(MessageClickFlagSyncHandler.class, MessageClickFlagSync.class, 10, Side.SERVER);
-		INSTANCE.registerMessage(MessageShopSettingFlagToServerHandler.class, MessageShopSettingFlagToServer.class, 15, Side.SERVER);
-		INSTANCE.registerMessage(MessageShopSettingFlagToClientHandler.class, MessageShopSettingFlagToClient.class, 16, Side.CLIENT);
+		INSTANCE.registerMessage(MessageShopSettingFlagToServerHandler.class, MessageShopSettingFlagToServer.class, 11,
+				Side.SERVER);
+		INSTANCE.registerMessage(MessageShopSettingFlagToClientHandler.class, MessageShopSettingFlagToClient.class, 12,
+				Side.CLIENT);
 	}
 }

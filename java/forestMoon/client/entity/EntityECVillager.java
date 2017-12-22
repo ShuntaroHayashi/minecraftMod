@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import forestMoon.ForestMoon;
+import forestMoon.ForestMoon.GuiId;
 import forestMoon.packet.PacketHandler;
 import forestMoon.packet.villager.MessageVillagerSync;
 import forestMoon.shoping.ShopingItem;
@@ -209,7 +210,7 @@ public class EntityECVillager extends EntityVillager {
 
 		if (!this.worldObj.isRemote) {
 			// ショップGUIのオープン
-			player.openGui(ForestMoon.instance, ForestMoon.SHOPING_GUI_ID, player.worldObj, x, y, z);
+			player.openGui(ForestMoon.instance, GuiId.VILLAGERSHOP.getId(), player.worldObj, x, y, z);
 		}
 		return true;
 

@@ -24,13 +24,13 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 	private int x, y, z, moneyX, moneyY;
 	private GuiButton doneBtn, changeBtn, salengGetBtn;
 	private TileEntityShop tileEntity;
-	private boolean shopSettingMode = false;//false:itemMode true:priceMode
-	private EntityPlayer player;
-	private boolean shopSettingFlag = false;//ショップを設定中かのフラグ
-	private ExtendedPlayerProperties properties;
+	private boolean shopSettingMode = false;// false:itemMode true:priceMode
+	private EntityPlayer player;// GUIを開いているプレイヤー
+	private boolean shopSettingFlag = false;// ショップを設定中かのフラグ
+	private ExtendedPlayerProperties properties;// プレイヤーの所持金を変更するクラス
 	private static PlayerShopAdminContainer container;
-	private String itemName = "";
-	private String mode = "";
+	private String itemName = "";// 選択中のアイテムの名前
+	private String mode = "";// 現在の設定モード
 
 	public enum ButtonId {
 		doneBtn(0), changeBtn(1), salengGetBtn(2);
@@ -62,7 +62,6 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 		new ExtendedPlayerProperties();
 		properties = ExtendedPlayerProperties.get(player);
 		PacketHandler.INSTANCE.sendToServer(new MessagePlayerShopSyncToServer(x, y, z));
-//		PacketHandler.INSTANCE.sendToServer(new MessageShopChangeFlag(true, x, y, z));
 	}
 
 	public void initGui() {
@@ -70,8 +69,9 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 		tileEntity.setSlotClickFlag(true);
 		if (tileEntity.getAdminName().equals("NONE")) {
 			tileEntity.setAdminName(player.getCommandSenderName());
-			PacketHandler.INSTANCE.sendToServer(new MessagePlayerShopSyncToServer(x, y, z, player.getCommandSenderName(),
-					tileEntity.getSellPrices(), tileEntity.getEarnings(), tileEntity.getItemStacks()));
+			PacketHandler.INSTANCE
+					.sendToServer(new MessagePlayerShopSyncToServer(x, y, z, player.getCommandSenderName(),
+							tileEntity.getSellPrices(), tileEntity.getEarnings(), tileEntity.getItemStacks()));
 		} else if (tileEntity.getAdminName().equals(player.getCommandSenderName())) {
 			shopSettingFlag = true;
 		}
@@ -84,6 +84,8 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 					this.height / 2, 105, 20, StatCollector.translateToLocal("salengGetButton")));
 
 			this.doneBtn.enabled = false;
+			this.changeBtn.enabled = true;
+			this.salengGetBtn.enabled = true;
 
 			priceTextField = new GuiTextField(this.fontRendererObj, 190, 20, 100, 20);
 			priceTextField.setFocused(true);
@@ -123,6 +125,7 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 			mode = StatCollector.translateToLocal("itemChange");
 		}
 		itemName = container.slotItemToString(container.getLastSlotNumber());
+//		PacketHandler.INSTANCE.sendToServer(new MessageShopSettingFlagToServer(x, y, z, true));
 
 		super.drawGuiContainerForegroundLayer(p_146979_1_, p_146979_2_);
 	}
@@ -150,7 +153,6 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 		} else {
 			super.mouseClicked(i, j, k);
 		}
-
 	}
 
 	// キーをタイピングした時のアクション
@@ -173,6 +175,7 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 					try {
 						int price = Integer.parseInt(priceTextField.getText());
 						tileEntity.setSellPrice(container.getLastSlotNumber(), price);
+//						PacketHandler.INSTANCE.sendToServer(new MessagePlayerShopSyncToServer(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, tileEntity.getAdminName(), tileEntity.getSellPrices(), tileEntity.getEarnings(), tileEntity.getItemStacks()));
 						tileEntity.sendServer();
 					} catch (Exception e) {
 					}
@@ -189,13 +192,10 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 				properties.changeMoney(tileEntity.getEarnings());
 				tileEntity.setEarnings(0);
 				PacketHandler.INSTANCE.sendToServer(new MessagePlayerPropertieToServer(player));
-				PacketHandler.INSTANCE.sendToServer(
-						new MessagePlayerShopSyncToServer(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord,
-								tileEntity.getAdminName(), tileEntity.getSellPrices(), 0, tileEntity.getItemStacks()));
-				// PacketHandler.INSTANCE.sendToServer(new
-				// MessageEarningsSyncToServer(tileEntity.xCoord,
-				// tileEntity.yCoord, tileEntity.zCoord,
-				// tileEntity.getEarnings()));
+				tileEntity.sendServer();
+//				PacketHandler.INSTANCE.sendToServer(
+//						new MessagePlayerShopSyncToServer(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord,
+//								tileEntity.getAdminName(), tileEntity.getSellPrices(), 0, tileEntity.getItemStacks()));
 			}
 		}
 	}
@@ -203,9 +203,8 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 	@Override
 	public void onGuiClosed() {
 		super.onGuiClosed();
-//		PacketHandler.INSTANCE.sendToServer(
-//				new MessageShopChangeFlag(false, tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord));
 		PacketHandler.INSTANCE.sendToServer(
 				new MessageShopSettingFlagToServer(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, false));
+		tileEntity.sendServer();
 	}
 }

@@ -39,8 +39,20 @@ public class ForestMoon {
 	public static ForestMoon instance;
 
 	// GUI_ID
-	public static final int SHOPING_GUI_ID = 0;
-	public static final int CHEST_GUI_ID = 10;
+	public enum GuiId{
+		VILLAGERSHOP(0),
+		PLAYERSHOP(1);
+
+		private final int id;
+
+		private GuiId(int id) {
+			this.id = id;
+		}
+		public int getId() {
+			return this.id;
+		}
+	}
+
 
 	// プロキシの設定
 	@SidedProxy(clientSide = "forestMoon.proxy.ClientProxy", serverSide = "forestMoon.proxy.CommonProxy")

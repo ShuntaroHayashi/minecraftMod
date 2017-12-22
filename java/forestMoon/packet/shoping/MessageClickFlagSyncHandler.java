@@ -22,7 +22,6 @@ public class MessageClickFlagSyncHandler implements IMessageHandler<MessageClick
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return null;
 	}
 

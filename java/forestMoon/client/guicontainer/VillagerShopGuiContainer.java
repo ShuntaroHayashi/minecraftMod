@@ -87,7 +87,7 @@ public class VillagerShopGuiContainer extends GuiContainer{
 		VillagerShopingItem shopingItem = new VillagerShopingItem();
 		fontRendererObj.drawString(itemStr, 4, 48, 4210752);
 		fontRendererObj.drawString(buyStr, 4, 57, 4210752);
-		fontRendererObj.drawString(StatCollector.translateToLocal(shopingItem.getProfessionName(profession)), 8, 6, 4210752);
+		fontRendererObj.drawString(StatCollector.translateToLocal(shopingItem.getProfessionName(profession)), 4, 6, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal("shopingGui_num"),(this.xSize) / 2 - 4, 70, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX, moneyY, 4210752);
 

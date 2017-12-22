@@ -21,8 +21,9 @@ public class PlayerShopGuiContainer extends GuiContainer{
 
 	private EntityPlayer player;
 	private TileEntityShop tileEntity;
-	private String shopName;
-	private String itemName ="";
+	private MyGuiButton buyBtn;
+	private String shopName;//店の名前
+	private String itemName ="";//選択中のアイテムの名前
 	private ExtendedPlayerProperties properties;
 	private int moneyX,moneyY;
 	private static PlayerShopContainer container;
@@ -48,7 +49,7 @@ public class PlayerShopGuiContainer extends GuiContainer{
 		moneyX = xSize - 62;
 		moneyY = this.ySize - 148;
 
-		this.buttonList.add(new MyGuiButton(0, guiLeft + xSize - 50, guiTop+ySize- 165, 40,15,StatCollector.translateToLocal("buy_button")));
+		this.buttonList.add(buyBtn = new MyGuiButton(0, guiLeft + xSize - 50, guiTop+ySize- 165, 40,15,StatCollector.translateToLocal("buy_button")));
 	}
 
 	@Override
@@ -62,7 +63,9 @@ public class PlayerShopGuiContainer extends GuiContainer{
 		super.drawGuiContainerForegroundLayer(p_146979_1_, p_146979_2_);
 
 		if(tileEntity.isShopSettingFlag()) {
-			player.closeScreen();
+			buyBtn.enabled = false;
+		}else {
+			buyBtn.enabled = true;
 		}
 	}
 
@@ -80,7 +83,9 @@ public class PlayerShopGuiContainer extends GuiContainer{
 		ItemStack itemStack;
 		int price;
 
+		System.out.println("test :" + button.id);
 		if(button.id == 0) {
+			System.out.println(tileEntity.isShopSettingFlag());
 			if(!itemName.equals("") && tileEntity.getStackInSlot(container.getLastSlotNumber()).stackSize > 0 && !tileEntity.isShopSettingFlag()) {
 				price = tileEntity.getSellPrice(container.getLastSlotNumber());
 				itemStack = tileEntity.getStackInSlot(container.getLastSlotNumber());

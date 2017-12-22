@@ -4,6 +4,7 @@ import java.util.Random;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import forestMoon.ForestMoon;
+import forestMoon.ForestMoon.GuiId;
 import forestMoon.packet.PacketHandler;
 import forestMoon.packet.shoping.MessagePlayerShopSyncToServer;
 import forestMoon.tileEntity.TileEntityShop;
@@ -45,7 +46,7 @@ public class PlayerShopBlock extends Block implements ITileEntityProvider{
 			PacketHandler.INSTANCE.sendToServer(new MessagePlayerShopSyncToServer(x, y, z));
 		}
 
-		player.openGui(ForestMoon.instance, ForestMoon.CHEST_GUI_ID, world, x, y, z);
+		player.openGui(ForestMoon.instance, GuiId.PLAYERSHOP.getId(), world, x, y, z);
 		return true;
 	}
 

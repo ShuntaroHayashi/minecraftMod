@@ -15,8 +15,8 @@ public class MessageShopSettingFlagToServerHandler implements IMessageHandler<Me
 		if(tileEntity instanceof TileEntityShop) {
 			try {
 				TileEntityShop tileEntityChest = (TileEntityShop)tileEntity;
-				tileEntityChest.setShopSettingFlag(message.adminFlag);
-				PacketHandler.INSTANCE.sendToAll(new MessageShopSettingFlagToClient(message.x, message.y, message.z, message.adminFlag));
+				tileEntityChest.setShopSettingFlag(message.shopSettingFlag);
+				PacketHandler.INSTANCE.sendToAll(new MessageShopSettingFlagToClient(message.x, message.y, message.z, message.shopSettingFlag));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

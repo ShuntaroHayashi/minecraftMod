@@ -9,6 +9,8 @@ item.leggingsSample.name=leggingsSample
 item.bootsSample.name=bootsSample
 item.VillaggerEgg.name=flowerVilaggerSpownEgg
 item.samplesword.name=boneSword
+item.BoneShovel.name=boneShovel
+item.BonePickaxe.name=bonePickaxe
 item.Coin.0.name=100MMCoin
 item.Coin.1.name=1thousandMMCoin
 item.Coin.2.name=10thousandMMCoin
@@ -38,6 +40,7 @@ tile.PlayerShopBlock.name=PlayerShopBlock
 //entity
 entity.forestmoonmod.Villager.name=villager
 //container
+itemGroup.forestmoontab=EconomicsCraft
 container.forestmoon.PlayerShop=playerShop
 shop_name=%s's shop
 //GUI

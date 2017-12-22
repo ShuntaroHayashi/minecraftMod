@@ -22,13 +22,14 @@ public class MessagePlayerShopSyncToServerHandler
 				tileEntityChest.setSellPrices(message.sellPrices);
 				tileEntityChest.setEarnings(message.earnings);
 				tileEntityChest.setItemStacks(message.itemStacks);
+				PacketHandler.INSTANCE.sendToAll(new MessagePlayerShopSyncToClient(tileEntityChest.getAdminName(),
+						tileEntityChest.getSellPrices(), tileEntityChest.getItemStacks(),
+						tileEntityChest.getEarnings(), message.x, message.y, message.z));
 				return null;
 			} else {
-				if (!tileEntityChest.getAdminName().equals("NONE")) {
-					PacketHandler.INSTANCE.sendToAll(new MessagePlayerShopSyncToClient(tileEntityChest.getAdminName(),
-							tileEntityChest.getSellPrices(), tileEntityChest.getItemStacks(),
-							tileEntityChest.getEarnings(), message.x, message.y, message.z));
-				}
+				return new MessagePlayerShopSyncToClient(tileEntityChest.getAdminName(),
+						tileEntityChest.getSellPrices(), tileEntityChest.getItemStacks(),
+						tileEntityChest.getEarnings(), message.x, message.y, message.z);
 			}
 		}
 

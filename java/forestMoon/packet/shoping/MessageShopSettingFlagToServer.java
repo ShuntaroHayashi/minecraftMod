@@ -7,22 +7,22 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class MessageShopSettingFlagToServer implements IMessage {
 	int x, y, z;
-	boolean adminFlag;
+	boolean shopSettingFlag;
 
 	public MessageShopSettingFlagToServer() {
 	}
 
-	public MessageShopSettingFlagToServer(int x, int y, int z, boolean adminFlag) {
+	public MessageShopSettingFlagToServer(int x, int y, int z, boolean shopSettingFlag) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.adminFlag = adminFlag;
+		this.shopSettingFlag = shopSettingFlag;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		NBTTagCompound compound = ByteBufUtils.readTag(buf);
-		this.adminFlag = compound.getBoolean("adminFlag");
+		this.shopSettingFlag = compound.getBoolean("adminFlag");
 		this.x = compound.getInteger("x");
 		this.y = compound.getInteger("y");
 		this.z = compound.getInteger("z");
@@ -32,7 +32,7 @@ public class MessageShopSettingFlagToServer implements IMessage {
 	public void toBytes(ByteBuf buf) {
 		NBTTagCompound compound = new NBTTagCompound();
 
-		compound.setBoolean("adminFlag", adminFlag);
+		compound.setBoolean("adminFlag", shopSettingFlag);
 		compound.setInteger("x", x);
 		compound.setInteger("y", y);
 		compound.setInteger("z", z);

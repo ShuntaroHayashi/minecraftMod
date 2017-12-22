@@ -7,7 +7,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class VillagerShopingItem {
-	private String[] professions = {"villager_proffesion_flower","villager_proffesion_fruit"};
+	private final String[] professions = {"villager_proffesion_flower","villager_proffesion_fruit"};
 
 	public VillagerShopingItem() {
 	}

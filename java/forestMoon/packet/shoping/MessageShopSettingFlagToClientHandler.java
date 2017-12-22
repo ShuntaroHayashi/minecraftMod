@@ -15,6 +15,7 @@ public class MessageShopSettingFlagToClientHandler
 		TileEntity tileEntity = Minecraft.getMinecraft().theWorld.getTileEntity(message.x, message.y, message.z);
 		if (tileEntity instanceof TileEntityShop) {
 			try {
+
 				TileEntityShop tileEntityChest = (TileEntityShop) tileEntity;
 				tileEntityChest.setShopSettingFlag(message.shopSettingFlag);
 			} catch (Exception e) {
