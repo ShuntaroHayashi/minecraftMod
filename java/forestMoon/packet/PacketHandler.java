@@ -23,7 +23,7 @@ import forestMoon.packet.shoping.MessageShopSettingFlagToClientHandler;
 import forestMoon.packet.shoping.MessageShopSettingFlagToServer;
 import forestMoon.packet.shoping.MessageShopSettingFlagToServerHandler;
 import forestMoon.packet.shoping.MessageSpawnItemStackHandler;
-import forestMoon.packet.shoping.MessageSpawnItemstack;
+import forestMoon.packet.shoping.MessageSpawnItemStack;
 import forestMoon.packet.villager.MessageVillager;
 import forestMoon.packet.villager.MessageVillagerHandler;
 import forestMoon.packet.villager.MessageVillagerSync;
@@ -47,7 +47,7 @@ public class PacketHandler {
 		INSTANCE.registerMessage(MessageInventoryHandler.class, MessageInventory.class, 2, Side.SERVER);
 		INSTANCE.registerMessage(MessagePlayerPropertiesToServerHandler.class,MessagePlayerPropertieToServer.class , 3, Side.SERVER);
 		INSTANCE.registerMessage(MessageVillagerHandler.class, MessageVillager.class, 4, Side.SERVER);
-		INSTANCE.registerMessage(MessageSpawnItemStackHandler.class, MessageSpawnItemstack.class, 5, Side.SERVER);
+		INSTANCE.registerMessage(MessageSpawnItemStackHandler.class, MessageSpawnItemStack.class, 5, Side.SERVER);
 		INSTANCE.registerMessage(MessageVillagerSyncToServerHandler.class, MessageVillagerSyncToServer.class, 6, Side.SERVER);
 		INSTANCE.registerMessage(MessageVillagerSyncHandler.class, MessageVillagerSync.class, 7, Side.CLIENT);
 		INSTANCE.registerMessage(MessagePlayerShopSyncToServerHandler.class, MessagePlayerShopSyncToServer.class, 8, Side.SERVER);

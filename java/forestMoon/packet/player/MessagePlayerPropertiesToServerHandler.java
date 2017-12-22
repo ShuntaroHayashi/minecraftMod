@@ -6,7 +6,8 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import forestMoon.ExtendedPlayerProperties;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class MessagePlayerPropertiesToServerHandler implements IMessageHandler<MessagePlayerPropertieToServer, IMessage> {
+public class MessagePlayerPropertiesToServerHandler
+		implements IMessageHandler<MessagePlayerPropertieToServer, IMessage> {
 
 	@Override
 	public IMessage onMessage(MessagePlayerPropertieToServer message, MessageContext ctx) {

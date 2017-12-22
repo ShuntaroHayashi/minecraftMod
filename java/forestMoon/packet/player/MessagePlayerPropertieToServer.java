@@ -14,7 +14,6 @@ public class MessagePlayerPropertieToServer implements IMessage {
 	public NBTTagCompound data;
 
 	public MessagePlayerPropertieToServer() {
-
 	}
 
 	// インベントリをdataに保存

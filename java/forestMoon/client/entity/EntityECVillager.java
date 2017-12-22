@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import forestMoon.ForestMoon;
+import forestMoon.packet.PacketHandler;
+import forestMoon.packet.villager.MessageVillagerSync;
 import forestMoon.shoping.ShopingItem;
 import forestMoon.shoping.VillagerShopingItem;
 import net.minecraft.block.material.Material;
@@ -30,9 +32,9 @@ public class EntityECVillager extends EntityVillager {
 
 	public EntityECVillager(World world) {
 		super(world);
-		this.firstSetting();
-
-		// System.out.println("constraktor:IN");
+		if(!worldObj.isRemote) {
+			this.firstSetting();
+		}
 
 		/* EntiyのAIを登録する */
 		this.tasks.taskEntries.clear();// superの登録を削除
@@ -55,6 +57,18 @@ public class EntityECVillager extends EntityVillager {
 	}
 	public EntityECVillager(World world,int profession) {
 		this(world);
+
+		this.economicsProfession = profession;
+
+		VillagerShopingItem villagerShopingItem = new VillagerShopingItem();
+		ArrayList<ShopingItem> shopItems = villagerShopingItem.getProfessionItems(this.economicsProfession);
+		this.shopingItems = new ShopingItem[shopItems.size()];
+
+		for (int i = 0; i < shopItems.size(); i++) {
+			this.shopingItems[i] = shopItems.get(i);
+		}
+
+		PacketHandler.INSTANCE.sendToAll(new MessageVillagerSync(shopingItems, economicsProfession, this.getEntityId()));
 	}
 
 	/** MOBの速度やHPを変更するメソッド */
@@ -182,6 +196,8 @@ public class EntityECVillager extends EntityVillager {
 		for (int i = 0; i < shopItems.size(); i++) {
 			this.shopingItems[i] = shopItems.get(i);
 		}
+
+		PacketHandler.INSTANCE.sendToAll(new MessageVillagerSync(shopingItems, economicsProfession, this.getEntityId()));
 	}
 
 	// 右クリック時

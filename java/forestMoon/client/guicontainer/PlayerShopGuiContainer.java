@@ -8,7 +8,7 @@ import forestMoon.container.PlayerShopContainer;
 import forestMoon.packet.PacketHandler;
 import forestMoon.packet.player.MessagePlayerPropertieToServer;
 import forestMoon.packet.shoping.MessagePlayerShopSyncToServer;
-import forestMoon.packet.shoping.MessageSpawnItemstack;
+import forestMoon.packet.shoping.MessageSpawnItemStack;
 import forestMoon.tileEntity.TileEntityShop;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -45,8 +45,6 @@ public class PlayerShopGuiContainer extends GuiContainer{
 
 	public void initGui() {
 		super.initGui();
-
-		System.out.println("\nguileft :" + guiLeft + " width:"+width +" xSize:"+xSize + "\n guitop"+guiTop + " height" + height+" ySize:" + ySize);
 		moneyX = xSize - 62;
 		moneyY = this.ySize - 148;
 
@@ -99,7 +97,7 @@ public class PlayerShopGuiContainer extends GuiContainer{
 			double y = player.lastTickPosY;
 			double z = player.lastTickPosZ;
 
-			PacketHandler.INSTANCE.sendToServer(new MessageSpawnItemstack(itemStack, x, y, z,1));
+			PacketHandler.INSTANCE.sendToServer(new MessageSpawnItemStack(itemStack, x, y, z,1));
 
 			properties.changeMoney(price  * -1);
 			tileEntity.buy(container.getLastSlotNumber(), 1);
@@ -111,6 +109,5 @@ public class PlayerShopGuiContainer extends GuiContainer{
 	@Override
 	protected void mouseClicked(int p_73864_1_, int p_73864_2_, int p_73864_3_) {
 		super.mouseClicked(p_73864_1_, p_73864_2_, p_73864_3_);
-		System.out.println("x:" + p_73864_1_+" y:" + p_73864_2_ + " ?:"+p_73864_3_);
 	}
 }

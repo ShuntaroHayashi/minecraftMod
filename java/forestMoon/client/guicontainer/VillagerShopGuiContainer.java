@@ -11,7 +11,7 @@ import forestMoon.client.gui.MyGuiButton;
 import forestMoon.container.VillagerShopContainer;
 import forestMoon.packet.PacketHandler;
 import forestMoon.packet.player.MessagePlayerPropertieToServer;
-import forestMoon.packet.shoping.MessageSpawnItemstack;
+import forestMoon.packet.shoping.MessageSpawnItemStack;
 import forestMoon.packet.villager.MessageVillager;
 import forestMoon.shoping.ShopingItem;
 import forestMoon.shoping.VillagerShopingItem;
@@ -167,7 +167,7 @@ public class VillagerShopGuiContainer extends GuiContainer{
 			double y = player.lastTickPosY;
 			double z = player.lastTickPosZ;
 
-			PacketHandler.INSTANCE.sendToServer(new MessageSpawnItemstack(itemStack, x, y, z,stackSize));
+			PacketHandler.INSTANCE.sendToServer(new MessageSpawnItemStack(itemStack, x, y, z,stackSize));
 		}
 
 		properties.changeMoney(price * stackSize * -1);

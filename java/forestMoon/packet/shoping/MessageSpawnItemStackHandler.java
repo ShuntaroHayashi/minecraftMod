@@ -11,10 +11,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 
-public class MessageSpawnItemStackHandler implements IMessageHandler<MessageSpawnItemstack, IMessage> {
+public class MessageSpawnItemStackHandler implements IMessageHandler<MessageSpawnItemStack, IMessage> {
 
 	@Override
-	public IMessage onMessage(MessageSpawnItemstack message, MessageContext ctx) {
+	public IMessage onMessage(MessageSpawnItemStack message, MessageContext ctx) {
 		World world = MinecraftServer.getServer().getEntityWorld();
 
 		ItemStack itemStack = message.item;
@@ -38,13 +38,11 @@ public class MessageSpawnItemStackHandler implements IMessageHandler<MessageSpaw
 			if (itemStack.hasTagCompound()) {
 				entityItem.getEntityItem().setTagCompound(((NBTTagCompound) itemStack.getTagCompound().copy()));
 			}
-
 			float f3 = 0.025F;
 			entityItem.motionX = (float) random.nextGaussian() * f3;
 			entityItem.motionY = (float) random.nextGaussian() * f3 + 0.1F;
 			entityItem.motionZ = (float) random.nextGaussian() * f3;
 			world.spawnEntityInWorld(entityItem);
-
 		}
 
 		return null;

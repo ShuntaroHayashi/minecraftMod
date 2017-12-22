@@ -9,8 +9,7 @@ import net.minecraft.nbt.NBTTagList;
 
 public class MessagePlayerShopSyncToClient implements IMessage {
 
-
-	int x,y,z;
+	int x, y, z;
 	String adminName;
 	int[] sellPrices = new int[27];
 	int earings;
@@ -19,7 +18,8 @@ public class MessagePlayerShopSyncToClient implements IMessage {
 	public MessagePlayerShopSyncToClient() {
 	}
 
-	public MessagePlayerShopSyncToClient(String adminName,int[] sellPrices,ItemStack[] itemStacks,int earings,int x,int y,int z) {
+	public MessagePlayerShopSyncToClient(String adminName, int[] sellPrices, ItemStack[] itemStacks, int earings, int x,
+			int y, int z) {
 		this.adminName = adminName;
 		this.sellPrices = sellPrices;
 		this.earings = earings;
@@ -28,7 +28,6 @@ public class MessagePlayerShopSyncToClient implements IMessage {
 		this.y = y;
 		this.z = z;
 	}
-
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
@@ -39,12 +38,12 @@ public class MessagePlayerShopSyncToClient implements IMessage {
 		this.x = compound.getInteger("x");
 		this.y = compound.getInteger("y");
 		this.z = compound.getInteger("z");
-		NBTTagList tagList = (NBTTagList)compound.getTag("item");
+		NBTTagList tagList = (NBTTagList) compound.getTag("item");
 		itemStacks = new ItemStack[27];
 		for (int i = 0; i < tagList.tagCount(); i++) {
 			NBTTagCompound cmp = tagList.getCompoundTagAt(i);
 			byte b = cmp.getByte("Slot");
-			if(0<= b && b < itemStacks.length) {
+			if (0 <= b && b < itemStacks.length) {
 				itemStacks[b] = ItemStack.loadItemStackFromNBT(cmp);
 			}
 		}
@@ -63,9 +62,9 @@ public class MessagePlayerShopSyncToClient implements IMessage {
 		compound.setInteger("z", z);
 		NBTTagList tagList = new NBTTagList();
 		for (int i = 0; i < itemStacks.length; i++) {
-			if(itemStacks[i] != null) {
+			if (itemStacks[i] != null) {
 				NBTTagCompound cmp = new NBTTagCompound();
-				cmp.setByte("Slot", (byte)i);
+				cmp.setByte("Slot", (byte) i);
 				itemStacks[i].writeToNBT(cmp);
 				tagList.appendTag(cmp);
 			}

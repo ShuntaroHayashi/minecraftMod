@@ -5,7 +5,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class MessageClickFlagSync implements IMessage{
+public class MessageClickFlagSync implements IMessage {
 
 	boolean clickFlag;
 	int x;
@@ -15,7 +15,7 @@ public class MessageClickFlagSync implements IMessage{
 	public MessageClickFlagSync() {
 	}
 
-	public MessageClickFlagSync(int x, int y, int z,boolean clickflag) {
+	public MessageClickFlagSync(int x, int y, int z, boolean clickflag) {
 		this.x = x;
 		this.y = y;
 		this.z = z;

@@ -6,18 +6,17 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class MessageSpawnItemstack implements IMessage{
+public class MessageSpawnItemStack implements IMessage {
 	ItemStack item;
 	double x;
 	double y;
 	double z;
 	int num;
 
-	public MessageSpawnItemstack() {
-		// TODO 自動生成されたコンストラクター・スタブ
+	public MessageSpawnItemStack() {
 	}
 
-	public MessageSpawnItemstack(ItemStack item, double x, double y, double z,int num) {
+	public MessageSpawnItemStack(ItemStack item, double x, double y, double z, int num) {
 		this.item = item;
 		this.x = x;
 		this.y = y;

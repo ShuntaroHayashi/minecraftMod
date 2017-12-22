@@ -18,7 +18,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class PlayerShopBlock extends Block implements ITileEntityProvider{
-	private Random random = new Random();
 
 	public PlayerShopBlock(){
 		super(Material.rock);
@@ -42,7 +41,6 @@ public class PlayerShopBlock extends Block implements ITileEntityProvider{
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		// GUIを開く。
-
 		if (world.isRemote) {
 			PacketHandler.INSTANCE.sendToServer(new MessagePlayerShopSyncToServer(x, y, z));
 		}
@@ -55,6 +53,7 @@ public class PlayerShopBlock extends Block implements ITileEntityProvider{
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
 		// TileEntityの内部にあるアイテムをドロップさせる。
 		TileEntityShop tileentity = (TileEntityShop) world.getTileEntity(x, y, z);
+		Random random = new Random();
 		if (tileentity != null) {
 			for (int i = 0; i < tileentity.getSizeInventory(); i++) {
 				ItemStack itemStack = tileentity.getStackInSlot(i);
