@@ -1,4 +1,4 @@
-package forestMoon.packet;
+package forestMoon.packet.player;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;

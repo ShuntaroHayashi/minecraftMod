@@ -1,4 +1,4 @@
-package forestMoon.packet;
+package forestMoon.packet.villager;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;

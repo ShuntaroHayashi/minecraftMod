@@ -1,4 +1,4 @@
-package forestMoon.packet;
+package forestMoon.packet.shoping;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;

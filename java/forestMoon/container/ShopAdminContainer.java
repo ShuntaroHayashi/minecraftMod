@@ -5,8 +5,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 
-public class ContainerChest extends Container {
+public class ShopAdminContainer extends Container {
 	private TileEntityChest tileEntity;
 	/** アルミニウムチェストのインベントリの第一スロットの番号 */
 	private static final int index0 = 0;
@@ -18,8 +19,9 @@ public class ContainerChest extends Container {
 	private static final int index3 = 63;// 90
 	private String name;
 	private EntityPlayer player;
+	private int lastSlotNumber = -999;
 
-	public ContainerChest(EntityPlayer player, TileEntityChest tileEntity) {
+	public ShopAdminContainer(EntityPlayer player, TileEntityChest tileEntity) {
 		// スロットを設定する。
 		this.tileEntity = tileEntity;
 		this.player = player;
@@ -33,12 +35,12 @@ public class ContainerChest extends Container {
 		// プレイヤーインベントリーの設定
 		for (int iy = 0; iy < 3; iy++) {
 			for (int ix = 0; ix < 9; ix++) {
-				this.addSlotToContainer(new Slot(player.inventory, ix + (iy * 9) + 9, 8 + (ix * 18), 84 + (iy * 18)));
+				this.addSlotToContainer(new Slot(player.inventory, ix + (iy * 9) + 9, 8 + (ix * 18), 97 + (iy * 18)));
 			}
 		}
 		// クイックスロットの設定
 		for (int ix = 0; ix < 9; ix++) {
-			this.addSlotToContainer(new Slot(player.inventory, ix, 8 + (ix * 18), 142));
+			this.addSlotToContainer(new Slot(player.inventory, ix, 8 + (ix * 18), 155));
 		}
 
 	}
@@ -58,46 +60,53 @@ public class ContainerChest extends Container {
 
 	@Override
 	public ItemStack slotClick(int p_75144_1_, int p_75144_2_, int p_75144_3_, EntityPlayer p_75144_4_){
-		ItemStack itemStack = super.slotClick(p_75144_1_, p_75144_2_, p_75144_3_, p_75144_4_);
-		//最後にクリックされたスロットを保存
-		if (tileEntity.getAdminName().equals(player.getCommandSenderName())) {
-			return itemStack;
-		}else {
+		if(!tileEntity.isSlotClickFlag() && 0<=p_75144_1_ && p_75144_1_ < 27) {
+			lastSlotNumber = p_75144_1_;
 			return null;
+		}else {
+			ItemStack itemStack = super.slotClick(p_75144_1_, p_75144_2_, p_75144_3_, p_75144_4_);
+			return itemStack;
 		}
-
+		//最後にクリックされたスロットを保存
 	}
 
-//	@Override
-//	public ItemStack transferStackInSlot(EntityPlayer player, int slotNumber) {
-//		ItemStack itemStack = null;
-//		Slot slot = (Slot) inventorySlots.get(slotNumber);
-//		if (slot != null && slot.getHasStack()) {
-//			ItemStack itemStack1 = slot.getStack();
-//			itemStack = itemStack1.copy();
-//			if (index0 <= slotNumber && slotNumber < index1) {
-//				// チェストのインベントリならプレイヤーのインベントリに移動。
-//				if (!this.mergeItemStack(itemStack1, index1, index3, true)) {
-//					return null;
-//				}
-//			} else {
-//				// プレイヤーのインベントリならチェストのインベントリに移動。
-//				if (!this.mergeItemStack(itemStack1, index0, index1, false)) {
-//					return null;
-//				}
-//			}
-//
-//			if (itemStack1.stackSize == 0) {
-//				slot.putStack((ItemStack) null);
-//			} else {
-//				slot.onSlotChanged();
-//			}
-//			if (itemStack1.stackSize == itemStack.stackSize) {
-//				return null;
-//			}
-//			slot.onPickupFromSlot(player, itemStack1);
-//		}
-//		return itemStack;
-//	}
+	public String slotItemToString(int index) {
+		String str = "";
+		if (0 <= index && index < 27) {
+			try {
+				if(tileEntity.getStackInSlot(index) != null) {
+					str = StatCollector.translateToLocalFormatted("playerShop_itemName", tileEntity.getStackInSlot(index).getDisplayName(),tileEntity.getSellPrice(lastSlotNumber));
+//					str = StatCollector.translateToLocal(tileEntity.getStackInSlot(index).getDisplayName()) + "price:" + tileEntity.getSellPrice(lastSlotNumber);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return str;
+	}
+
+	public void onContainerClosed(EntityPlayer p_75134_1_){
+		if(tileEntity.getAdminName().equals("NONE")) {
+
+		}else {
+//			PacketHandler.INSTANCE.sendToServer(new MessageShopingSyncToServer(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, tileEntity.getAdminName()));
+		}
+
+		super.onContainerClosed(p_75134_1_);
+	}
+
+	public Boolean getClickFlag() {
+		return tileEntity.isSlotClickFlag();
+	}
+
+	public void setClickFlag(Boolean clickFlag) {
+		tileEntity.setSlotClickFlag(clickFlag);
+	}
+
+	public int getLastSlotNumber() {
+		return lastSlotNumber;
+	}
+
 
 }

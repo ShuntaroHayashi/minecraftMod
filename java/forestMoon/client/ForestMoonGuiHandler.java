@@ -3,9 +3,11 @@ package forestMoon.client;
 import cpw.mods.fml.common.network.IGuiHandler;
 import forestMoon.ForestMoon;
 import forestMoon.client.entity.TileEntityChest;
-import forestMoon.client.guicontainer.GuiChest;
+import forestMoon.client.guicontainer.PlayerShopingGuiContainer;
+import forestMoon.client.guicontainer.ShopAdminGuiContainer;
 import forestMoon.client.guicontainer.ShopingGuiContainer;
-import forestMoon.container.ContainerChest;
+import forestMoon.container.PlayerShopingContainer;
+import forestMoon.container.ShopAdminContainer;
 import forestMoon.container.ShopingContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -20,9 +22,16 @@ public class ForestMoonGuiHandler implements IGuiHandler{
 			if (!world.blockExists(x, y, z)){
 				return null;
 			}
-			TileEntity tileentity = world.getTileEntity(x, y, z);
-			if (tileentity instanceof TileEntityChest) {
-				return new ContainerChest(player, (TileEntityChest) tileentity);
+			TileEntity tileEntity = world.getTileEntity(x, y, z);
+			if (tileEntity instanceof TileEntityChest) {
+				if (((TileEntityChest) tileEntity).getAdminName().equals(player.getCommandSenderName()) || ((TileEntityChest)tileEntity).getAdminName().equals("NONE")) {
+					return new ShopAdminContainer(player, (TileEntityChest) tileEntity);
+				}else {
+					if(!(((TileEntityChest)tileEntity).isAdminFlag())) {
+						return new PlayerShopingContainer((TileEntityChest) tileEntity, player);
+					}
+				}
+
 			}
 		}
 
@@ -38,12 +47,18 @@ public class ForestMoonGuiHandler implements IGuiHandler{
 			if (!world.blockExists(x, y, z)){
 				return null;
 			}
-			TileEntity tileentity = world.getTileEntity(x, y, z);
-			if (tileentity instanceof TileEntityChest) {
-				return new GuiChest(player, (TileEntityChest) tileentity);
+			TileEntity tileEntity = world.getTileEntity(x, y, z);
+			if (tileEntity instanceof TileEntityChest) {
+				if (((TileEntityChest) tileEntity).getAdminName().equals(player.getCommandSenderName())|| ((TileEntityChest)tileEntity).getAdminName().equals("NONE")) {
+					return new ShopAdminGuiContainer(player, (TileEntityChest) tileEntity);
+				}else  {
+					if(!(((TileEntityChest)tileEntity).isAdminFlag())) {
+						return new PlayerShopingGuiContainer(player, (TileEntityChest)tileEntity);
+					}
+				}
+
 			}
 		}
-
 		return null;
 	}
 }

@@ -39,21 +39,26 @@ tile.ChestSample.name=ChestSample
 entity.forestmoonmod.Villager.name=villager
 //container
 container.forestmoon.ChestSample=chestSample
+shop_name=%s's shop
 //GUI
 buy_button=buy
 sell_button=sell
 shopingGui_num=num：
 buy=selling:
 sell=bid:
+sales=earnings:%d
+doneButton=price decision
+changeButton=mode change
+salengGetButton=earning revenue
+priceChange=price setting mode
+itemChange=item setting mode
+playerShop_itemName=%s price:%d
 //fixed phrase
 comandError_1=§cValue is bigger than possession money
 comandError_2=§cValue is too large
 comandMoney=changed %s's money to %d dollar
 comandMoney_Error=§c/money [player] [set|add] <num>
 comandCoin=converted %s's money to %d coin
-comandCoin_1=converted
-comandCoin_2='s money to
-comandCoin_3= coins
 comandCoin_Error=§c/coin [player] [num]
 money=＄
 shopingError_1=§cNon-integer was entered

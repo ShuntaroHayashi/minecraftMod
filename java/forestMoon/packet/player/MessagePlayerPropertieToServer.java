@@ -1,25 +1,26 @@
-package forestMoon.packet;
+package forestMoon.packet.player;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import forestMoon.ExtendedPlayerProperties;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 
-public class MessageInventory implements IMessage {
+public class MessagePlayerPropertieToServer implements IMessage {
 
 	// server,client上では変数に直接アクセス。各端末間での通信ではByteBufに書き込んだ情報のみを送受信できる。
 
 	public NBTTagCompound data;
 
-	public MessageInventory() {
+	public MessagePlayerPropertieToServer() {
 
 	}
 
 	// インベントリをdataに保存
-	public MessageInventory(NBTTagList tagList) {
+	public MessagePlayerPropertieToServer(EntityPlayer player) {
 		data = new NBTTagCompound();
-		data.setTag("inventory", tagList);
+		ExtendedPlayerProperties.get(player).saveNBTData(data);
 	}
 
 	@Override // IMessageのメソッド。ByteBufからデータを読み取る。 受信処理

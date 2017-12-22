@@ -1,8 +1,7 @@
 package forestMoon;
 
-//import sampleMod.packet.MessagePlayerProperties;
-import forestMoon.packet.MessagePlayerProperties;
 import forestMoon.packet.PacketHandler;
+import forestMoon.packet.player.MessagePlayerProperties;
 import forestMoon.shoping.ShopingItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

@@ -9,10 +9,10 @@ import forestMoon.ExtendedPlayerProperties;
 import forestMoon.client.entity.EntityECVillager;
 import forestMoon.client.gui.MyGuiButton;
 import forestMoon.container.ShopingContainer;
-import forestMoon.packet.MessagePlayerPropertieToServer;
-import forestMoon.packet.MessageSpawnItemstack;
-import forestMoon.packet.MessageVillager;
 import forestMoon.packet.PacketHandler;
+import forestMoon.packet.player.MessagePlayerPropertieToServer;
+import forestMoon.packet.shoping.MessageSpawnItemstack;
+import forestMoon.packet.villager.MessageVillager;
 import forestMoon.shoping.ShopingItem;
 import forestMoon.shoping.VillagerShopingItem;
 import net.minecraft.client.Minecraft;
@@ -167,8 +167,6 @@ public class ShopingGuiContainer extends GuiContainer{
 			double y = player.lastTickPosY;
 			double z = player.lastTickPosZ;
 
-//			EntityItem entityItem = new EntityItem(world, x, y, z, itemStack);
-//			world.spawnEntityInWorld(entityItem);
 			PacketHandler.INSTANCE.sendToServer(new MessageSpawnItemstack(itemStack, x, y, z,stackSize));
 		}
 

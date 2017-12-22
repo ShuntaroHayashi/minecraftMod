@@ -5,6 +5,8 @@ import java.util.Random;
 import cpw.mods.fml.common.registry.GameRegistry;
 import forestMoon.ForestMoon;
 import forestMoon.client.entity.TileEntityChest;
+import forestMoon.packet.PacketHandler;
+import forestMoon.packet.shoping.MessageShopingSyncToServer;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -25,7 +27,7 @@ public class ChestSample extends Block implements ITileEntityProvider{
 		this.setBlockTextureName("forestmoon:"+name);
 		this.setCreativeTab(ForestMoon.forestmoontab);
 		this.setHardness(5.0F);
-		this.setResistance(1.0F);
+		this.setResistance(2000.0F);
 		this.setStepSound(soundTypeMetal);
 		isBlockContainer = true;
 		GameRegistry.registerBlock(this, name);
@@ -40,9 +42,16 @@ public class ChestSample extends Block implements ITileEntityProvider{
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		// GUIを開く。
+
+		if (world.isRemote) {
+			PacketHandler.INSTANCE.sendToServer(new MessageShopingSyncToServer(x, y, z));
+		}
+
 		player.openGui(ForestMoon.instance, ForestMoon.CHEST_GUI_ID, world, x, y, z);
 		return true;
 	}
+
+
 
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {

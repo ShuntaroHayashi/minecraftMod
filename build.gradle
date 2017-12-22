@@ -25,7 +25,7 @@ apply plugin: "forge"
 	}
 
 archivesBaseName = "EconomicsCraft.1.7.10"
-version = "bata-1.1.0"
+version = "bata-1.2.0"
 minecraft.version = "1.7.10-10.13.4.1558-1.7.10"
 
 [compileJava, compileTestJava].each {

@@ -1,7 +1,7 @@
 package forestMoon.container;
 
-import forestMoon.packet.MessageInventory;
 import forestMoon.packet.PacketHandler;
+import forestMoon.packet.player.MessageInventory;
 import forestMoon.shoping.ShopingItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
