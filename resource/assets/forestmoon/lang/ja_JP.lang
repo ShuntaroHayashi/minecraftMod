@@ -50,6 +50,7 @@ sell_button=売る
 shopingGui_num=個数：
 buy=売値:
 sell=買値:
+villagerBuy=売値:%d 買値:%d
 sales=売り上げ:%d
 doneButton=価格決定
 changeButton=モード変更

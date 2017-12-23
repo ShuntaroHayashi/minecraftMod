@@ -17,28 +17,29 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
-public class PlayerShopGuiContainer extends GuiContainer{
+public class PlayerShopGuiContainer extends GuiContainer {
 
 	private EntityPlayer player;
 	private TileEntityShop tileEntity;
 	private MyGuiButton buyBtn;
-	private String shopName;//店の名前
-	private String itemName ="";//選択中のアイテムの名前
+	private String shopName;// 店の名前
+	private String itemName = "";// 選択中のアイテムの名前
 	private ExtendedPlayerProperties properties;
-	private int moneyX,moneyY;
+	private int moneyX, moneyY;
 	private static PlayerShopContainer container;
-	private static final ResourceLocation GUITEXTURE = new ResourceLocation("forestmoon:textures/gui/container/shopGui_2.png");
-
-
+	private static final ResourceLocation GUITEXTURE = new ResourceLocation(
+			"forestmoon:textures/gui/container/shopGui_2.png");
 
 	public PlayerShopGuiContainer(EntityPlayer player, TileEntityShop tileEntity) {
 		super(container = new PlayerShopContainer(tileEntity, player));
 		this.player = player;
 		this.tileEntity = tileEntity;
 		ySize = 235;
-		shopName = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("shop_name"), tileEntity.getAdminName());
+		shopName = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("shop_name"),
+				tileEntity.getAdminName());
 
-		PacketHandler.INSTANCE.sendToServer(new MessagePlayerShopSyncToServer(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord));
+		PacketHandler.INSTANCE.sendToServer(
+				new MessagePlayerShopSyncToServer(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord));
 
 		new ExtendedPlayerProperties();
 		properties = ExtendedPlayerProperties.get(player);
@@ -49,7 +50,9 @@ public class PlayerShopGuiContainer extends GuiContainer{
 		moneyX = xSize - 62;
 		moneyY = this.ySize - 148;
 
-		this.buttonList.add(buyBtn = new MyGuiButton(0, guiLeft + xSize - 50, guiTop+ySize- 165, 40,15,StatCollector.translateToLocal("buy_button")));
+		this.buttonList.add(buyBtn = new MyGuiButton(0, guiLeft + xSize - 50, guiTop + ySize - 165, 40, 15,
+				StatCollector.translateToLocal("buy_button")));
+		buyBtn.enabled = false;
 	}
 
 	@Override
@@ -65,8 +68,11 @@ public class PlayerShopGuiContainer extends GuiContainer{
 		if(tileEntity.isShopSettingFlag()) {
 			buyBtn.enabled = false;
 		}else {
-			buyBtn.enabled = true;
+			buyBtn.enabled = !itemName.equals("");
 		}
+
+
+
 	}
 
 	@Override
@@ -77,38 +83,45 @@ public class PlayerShopGuiContainer extends GuiContainer{
 		int l = (height - ySize) / 2;
 		this.drawTexturedModalRect(k, l, 0, 0, xSize, ySize);
 	}
-	//ボタン押下時
+
+	// ボタン押下時
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		ItemStack itemStack;
 		int price;
 
-		System.out.println("test :" + button.id);
-		if(button.id == 0) {
-			System.out.println(tileEntity.isShopSettingFlag());
-			if(!itemName.equals("") && tileEntity.getStackInSlot(container.getLastSlotNumber()).stackSize > 0 && !tileEntity.isShopSettingFlag()) {
+		if (button.id == 0) {
+			if (!itemName.equals("") && tileEntity.getStackInSlot(container.getLastSlotNumber()).stackSize > 0
+					&& !tileEntity.isShopSettingFlag()) {
 				price = tileEntity.getSellPrice(container.getLastSlotNumber());
 				itemStack = tileEntity.getStackInSlot(container.getLastSlotNumber());
 				buy(itemStack, price);
 			}
 		}
 	}
-	//販売処理
-	private void buy(ItemStack itemStack,int price){
-		long money = properties.getMoney();
 
-		if(price <= money ){
+	// 販売処理
+	private void buy(ItemStack itemStack, int price) {
+		long money = properties.getMoney();
+		int num = 1;
+		final int maxSize = tileEntity.getStackInSlot(container.getLastSlotNumber()).stackSize;
+
+		if (super.isShiftKeyDown()) {
+			while (num < maxSize && (price * num + price) <= money) {
+				num++;
+			}
+		}
+		if (price * num <= money) {
 			double x = player.lastTickPosX;
 			double y = player.lastTickPosY;
 			double z = player.lastTickPosZ;
 
-			PacketHandler.INSTANCE.sendToServer(new MessageSpawnItemStack(itemStack, x, y, z,1));
+			PacketHandler.INSTANCE.sendToServer(new MessageSpawnItemStack(itemStack, x, y, z, num));
 
-			properties.changeMoney(price  * -1);
-			tileEntity.buy(container.getLastSlotNumber(), 1);
+			properties.changeMoney(price * -1 * num);
+			tileEntity.buy(container.getLastSlotNumber(), num);
 			PacketHandler.INSTANCE.sendToServer(new MessagePlayerPropertieToServer(player));
 		}
-
 	}
 
 	@Override

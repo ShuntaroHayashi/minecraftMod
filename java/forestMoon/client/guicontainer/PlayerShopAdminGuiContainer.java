@@ -7,7 +7,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import forestMoon.ExtendedPlayerProperties;
 import forestMoon.container.PlayerShopAdminContainer;
 import forestMoon.packet.PacketHandler;
-import forestMoon.packet.player.MessagePlayerPropertieToServer;
 import forestMoon.packet.shoping.MessagePlayerShopSyncToServer;
 import forestMoon.packet.shoping.MessageShopSettingFlagToServer;
 import forestMoon.tileEntity.TileEntityShop;
@@ -111,21 +110,24 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 				StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX,
 				moneyY, 4210752);
 		fontRendererObj.drawString(itemName, 8, 72, 4210752);
-		if (shopSettingFlag) {
-			priceTextField.setEnabled(shopSettingMode);
-			priceTextField.drawTextBox();
+		priceTextField.setEnabled(shopSettingMode);
+		priceTextField.drawTextBox();
 
-			// テキストフィールドに数値が入ってる場合にボタンを有効化
-			this.doneBtn.enabled = this.priceTextField.getText().trim().length() > 0;
+		// テキストフィールドに数値が入ってる場合にボタンを有効化
+		if(this.priceTextField.getText().trim().length() > 0) {
+			try {
+				int currentPrice = tileEntity.getSellPrice(container.getLastSlotNumber());
+				int price = Integer.parseInt(priceTextField.getText());
+				this.doneBtn.enabled = currentPrice != price;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+		/** 現在の設定値とテキストフィールドの中身が違った場合はtrue **/
+		salengGetBtn.enabled = (tileEntity.getEarnings() > 0);
+		mode = shopSettingMode?StatCollector.translateToLocal("priceChange"):StatCollector.translateToLocal("itemChange");
 
-		if (shopSettingMode) {
-			mode = StatCollector.translateToLocal("priceChange");
-		} else {
-			mode = StatCollector.translateToLocal("itemChange");
-		}
 		itemName = container.slotItemToString(container.getLastSlotNumber());
-//		PacketHandler.INSTANCE.sendToServer(new MessageShopSettingFlagToServer(x, y, z, true));
 
 		super.drawGuiContainerForegroundLayer(p_146979_1_, p_146979_2_);
 	}
@@ -175,7 +177,6 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 					try {
 						int price = Integer.parseInt(priceTextField.getText());
 						tileEntity.setSellPrice(container.getLastSlotNumber(), price);
-//						PacketHandler.INSTANCE.sendToServer(new MessagePlayerShopSyncToServer(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, tileEntity.getAdminName(), tileEntity.getSellPrices(), tileEntity.getEarnings(), tileEntity.getItemStacks()));
 						tileEntity.sendServer();
 					} catch (Exception e) {
 					}
@@ -191,11 +192,9 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 			if (guibutton.id == ButtonId.salengGetBtn.id) {
 				properties.changeMoney(tileEntity.getEarnings());
 				tileEntity.setEarnings(0);
-				PacketHandler.INSTANCE.sendToServer(new MessagePlayerPropertieToServer(player));
 				tileEntity.sendServer();
-//				PacketHandler.INSTANCE.sendToServer(
-//						new MessagePlayerShopSyncToServer(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord,
-//								tileEntity.getAdminName(), tileEntity.getSellPrices(), 0, tileEntity.getItemStacks()));
+				properties.syncPlayerData(player);
+
 			}
 		}
 	}

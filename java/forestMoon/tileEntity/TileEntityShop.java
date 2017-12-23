@@ -192,16 +192,16 @@ public class TileEntityShop extends TileEntity implements IInventory {
 
 	public int buy(int index, int num) {
 		ItemStack itemStack = this.getStackInSlot(index);
+		earnings += (sellPrices[index] * num);
 		if (itemStack.stackSize > num) {
 			itemStack.stackSize = itemStack.stackSize - num;
 			itemStacks[index] = itemStack;
 		} else {
-			num -= itemStack.stackSize;
 			itemStack.stackSize = 0;
 			itemStacks[index] = null;
 			sellPrices[index] = 0;
 		}
-		earnings += (sellPrices[index] * num);
+
 		if (worldObj.isRemote) {
 			PacketHandler.INSTANCE.sendToServer(
 					new MessagePlayerShopSyncToServer(xCoord, yCoord, zCoord, name, sellPrices, earnings, itemStacks));

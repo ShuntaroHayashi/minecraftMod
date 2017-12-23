@@ -75,7 +75,6 @@ public class PlayerShopContainer extends Container{
 				if(tileEntity.getStackInSlot(index) != null) {
 					if (tileEntity.getStackInSlot(index).stackSize > 0) {
 						str = StatCollector.translateToLocalFormatted("playerShop_itemName", tileEntity.getStackInSlot(index).getDisplayName(),tileEntity.getSellPrice(lastSlotNumber));
-//						str = StatCollector.translateToLocal(tileEntity.getStackInSlot(index).getDisplayName()) + "price :" + tileEntity.getSellPrice(lastSlotNumber);
 					}else {
 						str = "売り切れ";
 					}
@@ -94,33 +93,6 @@ public class PlayerShopContainer extends Container{
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int slotNumber) {
-//		ItemStack itemStack = null;
-//		Slot slot = (Slot) inventorySlots.get(slotNumber);
-//		if (slot != null && slot.getHasStack()) {
-//			ItemStack itemStack1 = slot.getStack();
-//			itemStack = itemStack1.copy();
-//			if (index0 <= slotNumber && slotNumber < index1) {
-//				// チェストのインベントリならプレイヤーのインベントリに移動。
-//				if (!this.mergeItemStack(itemStack1, index1, index3, true)) {
-//					return null;
-//				}
-//			} else {
-//				// プレイヤーのインベントリならチェストのインベントリに移動。
-//				if (!this.mergeItemStack(itemStack1, index0, index1, false)) {
-//					return null;
-//				}
-//			}
-//
-//			if (itemStack1.stackSize == 0) {
-//				slot.putStack((ItemStack) null);
-//			} else {
-//				slot.onSlotChanged();
-//			}
-//			if (itemStack1.stackSize == itemStack.stackSize) {
-//				return null;
-//			}
-//			slot.onPickupFromSlot(player, itemStack1);
-//		}
 		return null;
 	}
 
@@ -128,7 +100,6 @@ public class PlayerShopContainer extends Container{
 		if(tileEntity.getAdminName().equals("NONE")) {
 
 		}else {
-//			PacketHandler.INSTANCE.sendToServer(new MessageShopingSyncToServer(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, tileEntity.getAdminName()));
 		}
 
 		super.onContainerClosed(p_75134_1_);

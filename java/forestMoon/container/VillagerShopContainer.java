@@ -17,6 +17,10 @@ public class VillagerShopContainer extends Container{
 	public InventoryPlayer inventoryPlayer;
 	private VilaggerInventory inventory;
 	private int lastSlotNumber;
+	private int index0 = 0;
+	private int index1 = 14;
+	private int index2 = 41;
+	private int index3 = 50;
 
 	public VillagerShopContainer(final InventoryPlayer p_i1819_1_, boolean p_i1819_2_, EntityPlayer player) {
 		this.inventoryPlayer = p_i1819_1_;
@@ -26,7 +30,7 @@ public class VillagerShopContainer extends Container{
 		//販売アイテム
 		for(int iy=0;iy<2;iy++){
 			for(int ix=0; ix<7;ix++){
-				this.addSlotToContainer(new NoMoveInventorySlot(inventory,  ix+ (iy * 7) , 36 + 8+(ix * 18), 10 +(iy * 18)));
+				this.addSlotToContainer(new NoMoveInventorySlot(inventory,  ix+ (iy * 7) , 36 + 8+(ix * 18), 17 +(iy * 18)));
 			}
 		}
 
@@ -34,12 +38,12 @@ public class VillagerShopContainer extends Container{
 		//クイックスロットの設定
 		for (int ix = 0; ix < 9; ix++) {
 			//inventoryplyer/id/x/y
-			this.addSlotToContainer(new Slot(inventoryPlayer, ix , 8 + (ix * 18) , 142));
+			this.addSlotToContainer(new Slot(inventoryPlayer, ix , 8 + (ix * 18) , 149));
 		}
 		//インベントリー
 		for (int iy = 0; iy < 3; iy++) {
 			for (int ix = 0; ix < 9; ix++) {
-				this.addSlotToContainer(new Slot(inventoryPlayer,  ix + (iy * 9) + 9 , 8 + (ix * 18), 84 + (iy * 18)));
+				this.addSlotToContainer(new Slot(inventoryPlayer,  ix + (iy * 9) + 9 , 8 + (ix * 18), 91 + (iy * 18)));
 			}
 		}
 	}

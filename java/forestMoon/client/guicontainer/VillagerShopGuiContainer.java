@@ -27,8 +27,8 @@ import net.minecraft.util.StatCollector;
 
 @SideOnly(Side.CLIENT)
 public class VillagerShopGuiContainer extends GuiContainer{
-	private static final ResourceLocation TEXTURE = new ResourceLocation("forestmoon", "textures/guis/buyGui.png");
-	private static VillagerShopContainer shopingContainer;
+	private static final ResourceLocation TEXTURE = new ResourceLocation("forestmoon", "textures/guis/villagerShopGui.png");
+	private static VillagerShopContainer container;
 	private final int BUY_BUTTON = 0;
 	private final int SELL_BUTTON = 1;
 	private int moneyX = 0;
@@ -42,16 +42,17 @@ public class VillagerShopGuiContainer extends GuiContainer{
 	private ShopingItem currentItem;
 	private String itemStr = "";
 	private String buyStr="";
+	private MyGuiButton buyBtn,sellBtn;
 
 	//コンストラクター
 	public VillagerShopGuiContainer(EntityPlayer player) {
-		super(shopingContainer = new VillagerShopContainer(player.inventory, true, player));
+		super(container = new VillagerShopContainer(player.inventory, true, player));
 
 		this.allowUserInput = true;
 		this.player = player;
 
 		moneyX = this.guiLeft + 8;
-		moneyY = this.guiTop + this.ySize - 92;
+		moneyY = this.guiTop + this.ySize - 85;
 
 		new ExtendedPlayerProperties();
 		properties = ExtendedPlayerProperties.get(player);
@@ -63,20 +64,25 @@ public class VillagerShopGuiContainer extends GuiContainer{
 		villager = (EntityECVillager)(Minecraft.getMinecraft().theWorld.getEntityByID(id));
 		this.readItemToEntity(villager);
 
-		shopingContainer.ItemSet(shopingItems);
+		container.ItemSet(shopingItems);
 	}
 
 	//イニット
 	public void initGui() {
 		super.initGui();
 
-		textField = new GuiTextField(fontRendererObj,(this.xSize ) / 2 + 18, 65, 20, 15);
+		textField = new GuiTextField(fontRendererObj,(this.xSize ) / 2 + 18, 72, 20, 15);
 		textField.setFocused(true);
 		textField.setText("");
 		textField.setMaxStringLength(3);
 
-		buttonList.add(new MyGuiButton(BUY_BUTTON, this.guiLeft + (this.xSize/4) * 3 - 4, this.guiTop +49, this.xSize/4, 15, StatCollector.translateToLocal("buy_button")));
-		buttonList.add(new MyGuiButton(SELL_BUTTON,this.guiLeft + (this.xSize/4) * 3 - 4, this.guiTop + 65, this.xSize/4,15,StatCollector.translateToLocal("sell_button")));
+		this.ySize += 7;
+
+		buttonList.add(buyBtn = new MyGuiButton(BUY_BUTTON, this.guiLeft + (this.xSize/4) * 3 - 4, this.guiTop +56, this.xSize/4, 15, StatCollector.translateToLocal("buy_button")));
+		buttonList.add(sellBtn = new MyGuiButton(SELL_BUTTON,this.guiLeft + (this.xSize/4) * 3 - 4, this.guiTop + 72, this.xSize/4,15,StatCollector.translateToLocal("sell_button")));
+
+		buyBtn.enabled = false;
+		sellBtn.enabled = false;
 
 	}
 
@@ -85,14 +91,17 @@ public class VillagerShopGuiContainer extends GuiContainer{
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseZ) {
 
 		VillagerShopingItem shopingItem = new VillagerShopingItem();
-		fontRendererObj.drawString(itemStr, 4, 48, 4210752);
-		fontRendererObj.drawString(buyStr, 4, 57, 4210752);
-		fontRendererObj.drawString(StatCollector.translateToLocal(shopingItem.getProfessionName(profession)), 4, 6, 4210752);
-		fontRendererObj.drawString(StatCollector.translateToLocal("shopingGui_num"),(this.xSize) / 2 - 4, 70, 4210752);
+		fontRendererObj.drawString(itemStr, 8, 55, 4210752);
+		fontRendererObj.drawString(buyStr, 8, 64, 4210752);
+		fontRendererObj.drawString(StatCollector.translateToLocal(shopingItem.getProfessionName(profession)), 8, 6, 4210752);
+		fontRendererObj.drawString(StatCollector.translateToLocal("shopingGui_num"),(this.xSize) / 2 - 4, 77, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX, moneyY, 4210752);
 
 		textField.setEnabled(true);
 		textField.drawTextBox();
+
+		buyBtn.enabled = !itemStr.equals("");
+		sellBtn.enabled = !itemStr.equals("");
 
 		super.drawGuiContainerForegroundLayer(mouseX, mouseZ);
 
@@ -180,15 +189,15 @@ public class VillagerShopGuiContainer extends GuiContainer{
 	//買取処理
 	private void sell(ItemStack itemStack , int price,int num){
 		for(int index = 14;index<50;index++){
-			if(shopingContainer.getItemStack(index) != null){
-				ItemStack slotItem = shopingContainer.getItemStack(index);
+			if(container.getItemStack(index) != null){
+				ItemStack slotItem = container.getItemStack(index);
 				if(itemStack.getItem() == slotItem.getItem()){
 					if(slotItem.stackSize >= num ){
 						properties.changeMoney(price * num);
 						PacketHandler.INSTANCE.sendToServer(new MessagePlayerPropertieToServer(player));
 
 						itemStack.stackSize = slotItem.stackSize - num;
-						shopingContainer.slotChange(index, itemStack);
+						container.slotChange(index, itemStack);
 
 						fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX, moneyY, 4210752);
 
@@ -200,7 +209,7 @@ public class VillagerShopGuiContainer extends GuiContainer{
 						num -= slotItem.stackSize;
 						itemStack.stackSize = 0;
 
-						shopingContainer.slotChange(index, itemStack);
+						container.slotChange(index, itemStack);
 						fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX, moneyY, 4210752);
 
 					}
@@ -215,14 +224,15 @@ public class VillagerShopGuiContainer extends GuiContainer{
 		textField.mouseClicked(i-this.guiLeft, j-this.guiTop, k);
 
 		//最後にクリックされたスロットが村人のスロットだった場合
-		if(between(shopingContainer.getLastSlotNumber(), 13, 0)){
-			if(shopingContainer.getLastSlotNumber() < shopingItems.length){
-				ShopingItem item = shopingItems[ shopingContainer.getLastSlotNumber()];
+		if(between(container.getLastSlotNumber(), 13, 0)){
+			if(container.getLastSlotNumber() < shopingItems.length){
+				ShopingItem item = shopingItems[ container.getLastSlotNumber()];
 				currentItem = item;
-//				String string = new String(item.getItemStack().getDisplayName()+" 売値"+item.getBuy()+" 買値" + item.getSell());
-//				itemField.setText(string);
-				itemStr = new String(item.getItemStack().getDisplayName());
-				buyStr = new String(StatCollector.translateToLocal("buy") + item.getBuy() + " " + StatCollector.translateToLocal("sell") + item.getSell());
+				itemStr = item.getItemStack().getDisplayName();
+				buyStr = StatCollector.translateToLocalFormatted("villagerBuy", item.getBuy(),item.getSell());
+			}else {
+				itemStr="";
+				buyStr="";
 			}
 		}
 	}
