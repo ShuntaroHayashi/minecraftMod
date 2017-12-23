@@ -20,6 +20,7 @@ public class TileEntityShop extends TileEntity implements IInventory {
 	private boolean slotClickFlag = true;//スロットにアクセスできるかのフラグ
 	private boolean shopSettingFlag = false;//ショップを設定中かのフラグ
 	private int[] sellPrices = new int[27];//価格一覧
+	private boolean breakFlag = true;//ブロックを破壊可能かのフラグ true:可能 false:不可能
 
 
 	// データの書き込み
@@ -147,9 +148,9 @@ public class TileEntityShop extends TileEntity implements IInventory {
 		this.readFromNBT(pkt.func_148857_g());
 	}
 
-	/*
-	 * プレイヤー名文字列のゲッターとセッター。
-	 */
+	/**
+	 * ゲッターとセッター。
+	 **/
 	public String getAdminName() {
 		return this.name;
 	}
@@ -202,10 +203,6 @@ public class TileEntityShop extends TileEntity implements IInventory {
 		}
 		earnings += (sellPrices[index] * num);
 		if (worldObj.isRemote) {
-			// PacketHandler.INSTANCE.sendToServer(new
-			// MessageEarningsSyncToServer(xCoord, yCoord, zCoord, earnings));
-			// PacketHandler.INSTANCE.sendToServer(new
-			// MessageTileEntitySync(xCoord, yCoord, zCoord, itemStacks));
 			PacketHandler.INSTANCE.sendToServer(
 					new MessagePlayerShopSyncToServer(xCoord, yCoord, zCoord, name, sellPrices, earnings, itemStacks));
 		}
@@ -255,5 +252,15 @@ public class TileEntityShop extends TileEntity implements IInventory {
 	public void setShopSettingFlag(boolean shopSettingFlag) {
 		this.shopSettingFlag = shopSettingFlag;
 	}
+
+	public boolean isBreakFlag() {
+		return breakFlag;
+	}
+
+	public void setBreakFlag(boolean breakFlag) {
+		this.breakFlag = breakFlag;
+	}
+
+
 
 }
