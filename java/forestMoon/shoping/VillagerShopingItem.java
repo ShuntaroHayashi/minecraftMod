@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class VillagerShopingItem {
@@ -25,12 +26,12 @@ public class VillagerShopingItem {
 
 		switch (profession) {
 		case 0:
-			shopingItems.add(new ShopingItem(new ItemStack(Blocks.red_flower), 200, 100));
-			shopingItems.add(new ShopingItem(new ItemStack(Blocks.yellow_flower), 300, 200));
+			shopingItems.add(new ShopingItem(new ItemStack(Blocks.red_flower), 200, 70,500));
+			shopingItems.add(new ShopingItem(new ItemStack(Blocks.yellow_flower), 300, 100,500));
 			break;
-
 		case 1:
-			shopingItems.add(new ShopingItem(new ItemStack(Items.apple), 100, 50));
+			shopingItems.add(new ShopingItem(new ItemStack(Items.apple), 100, 30,1000));
+			shopingItems.add(new ShopingItem(new ItemStack(Item.getItemById(364)), 300, 100, 800));
 			break;
 		}
 

@@ -13,8 +13,8 @@ public class MessageVillagerSyncHandler implements IMessageHandler<MessageVillag
 		EntityECVillager villager = (EntityECVillager) Minecraft.getMinecraft().theWorld.getEntityByID(message.id);
 
 		try {
-			villager.setShopingItems(message.items);
 			villager.setEconomicsProfession(message.profession);
+			villager.setBuyCount(message.buyCount);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

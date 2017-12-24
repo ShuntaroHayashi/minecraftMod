@@ -16,7 +16,7 @@ public class MessageVillagerSyncToServerHandler
 			Entity entity = MinecraftServer.getServer().getEntityWorld().getEntityByID(message.id);
 			if (entity instanceof EntityECVillager && entity != null) {
 				EntityECVillager villager = (EntityECVillager) entity;
-				MessageVillagerSync returnMessage = new MessageVillagerSync(villager.getShopingItems(),
+				MessageVillagerSync returnMessage = new MessageVillagerSync(villager.getBuyCount(),
 						villager.getEconomicsProfession(), message.id);
 				return returnMessage;
 			}

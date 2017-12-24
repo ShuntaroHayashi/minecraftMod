@@ -34,10 +34,9 @@ public class ForestMoon {
 	// 初期設定
 	@Mod.Instance("EconomicsCraft")
 	public static final String MODID = "economicscraft";
-	public static final String VERSION = "beta1.1.0";
+	public static final String VERSION = "beta1.3.0";
 	@Instance(MODID)
 	public static ForestMoon instance;
-
 	// GUI_ID
 	public enum GuiId{
 		VILLAGERSHOP(0),
