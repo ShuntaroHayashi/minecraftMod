@@ -104,7 +104,6 @@ public class VillagerShopGuiContainer extends GuiContainer{
 		sellBtn.enabled = !itemStr.equals("");
 
 		super.drawGuiContainerForegroundLayer(mouseX, mouseZ);
-
 	}
 
 	/*GUIの背景の描画処理*/

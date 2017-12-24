@@ -132,6 +132,11 @@ public class VillagerShopContainer extends Container{
 		PacketHandler.INSTANCE.sendToServer(new MessageInventory(tagList));
 	}
 
+	@Override
+	public ItemStack transferStackInSlot(EntityPlayer player, int slotNumber) {
+		return null;
+	}
+
 	//最後にクリックされたスロットのスロットナンバーを返す
 	public int getLastSlotNumber() {
 		return lastSlotNumber;

@@ -15,7 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityShop extends TileEntity implements IInventory {
 	protected ItemStack[] itemStacks = new ItemStack[27];//売り物
-	private String name = "NONE";//ショップ管理者名
+	private String adminName = "NONE";//ショップ管理者名
 	private int earnings = 0;//売り上げ
 	private boolean slotClickFlag = true;//スロットにアクセスできるかのフラグ
 	private boolean shopSettingFlag = false;//ショップを設定中かのフラグ
@@ -37,7 +37,7 @@ public class TileEntityShop extends TileEntity implements IInventory {
 			nbttaglist.appendTag(nbt1);
 		}
 		nbt.setTag("Items", nbttaglist);
-		nbt.setString("name", name);
+		nbt.setString("name", adminName);
 		nbt.setIntArray("sellPrices", sellPrices);
 		nbt.setInteger("earnings", earnings);
 	}
@@ -55,7 +55,7 @@ public class TileEntityShop extends TileEntity implements IInventory {
 				itemStacks[b0] = ItemStack.loadItemStackFromNBT(nbt1);
 			}
 		}
-		name = nbt.getString("name");
+		adminName = nbt.getString("name");
 		earnings = nbt.getInteger("earnings");
 		sellPrices = nbt.getIntArray("sellPrices");
 	}
@@ -148,15 +148,13 @@ public class TileEntityShop extends TileEntity implements IInventory {
 		this.readFromNBT(pkt.func_148857_g());
 	}
 
-	/**
-	 * ゲッターとセッター。
-	 **/
+	/* getter setter start */
 	public String getAdminName() {
-		return this.name;
+		return this.adminName;
 	}
 
 	public void setAdminName(String par1) {
-		this.name = par1;
+		this.adminName = par1;
 	}
 
 	public int getMetadata() {
@@ -204,7 +202,7 @@ public class TileEntityShop extends TileEntity implements IInventory {
 
 		if (worldObj.isRemote) {
 			PacketHandler.INSTANCE.sendToServer(
-					new MessagePlayerShopSyncToServer(xCoord, yCoord, zCoord, name, sellPrices, earnings, itemStacks));
+					new MessagePlayerShopSyncToServer(xCoord, yCoord, zCoord, adminName, sellPrices, earnings, itemStacks));
 		}
 		return num;
 	}
@@ -212,7 +210,7 @@ public class TileEntityShop extends TileEntity implements IInventory {
 	public void sendServer() {
 		if (worldObj.isRemote) {
 			PacketHandler.INSTANCE.sendToServer(
-					new MessagePlayerShopSyncToServer(xCoord, yCoord, zCoord, name, sellPrices, earnings, itemStacks));
+					new MessagePlayerShopSyncToServer(xCoord, yCoord, zCoord, adminName, sellPrices, earnings, itemStacks));
 		}
 	}
 
@@ -260,7 +258,7 @@ public class TileEntityShop extends TileEntity implements IInventory {
 	public void setBreakFlag(boolean breakFlag) {
 		this.breakFlag = breakFlag;
 	}
-
+	/* getter setter end*/
 
 
 }
