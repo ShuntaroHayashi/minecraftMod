@@ -103,9 +103,10 @@ public class CommandCoin extends CommandBase {
 
 						}
 					}
-					chatText = new ChatComponentText(StatCollector.translateToLocal("comandCoin_1")
-							+ player.getCommandSenderName() + StatCollector.translateToLocal("comandCoin_2") + chatMoney
-							+ StatCollector.translateToLocal("comandCoin_3"));
+//					chatText = new ChatComponentText(StatCollector.translateToLocal("comandCoin_1")
+//							+ player.getCommandSenderName() + StatCollector.translateToLocal("comandCoin_2") + chatMoney
+//							+ StatCollector.translateToLocal("comandCoin_3"));
+					chatText = new ChatComponentText(StatCollector.translateToLocalFormatted("comandCoin", player.getCommandSenderName(),chatMoney));
 				} else {
 					chatText = new ChatComponentText(StatCollector.translateToLocal("comandError_1"));
 				}

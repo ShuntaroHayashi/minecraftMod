@@ -1,31 +1,73 @@
 package forestMoon.item.items;
 
+import java.util.List;
+
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import forestMoon.ForestMoon;
 import forestMoon.client.entity.EntityECVillager;
+import forestMoon.shoping.VillagerShopingItem;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Facing;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class ItemECVillagerEgg extends Item {
+	VillagerShopingItem vItem = new VillagerShopingItem();
+	private IIcon[] iIcons = new IIcon[vItem.getProfessionSize()];
+
 
 	public ItemECVillagerEgg() {
 		String name = "VillagerEgg";
-		// クリエイティブタブの登録
 		this.setCreativeTab(ForestMoon.forestmoontab);
-		// システム名の登録
 		this.setUnlocalizedName(name);
-		// テクスチャ名の登録
 		this.setTextureName("forestmoon:" + name);
-		// GameRegistryへの登録
+		this.setHasSubtypes(true);
+		this.setMaxDamage(0);
+
 		GameRegistry.registerItem(this, name);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IIconRegister iicon) {
+		for (int i = 0; i < vItem.getProfessionSize(); i++) {
+			this.iIcons[i] = iicon.registerIcon(this.getIconString() + "." + i);
+		}
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public IIcon getIconFromDamage(int meta) {
+		return iIcons[meta];
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
+		for (int i = 0; i < vItem.getProfessionSize(); i++) {
+			list.add(new ItemStack(this, 1, i));
+		}
+	}
+
+	@Override
+	public int getMetadata(int meta) {
+		return meta;
+	}
+
+	@Override
+	public String getUnlocalizedName(ItemStack itemStack) {
+		return super.getUnlocalizedName() + "." + itemStack.getItemDamage();
 	}
 
 	/** アイテムでブロックを右クリックしたのメソッド。ItemMonsterPlacer参照。 */
@@ -46,7 +88,7 @@ public class ItemECVillagerEgg extends Item {
 				height = 0.5D;
 			}
 
-			Entity entity = spawnEntity(world, (double) x + 0.5D, (double) y + height, (double) z + 0.5D);
+			Entity entity = spawnEntity(world,itemStack.getItemDamage(), (double) x + 0.5D, (double) y + height, (double) z + 0.5D);
 
 			if (entity != null) {
 
@@ -85,7 +127,7 @@ public class ItemECVillagerEgg extends Item {
 					}
 
 					if (world.getBlock(x, y, z) instanceof BlockLiquid) {
-						Entity entity = spawnEntity(world, (double) x, (double) y, (double) z);
+						Entity entity = spawnEntity(world,itemStack.getItemDamage() ,(double) x, (double) y, (double) z);
 
 						if (entity != null) {
 							if (!player.capabilities.isCreativeMode) {
@@ -101,8 +143,8 @@ public class ItemECVillagerEgg extends Item {
 	}
 
 	/** Mobをスポーンさせるメソッド */
-	public Entity spawnEntity(World world, double x, double y, double z) {
-		EntityECVillager entityliving = new EntityECVillager(world);
+	public Entity spawnEntity(World world,int meta, double x, double y, double z) {
+		EntityECVillager entityliving = new EntityECVillager(world,meta);
 		entityliving.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F),
 				0.0F);
 		entityliving.rotationYawHead = entityliving.rotationYaw;

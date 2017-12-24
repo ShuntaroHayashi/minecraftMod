@@ -1,4 +1,4 @@
-package forestMoon.packet;
+package forestMoon.packet.player;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -17,7 +17,6 @@ public class MessageInventoryHandler implements IMessageHandler<MessageInventory
 		// サーバーへ送った際に、EntityPlayerインスタンス（EntityPlayerMPインスタンス）はこのように取れる。
 		// EntityPlayer entityPlayer = ctx.getServerHandler().playerEntity;
 		// Do something.
-
 		// サーバーでのEntityPlayer取得
 		EntityPlayer entityPlayer = ctx.getServerHandler().playerEntity;
 

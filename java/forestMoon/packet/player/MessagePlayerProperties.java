@@ -1,4 +1,4 @@
-package forestMoon.packet;
+package forestMoon.packet.player;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -18,7 +18,6 @@ public class MessagePlayerProperties implements IMessage {
 		this.data = new NBTTagCompound();
 		// EntityPlayerからIExtendedEntityPropertiesを取得。
 		ExtendedPlayerProperties.get(entityPlayer).saveNBTData(data);
-
 	}
 
 	@Override

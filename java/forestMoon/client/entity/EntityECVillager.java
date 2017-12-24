@@ -3,13 +3,13 @@ package forestMoon.client.entity;
 import java.util.ArrayList;
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import forestMoon.ForestMoon;
+import forestMoon.ForestMoon.GuiId;
+import forestMoon.packet.PacketHandler;
+import forestMoon.packet.villager.MessageVillagerSync;
 import forestMoon.shoping.ShopingItem;
 import forestMoon.shoping.VillagerShopingItem;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityVillager;
@@ -26,17 +26,16 @@ import net.minecraft.world.World;
 public class EntityECVillager extends EntityVillager {
 
 	// boolean flag = false;
-	int profession;
+	int economicsProfession = -1;
 
 	ShopingItem[] shopingItems;
-	public Minecraft mc = Minecraft.getMinecraft();
+//	public Minecraft mc = Minecraft.getMinecraft();
 
 	public EntityECVillager(World world) {
 		super(world);
-
-		// System.out.println("constraktor:IN");
-		// firstSetting();
-		this.firstSetting();
+		if(!worldObj.isRemote) {
+			this.firstSetting();
+		}
 
 		/* EntiyのAIを登録する */
 		this.tasks.taskEntries.clear();// superの登録を削除
@@ -56,6 +55,21 @@ public class EntityECVillager extends EntityVillager {
 		// this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this,
 		// EntityPlayer.class, 1, true));
 		// this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
+	}
+	public EntityECVillager(World world,int profession) {
+		this(world);
+
+		this.economicsProfession = profession;
+
+		VillagerShopingItem villagerShopingItem = new VillagerShopingItem();
+		ArrayList<ShopingItem> shopItems = villagerShopingItem.getProfessionItems(this.economicsProfession);
+		this.shopingItems = new ShopingItem[shopItems.size()];
+
+		for (int i = 0; i < shopItems.size(); i++) {
+			this.shopingItems[i] = shopItems.get(i);
+		}
+
+		PacketHandler.INSTANCE.sendToAll(new MessageVillagerSync(shopingItems, economicsProfession, this.getEntityId()));
 	}
 
 	/** MOBの速度やHPを変更するメソッド */
@@ -123,7 +137,6 @@ public class EntityECVillager extends EntityVillager {
 	}
 
 	// NBTDataの書き込み
-	@SideOnly(Side.CLIENT)
 	@Override
 	public void writeEntityToNBT(NBTTagCompound p_70014_1_) {
 		super.writeEntityToNBT(p_70014_1_);
@@ -141,7 +154,7 @@ public class EntityECVillager extends EntityVillager {
 				itemList.appendTag(compound);
 			}
 		}
-		p_70014_1_.setInteger("profession", profession);
+		p_70014_1_.setInteger("profession", economicsProfession);
 		p_70014_1_.setTag("item", itemList);
 		p_70014_1_.setIntArray("buy", buy);
 		p_70014_1_.setIntArray("sell", sell);
@@ -162,8 +175,7 @@ public class EntityECVillager extends EntityVillager {
 				ItemStack itemStack = ItemStack.loadItemStackFromNBT(compound);
 				shopingItems[i] = new ShopingItem(itemStack, buy[i], sell[i]);
 			}
-
-			this.profession = p_70037_1_.getInteger("profession");
+			this.economicsProfession = p_70037_1_.getInteger("profession");
 		} else {
 			// 初期設定
 			this.firstSetting();
@@ -172,15 +184,21 @@ public class EntityECVillager extends EntityVillager {
 
 	// 初期設定（スポーン時）
 	private void firstSetting() {
-		Random rnd = new Random();
 		VillagerShopingItem villagerShopingItem = new VillagerShopingItem();
-		this.profession = rnd.nextInt(villagerShopingItem.getProfessionSize());
-		ArrayList<ShopingItem> shopItems = villagerShopingItem.getProfessionItems(profession);
+		if(this.economicsProfession == -1) {
+			Random rnd = new Random();
+			this.economicsProfession = rnd.nextInt(villagerShopingItem.getProfessionSize());
+		}else {
+
+		}
+		ArrayList<ShopingItem> shopItems = villagerShopingItem.getProfessionItems(this.economicsProfession);
 		this.shopingItems = new ShopingItem[shopItems.size()];
 
 		for (int i = 0; i < shopItems.size(); i++) {
 			this.shopingItems[i] = shopItems.get(i);
 		}
+
+		PacketHandler.INSTANCE.sendToAll(new MessageVillagerSync(shopingItems, economicsProfession, this.getEntityId()));
 	}
 
 	// 右クリック時
@@ -192,7 +210,7 @@ public class EntityECVillager extends EntityVillager {
 
 		if (!this.worldObj.isRemote) {
 			// ショップGUIのオープン
-			player.openGui(ForestMoon.instance, ForestMoon.SHOPING_GUI_ID, player.worldObj, x, y, z);
+			player.openGui(ForestMoon.instance, GuiId.VILLAGERSHOP.getId(), player.worldObj, x, y, z);
 		}
 		return true;
 
@@ -211,10 +229,11 @@ public class EntityECVillager extends EntityVillager {
 		this.shopingItems = shopingItems;
 	}
 
-	public int getProfession() {
-		return profession;
+	public int getEconomicsProfession() {
+		return this.economicsProfession;
 	}
-
-
+	public void  setEconomicsProfession(int profession) {
+		this.economicsProfession = profession;
+	}
 
 }
