@@ -72,9 +72,6 @@ public class VillagerShopGuiContainer extends GuiContainer {
 		shopingItems = (ShopingItem[]) vItem.getProfessionItems(villager.getEconomicsProfession())
 				.toArray(new ShopingItem[14]);
 
-		// shopingItems =
-		// vItem.getProfessionItems(villager.getEconomicsProfession());
-
 		container.ItemSet(shopingItems);
 	}
 
@@ -269,7 +266,6 @@ public class VillagerShopGuiContainer extends GuiContainer {
 						itemStack.stackSize = slotItem.stackSize - num;
 						container.slotChange(index, itemStack);
 
-						// buyCount[container.getLastSlotNumber()] -= num;
 						villager.setBuyCountSlot(number, villager.getBuyCountSlot(number) - num);
 
 						break;
@@ -279,8 +275,6 @@ public class VillagerShopGuiContainer extends GuiContainer {
 
 						villager.setBuyCountSlot(number, villager.getBuyCountSlot(number) - slotItem.stackSize);
 
-						// buyCount[container.getLastSlotNumber()] -=
-						// slotItem.stackSize;
 						num -= slotItem.stackSize;
 						itemStack.stackSize = 0;
 
@@ -352,7 +346,6 @@ public class VillagerShopGuiContainer extends GuiContainer {
 
 	// 買い物終了時に取引内容に応じて値段を変動
 	public void guiClose() {
-		// villager.setShopingItems(shopingItems);
 		PacketHandler.INSTANCE.sendToServer(
 				new MessageVillager(villager.getBuyCount(), villager.getEconomicsProfession(), villager.getEntityId()));
 	}

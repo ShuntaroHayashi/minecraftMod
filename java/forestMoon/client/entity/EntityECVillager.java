@@ -21,15 +21,12 @@ import net.minecraft.world.World;
 
 public class EntityECVillager extends EntityVillager {
 
-	// boolean flag = false;
 	private int economicsProfession = -1;
 	private int[] buyCount = new int[14];
 
-//	public Minecraft mc = Minecraft.getMinecraft();
-
 	public EntityECVillager(World world) {
 		super(world);
-		if(!worldObj.isRemote) {
+		if (!worldObj.isRemote) {
 			this.firstSetting();
 		}
 
@@ -52,7 +49,8 @@ public class EntityECVillager extends EntityVillager {
 		// EntityPlayer.class, 1, true));
 		// this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
 	}
-	public EntityECVillager(World world,int profession) {
+
+	public EntityECVillager(World world, int profession) {
 		this(world);
 
 		this.economicsProfession = profession;
@@ -60,13 +58,11 @@ public class EntityECVillager extends EntityVillager {
 
 		VillagerShopingItem villagerShopingItem = new VillagerShopingItem();
 		ArrayList<ShopingItem> shopItems = villagerShopingItem.getProfessionItems(this.economicsProfession);
-		for (int i=0;i<shopItems.size();i++) {
-			if(shopItems.get(i) != null) {
-				buyCount[i] = (int) ((rnd.nextInt(4)+1) * shopItems.get(i).getCofficient());
+		for (int i = 0; i < shopItems.size(); i++) {
+			if (shopItems.get(i) != null) {
+				buyCount[i] = (int) ((rnd.nextInt(4) + 1) * shopItems.get(i).getCofficient());
 			}
 		}
-
-//		PacketHandler.INSTANCE.sendToAll(new MessageVillagerSync(buyCount, economicsProfession, this.getEntityId()));
 	}
 
 	/** MOBの速度やHPを変更するメソッド */
@@ -137,25 +133,8 @@ public class EntityECVillager extends EntityVillager {
 	@Override
 	public void writeEntityToNBT(NBTTagCompound p_70014_1_) {
 		super.writeEntityToNBT(p_70014_1_);
-//		NBTTagList itemList = new NBTTagList();
-//		int[] buy = new int[shopingItems.length];
-//		int[] sell = new int[shopingItems.length];
-//
-//		for (int i = 0; i < shopingItems.length; i++) {
-//			if (shopingItems[i] != null) {
-//				NBTTagCompound compound = new NBTTagCompound();
-//				compound.setByte("Slot", (byte) i);
-//				shopingItems[i].getItemStack().writeToNBT(compound);
-//				buy[i] = shopingItems[i].getBuy();
-//				sell[i] = shopingItems[i].getSell();
-//				itemList.appendTag(compound);
-//			}
-//		}
 		p_70014_1_.setIntArray("buyCount", buyCount);
 		p_70014_1_.setInteger("profession", economicsProfession);
-//		p_70014_1_.setTag("item", itemList);
-//		p_70014_1_.setIntArray("buy", buy);
-//		p_70014_1_.setIntArray("sell", sell);
 	}
 
 	// NBTDataの読み込み
@@ -164,16 +143,6 @@ public class EntityECVillager extends EntityVillager {
 		super.readEntityFromNBT(p_70037_1_);
 		// NBTに情報が書き込んであるのかの確認（スポーン時か確認）
 		if (p_70037_1_.hasKey("profession")) {
-//			NBTTagList tagList = (NBTTagList) p_70037_1_.getTag("item");
-//			this.shopingItems = new ShopingItem[tagList.tagCount()];
-//			int[] buy = p_70037_1_.getIntArray("buy");
-//			int[] sell = p_70037_1_.getIntArray("sell");
-//			double[] coefficient =new double[14];
-//			for (int i = 0; i < tagList.tagCount(); i++) {
-//				NBTTagCompound compound = tagList.getCompoundTagAt(i);
-//				ItemStack itemStack = ItemStack.loadItemStackFromNBT(compound);
-//				shopingItems[i] = new ShopingItem(itemStack, buy[i], sell[i],coefficient[i]);
-//			}
 			this.buyCount = p_70037_1_.getIntArray("buyCount");
 			this.economicsProfession = p_70037_1_.getInteger("profession");
 		} else {
@@ -185,20 +154,18 @@ public class EntityECVillager extends EntityVillager {
 	// 初期設定（スポーン時）
 	private void firstSetting() {
 		VillagerShopingItem villagerShopingItem = new VillagerShopingItem();
-		if(this.economicsProfession == -1) {
+		if (this.economicsProfession == -1) {
 			Random rnd = new Random();
 			this.economicsProfession = rnd.nextInt(villagerShopingItem.getProfessionSize());
 			ArrayList<ShopingItem> shopItems = villagerShopingItem.getProfessionItems(this.economicsProfession);
-			for (int i=0;i<shopItems.size();i++) {
-				if(shopItems.get(i) != null) {
-					buyCount[i] = (int) ((rnd.nextInt(4)+1) * shopItems.get(i).getCofficient());
+			for (int i = 0; i < shopItems.size(); i++) {
+				if (shopItems.get(i) != null) {
+					buyCount[i] = (int) ((rnd.nextInt(4) + 1) * shopItems.get(i).getCofficient());
 				}
 			}
-		}else {
+		} else {
 
 		}
-
-//		PacketHandler.INSTANCE.sendToAll(new MessageVillagerSync(buyCount, economicsProfession, this.getEntityId()));
 	}
 
 	// 右クリック時
@@ -221,19 +188,10 @@ public class EntityECVillager extends EntityVillager {
 		return (this.getEntityId() + " " + this.getUniqueID() + " " + this.getCommandSenderName());
 	}
 
-//	public ShopingItem[] getShopingItems() {
-//		return this.shopingItems;
-//	}
-//
-//	public void setShopingItems(ShopingItem[] shopingItems) {
-//		this.shopingItems = shopingItems;
-//	}
-
-
-
 	public int getEconomicsProfession() {
 		return this.economicsProfession;
 	}
+
 	public int[] getBuyCount() {
 		return buyCount;
 	}
@@ -241,18 +199,21 @@ public class EntityECVillager extends EntityVillager {
 	public void setBuyCount(int[] buyCount) {
 		this.buyCount = buyCount;
 	}
-	public void setBuyCountSlot(int index,int buycount) {
-		if(index < buyCount.length) {
+
+	public void setBuyCountSlot(int index, int buycount) {
+		if (index < buyCount.length) {
 			this.buyCount[index] = buycount;
 		}
 	}
+
 	public int getBuyCountSlot(int index) {
-		if(index < buyCount.length) {
+		if (index < buyCount.length) {
 			return buyCount[index];
 		}
 		return 0;
 	}
-	public void  setEconomicsProfession(int profession) {
+
+	public void setEconomicsProfession(int profession) {
 		this.economicsProfession = profession;
 	}
 
