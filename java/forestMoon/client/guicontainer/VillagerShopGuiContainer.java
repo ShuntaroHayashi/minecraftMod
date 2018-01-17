@@ -21,7 +21,6 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
@@ -44,6 +43,7 @@ public class VillagerShopGuiContainer extends GuiContainer {
 	private String itemStr = "";
 	private String buyStr = "";
 	private MyGuiButton buyBtn, sellBtn;
+	private int buy,sell;
 	private int[] buyCount;
 
 	// コンストラクター
@@ -79,10 +79,13 @@ public class VillagerShopGuiContainer extends GuiContainer {
 	public void initGui() {
 		super.initGui();
 
-		textField = new GuiTextField(fontRendererObj, (this.xSize) / 2 + 18, 72, 20, 15);
-		textField.setFocused(true);
-		textField.setText("");
-		textField.setMaxStringLength(3);
+//		textField = new GuiTextField(fontRendererObj, (this.xSize) / 2 + 18, 72, 20, 15);
+//		textField.setFocused(true);
+//		textField.setText("");
+//		textField.setMaxStringLength(3);
+
+		buy = -1;
+		sell = -1;
 
 		this.ySize += 7;
 
@@ -105,35 +108,29 @@ public class VillagerShopGuiContainer extends GuiContainer {
 		fontRendererObj.drawString(buyStr, 8, 64, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal(shopingItem.getProfessionName(profession)), 8, 6,
 				4210752);
-		fontRendererObj.drawString(StatCollector.translateToLocal("shopingGui_num"), (this.xSize) / 2 - 4, 77, 4210752);
+//		fontRendererObj.drawString(StatCollector.translateToLocal("shopingGui_num"), (this.xSize) / 2 - 4, 77, 4210752);
 		fontRendererObj.drawString(
 				StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX,
 				moneyY, 4210752);
 
-		textField.setEnabled(true);
-		textField.drawTextBox();
+//		textField.setEnabled(true);
+//		textField.drawTextBox();
 
-		buyBtn.enabled = !itemStr.equals("");
-		sellBtn.enabled = !itemStr.equals("");
 
 		int slotNumber = container.getLastSlotNumber();
+
 		// 最後にクリックされたスロットが村人のスロットだった場合
 		if (between(slotNumber, 13, 0)) {
-			if (slotNumber < shopingItems.length && shopingItems[slotNumber] != null) {
-				ShopingItem item = shopingItems[slotNumber];
-				currentItem = item;
-
-				itemStr = item.getItemStack().getDisplayName();
-				int buy = buyCalc(item.getBuy(), villager.getBuyCountSlot(slotNumber), item.getCofficient());
-
-				int sell = sellCalc(item.getSell(), villager.getBuyCountSlot(slotNumber), item.getCofficient());
-
-				buyStr = StatCollector.translateToLocalFormatted("villagerBuy", buy, sell);
-			} else {
-				itemStr = "";
-				buyStr = "";
-			}
+		}else {
+			itemStr = "";
+			buyStr = "";
 		}
+
+		buyBtn.enabled = (buy >= 0);
+		sellBtn.enabled = (sell >= 0);
+
+//		buyBtn.enabled = !itemStr.equals("");
+//		sellBtn.enabled = !itemStr.equals("");
 
 		super.drawGuiContainerForegroundLayer(mouseX, mouseZ);
 	}
@@ -168,13 +165,18 @@ public class VillagerShopGuiContainer extends GuiContainer {
 				price = buyCalc(currentItem.getBuy(), villager.getBuyCountSlot(container.getLastSlotNumber()),
 						currentItem.getCofficient());
 				itemStack = new ItemStack(currentItem.getItemStack().getItem());
-				try {
-					int num = Integer.parseInt(textField.getText());
-					buy(itemStack, price, num);
-				} catch (NumberFormatException exception) {
-					ChatComponentText chatText;
-					chatText = new ChatComponentText(StatCollector.translateToLocal("shopingError_1"));
-					player.addChatMessage(chatText);
+//				try {
+//					int num = Integer.parseInt(textField.getText());
+//					buy(itemStack, price, num);
+//				} catch (NumberFormatException exception) {
+//					ChatComponentText chatText;
+//					chatText = new ChatComponentText(StatCollector.translateToLocal("shopingError_1"));
+//					player.addChatMessage(chatText);
+//				}
+				if(super.isShiftKeyDown()) {
+					buy(itemStack, price, 64);
+				}else {
+					buy(itemStack, price, 1);
 				}
 				PacketHandler.INSTANCE.sendToServer(new MessageVillager(villager.getBuyCount(),
 						villager.getEconomicsProfession(), villager.getEntityId()));
@@ -185,13 +187,18 @@ public class VillagerShopGuiContainer extends GuiContainer {
 						currentItem.getCofficient());
 
 				itemStack = currentItem.getItemStack();
-				try {
-					int num = Integer.parseInt(textField.getText());
-					sell(itemStack, price, num);
-				} catch (NumberFormatException e) {
-					ChatComponentText chatText;
-					chatText = new ChatComponentText(StatCollector.translateToLocal("shopingError_1"));
-					player.addChatMessage(chatText);
+//				try {
+//					int num = Integer.parseInt(textField.getText());
+//					sell(itemStack, price, num);
+//				} catch (NumberFormatException e) {
+//					ChatComponentText chatText;
+//					chatText = new ChatComponentText(StatCollector.translateToLocal("shopingError_1"));
+//					player.addChatMessage(chatText);
+//				}
+				if(super.isShiftKeyDown()) {
+					sell(itemStack, price, 64);
+				}else {
+					sell(itemStack, price, 1);
 				}
 				PacketHandler.INSTANCE.sendToServer(new MessageVillager(villager.getBuyCount(),
 						villager.getEconomicsProfession(), villager.getEntityId()));
@@ -202,16 +209,20 @@ public class VillagerShopGuiContainer extends GuiContainer {
 	}
 
 	private int buyCalc(int price, int count, double coefficient) {
-		int num = 0;
-		if (count > 0) {
-			num = (int) ((count / coefficient) * price);
-		}
-		num = num <= price ? price  : num;
+		if(price >= 0) {
+			int num = 0;
+			if (count > 0) {
+				num = (int) ((count / coefficient) * price);
+			}
+			num = num <= price ? price  : num;
 
-		return num;
+			return num;
+		}
+		return -1;
 	}
 
 	private int sellCalc(int price, int count, double coefficient) {
+		if(price >= 0) {
 		int num = 0;
 		if (count > 0) {
 			num = (int) ((count / coefficient) * price);
@@ -219,6 +230,8 @@ public class VillagerShopGuiContainer extends GuiContainer {
 		}
 		num = num < 0 ? 0 : num;
 		return num;
+		}
+		return -1;
 	}
 
 	// 販売処理
@@ -290,8 +303,10 @@ public class VillagerShopGuiContainer extends GuiContainer {
 	@Override
 	public void mouseClicked(int i, int j, int k) {
 		super.mouseClicked(i, j, k);
-		textField.mouseClicked(i - this.guiLeft, j - this.guiTop, k);
+//		textField.mouseClicked(i - this.guiLeft, j - this.guiTop, k);
+
 		int slotNumber = container.getLastSlotNumber();
+
 		// 最後にクリックされたスロットが村人のスロットだった場合
 		if (between(slotNumber, 13, 0)) {
 			if (slotNumber < shopingItems.length && shopingItems[slotNumber] != null) {
@@ -299,19 +314,35 @@ public class VillagerShopGuiContainer extends GuiContainer {
 				currentItem = item;
 
 				itemStr = item.getItemStack().getDisplayName();
-				int buy = buyCalc(item.getBuy(), villager.getBuyCountSlot(slotNumber), item.getCofficient());
-				buy = buy < 1 ? 1 : buy;
+				buy = buyCalc(item.getBuy(), villager.getBuyCountSlot(slotNumber), item.getCofficient());
 
-				int sell = sellCalc(item.getSell(), villager.getBuyCountSlot(slotNumber), item.getCofficient());
-				sell = sell < 0 ? 0 : sell;
+				sell = sellCalc(item.getSell(), villager.getBuyCountSlot(slotNumber), item.getCofficient());
 
-				buyStr = StatCollector.translateToLocalFormatted("villagerBuy", buy, sell);
+				if(buy < 0) {
+					buyStr = StatCollector.translateToLocalFormatted("sellOnry", sell);
+				}else if(sell < 0) {
+					buyStr = StatCollector.translateToLocalFormatted("buyOnry", buy);
+				}else {
+					buyStr = StatCollector.translateToLocalFormatted("villagerBuy", buy, sell);
+				}
+
+
+
 			} else {
 				itemStr = "";
+				buy = -1;
+				sell = -1;
 				buyStr = "";
 			}
+		}else {
+			itemStr = "";
+			buy = -1;
+			sell = -1;
+			buyStr = "";
 		}
+
 	}
+
 
 	// 引数１の値が引数3以上 引数2以下か確認
 	private boolean between(int chekNum, int maxNum, int minNum) {
@@ -328,7 +359,7 @@ public class VillagerShopGuiContainer extends GuiContainer {
 		if (i == 1) {
 			mc.displayGuiScreen(null);
 		}
-		textField.textboxKeyTyped(c, i);
+//		textField.textboxKeyTyped(c, i);
 	}
 
 	// データの読み取り

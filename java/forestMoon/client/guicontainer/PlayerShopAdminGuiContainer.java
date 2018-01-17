@@ -7,6 +7,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import forestMoon.ExtendedPlayerProperties;
 import forestMoon.container.PlayerShopAdminContainer;
 import forestMoon.packet.PacketHandler;
+import forestMoon.packet.player.MessagePlayerPropertieToServer;
 import forestMoon.packet.shoping.MessagePlayerShopSyncToServer;
 import forestMoon.packet.shoping.MessageShopSettingFlagToServer;
 import forestMoon.tileEntity.TileEntityShop;
@@ -71,7 +72,8 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 			PacketHandler.INSTANCE
 					.sendToServer(new MessagePlayerShopSyncToServer(x, y, z, player.getCommandSenderName(),
 							tileEntity.getSellPrices(), tileEntity.getEarnings(), tileEntity.getItemStacks()));
-		} else if (tileEntity.getAdminName().equals(player.getCommandSenderName())) {
+		}
+		if (tileEntity.getAdminName().equals(player.getCommandSenderName())) {
 			shopSettingFlag = true;
 		}
 		if (shopSettingFlag) {
@@ -110,7 +112,13 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 				StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX,
 				moneyY, 4210752);
 		fontRendererObj.drawString(itemName, 8, 72, 4210752);
+
+		try{
+
 		priceTextField.setEnabled(shopSettingMode);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		priceTextField.drawTextBox();
 
 		// テキストフィールドに数値が入ってる場合にボタンを有効化
@@ -193,7 +201,8 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 				properties.changeMoney(tileEntity.getEarnings());
 				tileEntity.setEarnings(0);
 				tileEntity.sendServer();
-				properties.syncPlayerData(player);
+//				properties.syncPlayerData(player);
+				PacketHandler.INSTANCE.sendToServer(new MessagePlayerPropertieToServer(player));
 
 			}
 		}

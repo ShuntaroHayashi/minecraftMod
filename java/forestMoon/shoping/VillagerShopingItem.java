@@ -26,8 +26,8 @@ public class VillagerShopingItem {
 
 		switch (profession) {
 		case 0:
-			shopingItems.add(new ShopingItem(new ItemStack(Blocks.red_flower), 200, 70,500));
-			shopingItems.add(new ShopingItem(new ItemStack(Blocks.yellow_flower), 300, 100,500));
+			shopingItems.add(new ShopingItem(new ItemStack(Blocks.red_flower), 200, -1,500));
+			shopingItems.add(new ShopingItem(new ItemStack(Blocks.yellow_flower), -1, 100,500));
 			break;
 		case 1:
 			shopingItems.add(new ShopingItem(new ItemStack(Items.apple), 100, 30,1000));
