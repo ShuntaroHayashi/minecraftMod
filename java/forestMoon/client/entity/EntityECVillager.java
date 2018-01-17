@@ -60,7 +60,8 @@ public class EntityECVillager extends EntityVillager {
 		ArrayList<ShopingItem> shopItems = villagerShopingItem.getProfessionItems(this.economicsProfession);
 		for (int i = 0; i < shopItems.size(); i++) {
 			if (shopItems.get(i) != null) {
-				buyCount[i] = (int) ((rnd.nextInt(4) + 1) * shopItems.get(i).getCofficient());
+//				buyCount[i] = (int) ((rnd.nextInt(4) + 1) * shopItems.get(i).getCofficient());
+				buyCount[i] = (int) ((rnd.nextDouble() + 0.5)* shopItems.get(i).getInitialValue() );
 			}
 		}
 	}
@@ -160,7 +161,8 @@ public class EntityECVillager extends EntityVillager {
 			ArrayList<ShopingItem> shopItems = villagerShopingItem.getProfessionItems(this.economicsProfession);
 			for (int i = 0; i < shopItems.size(); i++) {
 				if (shopItems.get(i) != null) {
-					buyCount[i] = (int) ((rnd.nextInt(4) + 1) * shopItems.get(i).getCofficient());
+//					buyCount[i] = (int) ((rnd.nextInt(4) + 1) * shopItems.get(i).getCofficient());
+					buyCount[i] = (int) ((rnd.nextDouble() + 0.5)* shopItems.get(i).getInitialValue() );
 				}
 			}
 		} else {

@@ -126,6 +126,11 @@ public class VillagerShopGuiContainer extends GuiContainer {
 			buyStr = "";
 		}
 
+		if(villager.getBuyCountSlot(slotNumber) <= 0) {
+			buy = -1;
+			villager.setBuyCountSlot(slotNumber, 0);
+		}
+
 		buyBtn.enabled = (buy >= 0);
 		sellBtn.enabled = (sell >= 0);
 
@@ -162,8 +167,9 @@ public class VillagerShopGuiContainer extends GuiContainer {
 				break;
 			case BUY_BUTTON:
 				// 販売処理
-				price = buyCalc(currentItem.getBuy(), villager.getBuyCountSlot(container.getLastSlotNumber()),
-						currentItem.getCofficient());
+//				price = buyCalc(currentItem.getBuy(), villager.getBuyCountSlot(container.getLastSlotNumber()),
+//						currentItem.getCofficient());
+				price = currentItem.getBuy(villager.getBuyCountSlot(container.getLastSlotNumber()));
 				itemStack = new ItemStack(currentItem.getItemStack().getItem());
 //				try {
 //					int num = Integer.parseInt(textField.getText());
@@ -183,8 +189,10 @@ public class VillagerShopGuiContainer extends GuiContainer {
 				break;
 			case SELL_BUTTON:
 				// 買取処理
-				price = sellCalc(currentItem.getSell(), villager.getBuyCountSlot(container.getLastSlotNumber()),
-						currentItem.getCofficient());
+//				price = sellCalc(currentItem.getSell(), villager.getBuyCountSlot(container.getLastSlotNumber()),
+//						currentItem.getCofficient());
+
+				price = currentItem.getSell(villager.getBuyCountSlot(container.getLastSlotNumber()));
 
 				itemStack = currentItem.getItemStack();
 //				try {
@@ -250,9 +258,13 @@ public class VillagerShopGuiContainer extends GuiContainer {
 
 			PacketHandler.INSTANCE.sendToServer(new MessageSpawnItemStack(itemStack, x, y, z, stackSize));
 		}
+		int slotNum = container.getLastSlotNumber();
+		int count = villager.getBuyCountSlot(slotNum);
 
-		villager.setBuyCountSlot(container.getLastSlotNumber(),
-				villager.getBuyCountSlot(container.getLastSlotNumber()) + stackSize);
+		count -= stackSize;
+		if(count < 0) count = 0;
+
+		villager.setBuyCountSlot(slotNum,count);
 
 		properties.changeMoney(price * stackSize * -1);
 
@@ -279,14 +291,14 @@ public class VillagerShopGuiContainer extends GuiContainer {
 						itemStack.stackSize = slotItem.stackSize - num;
 						container.slotChange(index, itemStack);
 
-						villager.setBuyCountSlot(number, villager.getBuyCountSlot(number) - num);
+						villager.setBuyCountSlot(number, villager.getBuyCountSlot(number) + num);
 
 						break;
 					} else {
 						properties.changeMoney(price * slotItem.stackSize);
 						PacketHandler.INSTANCE.sendToServer(new MessagePlayerPropertieToServer(player));
 
-						villager.setBuyCountSlot(number, villager.getBuyCountSlot(number) - slotItem.stackSize);
+						villager.setBuyCountSlot(number, villager.getBuyCountSlot(number) + slotItem.stackSize);
 
 						num -= slotItem.stackSize;
 						itemStack.stackSize = 0;
@@ -314,9 +326,11 @@ public class VillagerShopGuiContainer extends GuiContainer {
 				currentItem = item;
 
 				itemStr = item.getItemStack().getDisplayName();
-				buy = buyCalc(item.getBuy(), villager.getBuyCountSlot(slotNumber), item.getCofficient());
+//				buy = buyCalc(item.getBuy(buyCount[slotNumber]), villager.getBuyCountSlot(slotNumber), item.getCofficient());
+//				sell = sellCalc(item.getSell(), villager.getBuyCountSlot(slotNumber), item.getCofficient());
 
-				sell = sellCalc(item.getSell(), villager.getBuyCountSlot(slotNumber), item.getCofficient());
+				buy = item.getBuy(villager.getBuyCountSlot(slotNumber));
+				sell = item.getSell(villager.getBuyCountSlot(slotNumber));
 
 				if(buy < 0) {
 					buyStr = StatCollector.translateToLocalFormatted("sellOnry", sell);
@@ -325,8 +339,6 @@ public class VillagerShopGuiContainer extends GuiContainer {
 				}else {
 					buyStr = StatCollector.translateToLocalFormatted("villagerBuy", buy, sell);
 				}
-
-
 
 			} else {
 				itemStr = "";

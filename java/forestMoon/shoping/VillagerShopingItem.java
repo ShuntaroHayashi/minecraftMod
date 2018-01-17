@@ -26,12 +26,12 @@ public class VillagerShopingItem {
 
 		switch (profession) {
 		case 0:
-			shopingItems.add(new ShopingItem(new ItemStack(Blocks.red_flower), 200, -1,500));
-			shopingItems.add(new ShopingItem(new ItemStack(Blocks.yellow_flower), -1, 100,500));
+			shopingItems.add(new ShopingItem(new ItemStack(Blocks.red_flower), 200, -1,3.0,0.1,500,2000));
+			shopingItems.add(new ShopingItem(new ItemStack(Blocks.yellow_flower), -1, 100,3.0,0.1,500,1500));
 			break;
 		case 1:
-			shopingItems.add(new ShopingItem(new ItemStack(Items.apple), 100, 30,1000));
-			shopingItems.add(new ShopingItem(new ItemStack(Item.getItemById(364)), 300, 100, 800));
+			shopingItems.add(new ShopingItem(new ItemStack(Items.apple), 100, 30,2.5,0.2,400,1000));
+			shopingItems.add(new ShopingItem(new ItemStack(Item.getItemById(364)), 300, 100,3.0,0.2,400,1000 ));
 			break;
 		}
 
