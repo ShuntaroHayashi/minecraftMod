@@ -201,7 +201,6 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 				properties.changeMoney(tileEntity.getEarnings());
 				tileEntity.setEarnings(0);
 				tileEntity.sendServer();
-//				properties.syncPlayerData(player);
 				PacketHandler.INSTANCE.sendToServer(new MessagePlayerPropertieToServer(player));
 
 			}

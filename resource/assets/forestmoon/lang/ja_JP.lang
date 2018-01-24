@@ -9,6 +9,7 @@ item.leggingsSample.name=レギンスサンプル
 item.bootsSample.name=ブーツサンプル
 item.VillagerEgg.0.name=花屋スポーンエッグ
 item.VillagerEgg.1.name=食べ物屋スポーンエッグ
+item.VillagerEgg.2.name=貴金属屋スポーンエッグ
 item.samplesword.name=骨のソード
 item.BoneShovel.name=骨のシャベル
 item.BonePickaxe.name=骨のツルハシ
@@ -72,3 +73,4 @@ shopingError_1=§c個数欄に整数以外が入力されました
 //村人役職
 villager_proffesion_flower=花屋
 villager_proffesion_fruit=食べ物屋
+villager_proffesion_ore=貴金属屋

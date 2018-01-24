@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import forestMoon.ForestMoon;
 import forestMoon.client.entity.EntityECVillager;
-import forestMoon.shoping.VillagerShopingItem;
+import forestMoon.shoping.VillagerShopingMaster;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -23,7 +23,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class ItemECVillagerEgg extends Item {
-	VillagerShopingItem vItem = new VillagerShopingItem();
+	VillagerShopingMaster vItem = new VillagerShopingMaster();
 	private IIcon[] iIcons = new IIcon[vItem.getProfessionSize()];
 
 

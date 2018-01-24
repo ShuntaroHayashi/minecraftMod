@@ -10,7 +10,7 @@ public class VilaggerInventory implements IInventory {
 
 	public VilaggerInventory() {
 		// InventorySize
-		items = new ItemStack[14];
+		items = new ItemStack[18];
 	}
 
 	//インベントリのサイズを返す

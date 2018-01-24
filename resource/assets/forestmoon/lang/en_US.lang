@@ -9,6 +9,7 @@ item.leggingsSample.name=leggingsSample
 item.bootsSample.name=bootsSample
 item.VillaggerEgg.0.name=flowerVilaggerSpownEgg
 item.VillaggerEgg.1.name=foodVillagerSpownEgg
+item.VillagerEgg.2.name=oreVillagerSpownEgg
 item.samplesword.name=boneSword
 item.BoneShovel.name=boneShovel
 item.BonePickaxe.name=bonePickaxe
@@ -70,5 +71,6 @@ comandCoin_Error=§c/coin [player] [num]
 money=＄
 shopingError_1=§cNon-integer was entered
 //villager profession name
-villager_proffesion_flower=flower
-villager_proffesion_fruit=food
+villager_proffesion_flower=flower shop
+villager_proffesion_fruit=food shop
+villager_proffesion_fruit=ore shop

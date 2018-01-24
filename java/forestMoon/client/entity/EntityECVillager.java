@@ -5,9 +5,10 @@ import java.util.Random;
 
 import forestMoon.ForestMoon;
 import forestMoon.ForestMoon.GuiId;
+import forestMoon.packet.PacketHandler;
+import forestMoon.packet.villager.MessageVillagerSync;
 import forestMoon.shoping.ShopingItem;
-import forestMoon.shoping.VillagerShopingItem;
-import net.minecraft.block.material.Material;
+import forestMoon.shoping.VillagerShopingMaster;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityVillager;
@@ -22,7 +23,8 @@ import net.minecraft.world.World;
 public class EntityECVillager extends EntityVillager {
 
 	private int economicsProfession = -1;
-	private int[] buyCount = new int[14];
+	private int[] buyCount = new int[18];
+	private int tickCount = 0;
 
 	public EntityECVillager(World world) {
 		super(world);
@@ -56,11 +58,10 @@ public class EntityECVillager extends EntityVillager {
 		this.economicsProfession = profession;
 		Random rnd = new Random();
 
-		VillagerShopingItem villagerShopingItem = new VillagerShopingItem();
+		VillagerShopingMaster villagerShopingItem = new VillagerShopingMaster();
 		ArrayList<ShopingItem> shopItems = villagerShopingItem.getProfessionItems(this.economicsProfession);
 		for (int i = 0; i < shopItems.size(); i++) {
 			if (shopItems.get(i) != null) {
-//				buyCount[i] = (int) ((rnd.nextInt(4) + 1) * shopItems.get(i).getCofficient());
 				buyCount[i] = (int) ((rnd.nextDouble() + 0.5)* shopItems.get(i).getInitialValue() );
 			}
 		}
@@ -96,11 +97,27 @@ public class EntityECVillager extends EntityVillager {
 	/** Tickごとに呼ばれるメソッド */
 	@Override
 	public void onUpdate() {
-		int x = (int) this.posX;
-		int y = (int) this.posY;
-		int z = (int) this.posZ;
-		if (this.worldObj.getBlock(x, y - 1, z).getMaterial() == Material.iron) {
-			this.worldObj.createExplosion(this, x, y, z, 3F, true);
+		if(!worldObj.isRemote) {
+			if(tickCount > 24000) {
+				VillagerShopingMaster vItem = new VillagerShopingMaster();
+				ArrayList<ShopingItem> items = vItem.getProfessionItems(this.getEconomicsProfession());
+				for(int i=0;i< items.size();i++) {
+					int value = items.get(i).getInitialValue();
+					int changeNum = 0;
+					if(buyCount[i] < value) {
+						changeNum = value / 10;
+						buyCount[i] += changeNum;
+						buyCount[i] = buyCount[i]>value ? value : buyCount[i];
+					}else if (buyCount[i] > value) {
+						changeNum = ((value) / 10) * -1;
+						buyCount[i] += changeNum;
+						buyCount[i] = buyCount[i] <value ? value : buyCount[i];
+					}
+					PacketHandler.INSTANCE.sendToAll(new MessageVillagerSync(getBuyCount(), getEconomicsProfession(), this.getEntityId()));
+				}
+				tickCount = 0;
+			}
+			tickCount++;
 		}
 		super.onUpdate();
 	}
@@ -154,14 +171,13 @@ public class EntityECVillager extends EntityVillager {
 
 	// 初期設定（スポーン時）
 	private void firstSetting() {
-		VillagerShopingItem villagerShopingItem = new VillagerShopingItem();
+		VillagerShopingMaster villagerShopingItem = new VillagerShopingMaster();
 		if (this.economicsProfession == -1) {
 			Random rnd = new Random();
 			this.economicsProfession = rnd.nextInt(villagerShopingItem.getProfessionSize());
 			ArrayList<ShopingItem> shopItems = villagerShopingItem.getProfessionItems(this.economicsProfession);
 			for (int i = 0; i < shopItems.size(); i++) {
 				if (shopItems.get(i) != null) {
-//					buyCount[i] = (int) ((rnd.nextInt(4) + 1) * shopItems.get(i).getCofficient());
 					buyCount[i] = (int) ((rnd.nextDouble() + 0.5)* shopItems.get(i).getInitialValue() );
 				}
 			}
@@ -203,16 +219,26 @@ public class EntityECVillager extends EntityVillager {
 	}
 
 	public void setBuyCountSlot(int index, int buycount) {
-		if (index < buyCount.length) {
-			this.buyCount[index] = buycount;
+		try {
+			if (index < buyCount.length) {
+				this.buyCount[index] = buycount;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	public int getBuyCountSlot(int index) {
-		if (index < buyCount.length) {
-			return buyCount[index];
+		try {
+			if (index < buyCount.length) {
+				return buyCount[index];
+			}
+
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
-		return 0;
+		return -999;
+
 	}
 
 	public void setEconomicsProfession(int profession) {

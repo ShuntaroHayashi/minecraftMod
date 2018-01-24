@@ -48,6 +48,7 @@ public class EntityPropertiesEventHandler {
 		}
 	}
 
+
 	@SubscribeEvent
 	// Dimension移動時や、リスポーン時に呼ばれるイベント。古いインスタンスと新しいインスタンスの両方を参照できる。
 	public void onClonePlayer(net.minecraftforge.event.entity.player.PlayerEvent.Clone event) {

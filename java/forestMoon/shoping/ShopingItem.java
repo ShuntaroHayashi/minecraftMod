@@ -4,12 +4,12 @@ import net.minecraft.item.ItemStack;
 
 public class ShopingItem {
 	private ItemStack itemStack;
-	private int buy;
-	private int sell;
-	private double minCoefficient;
-	private double maxCoefficient;
-	private int initialValue;
-	private int maxValue;
+	private int buy;	//売値基準値
+	private int sell; //買取価格基準値
+	private double minCoefficient; //在庫1個時の係数
+	private double maxCoefficient; //在庫最大時の係数
+	private int initialValue; //標準在庫
+	private int maxValue; //最大在庫
 
 
 
@@ -25,11 +25,11 @@ public class ShopingItem {
 		this.maxValue = maxValue;
 	}
 
+	//現在の在庫に応じた販売価格を返す
 	public int getBuy(int stock) {
 		if(buy < 0) {
 			return -1;
 		}
-
 
 		int num = 0;
 		if(stock <= initialValue) {
@@ -45,12 +45,11 @@ public class ShopingItem {
 		}
 		return num;
 	}
-
+	//現在の在庫に応じた買取価格を返す
 	public int getSell(int stock) {
-		if(buy < -1) {
+		if(sell < 0) {
 			return -1;
 		}
-
 
 		int num = 0;
 		if(stock <= initialValue) {
