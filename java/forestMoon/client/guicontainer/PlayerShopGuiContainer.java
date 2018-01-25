@@ -60,18 +60,18 @@ public class PlayerShopGuiContainer extends GuiContainer {
 
 		fontRendererObj.drawString(shopName, 8, 4, 4210752);
 		fontRendererObj.drawString(itemName, 8, 74, 4210752);
-		fontRendererObj.drawString(StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX, moneyY, 4210752);
+		fontRendererObj.drawString(
+				StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX,
+				moneyY, 4210752);
 		itemName = container.slotItemToString(container.getLastSlotNumber());
 
 		super.drawGuiContainerForegroundLayer(p_146979_1_, p_146979_2_);
 
-		if(tileEntity.isShopSettingFlag()) {
+		if (tileEntity.isShopSettingFlag()) {
 			buyBtn.enabled = false;
-		}else {
+		} else {
 			buyBtn.enabled = !itemName.equals("");
 		}
-
-
 
 	}
 

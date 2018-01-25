@@ -62,15 +62,14 @@ itemChange=アイテム設定モード
 priceChange=価格設定モード
 playerShop_itemName=%s 値段:%d
 //定型文
-comandError_1=§c入力された値が所持金よりも多いです
-comandError_2=§c入力された値が大きすぎます
-comandMonew=%sの所持金を%d円に変更しました
-comandMoney_Error=§c/money [プレイヤー] [set|add] <値>
-comandCoin=%sの所持金を%dコインに変更しました
-comandCoin_Error=§c/coin [プレイヤー] <値>
+command.error.1=§c入力された値が所持金よりも多いです
+command.error.2=§c入力された値が大きすぎます
+command.money=%sの所持金を%d円に変更しました
+command.money.error=§c/money [プレイヤー] [set|add] <値>
+command.coin=%sの所持金を%dコインに変更しました
+command.coin.error=§c/coin [プレイヤー] <値>
 money=￥
-shopingError_1=§c個数欄に整数以外が入力されました
 //村人役職
-villager_proffesion_flower=花屋
-villager_proffesion_fruit=食べ物屋
-villager_proffesion_ore=貴金属屋
+villager.proffesion.flower=花屋
+villager.proffesion.fruit=食べ物屋
+villager.proffesion.ore=貴金属屋

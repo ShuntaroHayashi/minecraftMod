@@ -62,7 +62,7 @@ public class EntityECVillager extends EntityVillager {
 		ArrayList<ShopingItem> shopItems = villagerShopingItem.getProfessionItems(this.economicsProfession);
 		for (int i = 0; i < shopItems.size(); i++) {
 			if (shopItems.get(i) != null) {
-				buyCount[i] = (int) ((rnd.nextDouble() + 0.5)* shopItems.get(i).getInitialValue() );
+				buyCount[i] = (int) ((rnd.nextDouble() + 0.5) * shopItems.get(i).getInitialValue());
 			}
 		}
 	}
@@ -97,23 +97,24 @@ public class EntityECVillager extends EntityVillager {
 	/** Tickごとに呼ばれるメソッド */
 	@Override
 	public void onUpdate() {
-		if(!worldObj.isRemote) {
-			if(tickCount > 24000) {
+		if (!worldObj.isRemote) {
+			if (tickCount > 24000) {
 				VillagerShopingMaster vItem = new VillagerShopingMaster();
 				ArrayList<ShopingItem> items = vItem.getProfessionItems(this.getEconomicsProfession());
-				for(int i=0;i< items.size();i++) {
+				for (int i = 0; i < items.size(); i++) {
 					int value = items.get(i).getInitialValue();
 					int changeNum = 0;
-					if(buyCount[i] < value) {
+					if (buyCount[i] < value) {
 						changeNum = value / 10;
 						buyCount[i] += changeNum;
-						buyCount[i] = buyCount[i]>value ? value : buyCount[i];
-					}else if (buyCount[i] > value) {
+						buyCount[i] = buyCount[i] > value ? value : buyCount[i];
+					} else if (buyCount[i] > value) {
 						changeNum = ((value) / 10) * -1;
 						buyCount[i] += changeNum;
-						buyCount[i] = buyCount[i] <value ? value : buyCount[i];
+						buyCount[i] = buyCount[i] < value ? value : buyCount[i];
 					}
-					PacketHandler.INSTANCE.sendToAll(new MessageVillagerSync(getBuyCount(), getEconomicsProfession(), this.getEntityId()));
+					PacketHandler.INSTANCE.sendToAll(
+							new MessageVillagerSync(getBuyCount(), getEconomicsProfession(), this.getEntityId()));
 				}
 				tickCount = 0;
 			}
@@ -178,7 +179,7 @@ public class EntityECVillager extends EntityVillager {
 			ArrayList<ShopingItem> shopItems = villagerShopingItem.getProfessionItems(this.economicsProfession);
 			for (int i = 0; i < shopItems.size(); i++) {
 				if (shopItems.get(i) != null) {
-					buyCount[i] = (int) ((rnd.nextDouble() + 0.5)* shopItems.get(i).getInitialValue() );
+					buyCount[i] = (int) ((rnd.nextDouble() + 0.5) * shopItems.get(i).getInitialValue());
 				}
 			}
 		} else {
@@ -198,7 +199,6 @@ public class EntityECVillager extends EntityVillager {
 			player.openGui(ForestMoon.instance, GuiId.VILLAGERSHOP.getId(), player.worldObj, x, y, z);
 		}
 		return true;
-
 	}
 
 	@Override
@@ -223,7 +223,7 @@ public class EntityECVillager extends EntityVillager {
 			if (index < buyCount.length) {
 				this.buyCount[index] = buycount;
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -234,11 +234,10 @@ public class EntityECVillager extends EntityVillager {
 				return buyCount[index];
 			}
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return -999;
-
 	}
 
 	public void setEconomicsProfession(int profession) {

@@ -20,21 +20,23 @@ public class ShopBlock extends Block {
 	// @SideOnly(Side.CLIENT)
 	// private IIcon BottomIcon;
 
+	// bottom
 	@SideOnly(Side.CLIENT)
 	private IIcon texture0;
 
+	// top
 	@SideOnly(Side.CLIENT)
 	private IIcon texture1;
-
+	// side 3の反対
 	@SideOnly(Side.CLIENT)
 	private IIcon texture2;
-
+	// side 2の反対
 	@SideOnly(Side.CLIENT)
 	private IIcon texture3;
-
+	// side 5の反対
 	@SideOnly(Side.CLIENT)
 	private IIcon texture4;
-
+	// side 4の反対
 	@SideOnly(Side.CLIENT)
 	private IIcon texture5;
 
