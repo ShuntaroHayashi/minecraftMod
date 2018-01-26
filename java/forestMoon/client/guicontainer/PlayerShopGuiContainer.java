@@ -35,7 +35,7 @@ public class PlayerShopGuiContainer extends GuiContainer {
 		this.player = player;
 		this.tileEntity = tileEntity;
 		ySize = 235;
-		shopName = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("shop_name"),
+		shopName = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("gui.playershop.name"),
 				tileEntity.getAdminName());
 
 		PacketHandler.INSTANCE.sendToServer(
@@ -51,7 +51,7 @@ public class PlayerShopGuiContainer extends GuiContainer {
 		moneyY = this.ySize - 148;
 
 		this.buttonList.add(buyBtn = new MyGuiButton(0, guiLeft + xSize - 50, guiTop + ySize - 165, 40, 15,
-				StatCollector.translateToLocal("buy_button")));
+				StatCollector.translateToLocal("gui.button.buy")));
 		buyBtn.enabled = false;
 	}
 
@@ -60,9 +60,8 @@ public class PlayerShopGuiContainer extends GuiContainer {
 
 		fontRendererObj.drawString(shopName, 8, 4, 4210752);
 		fontRendererObj.drawString(itemName, 8, 74, 4210752);
-		fontRendererObj.drawString(
-				StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX,
-				moneyY, 4210752);
+		fontRendererObj.drawString(StatCollector.translateToLocal("gui.money") + properties.getMoney(), moneyX, moneyY,
+				4210752);
 		itemName = container.slotItemToString(container.getLastSlotNumber());
 
 		super.drawGuiContainerForegroundLayer(p_146979_1_, p_146979_2_);

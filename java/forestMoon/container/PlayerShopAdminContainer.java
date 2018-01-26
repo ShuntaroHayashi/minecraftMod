@@ -75,7 +75,7 @@ public class PlayerShopAdminContainer extends Container {
 		if (index0 <= index && index < index1) {
 			try {
 				if(tileEntity.getStackInSlot(index) != null) {
-					str = StatCollector.translateToLocalFormatted("playerShop_itemName", tileEntity.getStackInSlot(index).getDisplayName(),tileEntity.getSellPrice(lastSlotNumber));
+					str = StatCollector.translateToLocalFormatted("gui.playershop.label.item", tileEntity.getStackInSlot(index).getDisplayName(),tileEntity.getSellPrice(lastSlotNumber));
 				}
 			}catch(Exception e) {
 				e.printStackTrace();

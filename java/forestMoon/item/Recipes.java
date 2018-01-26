@@ -53,6 +53,15 @@ public class Recipes {
 						'y', ItemRegister.ItemSample3,
 						'z', ItemRegister.ItemSample4 }
 		);
+		GameRegistry.addRecipe(new ItemStack(ItemRegister.chestSample, 1),
+				new Object[] {
+						"xxx",
+						"xxx",
+						"yzy",
+						'x',Items.iron_ingot,
+						'y',Blocks.planks,
+						'z',Blocks.chest	}
+		);
 
 		return;
 	}

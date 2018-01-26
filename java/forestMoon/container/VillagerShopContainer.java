@@ -148,7 +148,15 @@ public class VillagerShopContainer extends Container {
 			return true;
 		}
 		return false;
-
+	}
+	public int getVillagerSlotEndIndex() {
+		return index1;
+	}
+	public int getHotBarEndIndex() {
+		return index2;
 	}
 
+	public int getPlayerInventoryEndIndex() {
+		return index3;
+	}
 }

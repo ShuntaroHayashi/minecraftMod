@@ -82,9 +82,9 @@ public class VillagerShopGuiContainer extends GuiContainer {
 		this.ySize += 7;
 
 		buttonList.add(buyBtn = new MyGuiButton(BUY_BUTTON, this.guiLeft + (this.xSize / 4) * 3 - 4, this.guiTop + 56,
-				this.xSize / 4, 15, StatCollector.translateToLocal("buy_button")));
+				this.xSize / 4, 15, StatCollector.translateToLocal("gui.button.buy")));
 		buttonList.add(sellBtn = new MyGuiButton(SELL_BUTTON, this.guiLeft + (this.xSize / 4) * 3 - 4, this.guiTop + 72,
-				this.xSize / 4, 15, StatCollector.translateToLocal("sell_button")));
+				this.xSize / 4, 15, StatCollector.translateToLocal("gui.button.sell")));
 
 		buyBtn.enabled = false;
 		sellBtn.enabled = false;
@@ -100,7 +100,7 @@ public class VillagerShopGuiContainer extends GuiContainer {
 		fontRendererObj.drawString(StatCollector.translateToLocal(vShopMaster.getProfessionName(profession)), 8, 6,
 				4210752);
 		fontRendererObj.drawString(
-				StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX,
+				StatCollector.translateToLocal(StatCollector.translateToLocal("gui.money") + properties.getMoney()), moneyX,
 				moneyY, 4210752);
 
 		int slotNumber = container.getLastSlotNumber();
@@ -117,11 +117,11 @@ public class VillagerShopGuiContainer extends GuiContainer {
 				sell = item.getSell(villager.getBuyCountSlot(slotNumber));
 
 				if (buy < 0) {
-					buyStr = StatCollector.translateToLocalFormatted("sellOnry", sell);
+					buyStr = StatCollector.translateToLocalFormatted("gui.label.sellOnry", sell);
 				} else if (sell < 0) {
-					buyStr = StatCollector.translateToLocalFormatted("buyOnry", buy);
+					buyStr = StatCollector.translateToLocalFormatted("gui.label.buyOnry", buy);
 				} else {
-					buyStr = StatCollector.translateToLocalFormatted("villagerBuy", buy, sell);
+					buyStr = StatCollector.translateToLocalFormatted("gui.villager.label.buy", buy, sell);
 				}
 
 			} else {
@@ -231,7 +231,7 @@ public class VillagerShopGuiContainer extends GuiContainer {
 	// 買取処理
 	private void sell(ItemStack itemStack, int price, int num) {
 		// インベントリのアイテムをひとつづつ確認
-		for (int index = 18; index < 50; index++) {
+		for (int index = container.getVillagerSlotEndIndex(); index < container.getPlayerInventoryEndIndex(); index++) {
 			if (container.getItemStack(index) != null) {
 				ItemStack slotItem = container.getItemStack(index);
 				// 同じアイテムか確認
@@ -283,11 +283,11 @@ public class VillagerShopGuiContainer extends GuiContainer {
 				sell = item.getSell(villager.getBuyCountSlot(slotNumber));
 
 				if (buy < 0) {
-					buyStr = StatCollector.translateToLocalFormatted("sellOnry", sell);
+					buyStr = StatCollector.translateToLocalFormatted("gui.label.sellOnry", sell);
 				} else if (sell < 0) {
-					buyStr = StatCollector.translateToLocalFormatted("buyOnry", buy);
+					buyStr = StatCollector.translateToLocalFormatted("gui.label.buyOnry", buy);
 				} else {
-					buyStr = StatCollector.translateToLocalFormatted("villagerBuy", buy, sell);
+					buyStr = StatCollector.translateToLocalFormatted("gui.villager.label.buy", buy, sell);
 				}
 
 			} else {

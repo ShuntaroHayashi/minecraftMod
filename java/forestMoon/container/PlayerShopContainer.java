@@ -74,7 +74,7 @@ public class PlayerShopContainer extends Container{
 			try {
 				if(tileEntity.getStackInSlot(index) != null) {
 					if (tileEntity.getStackInSlot(index).stackSize > 0) {
-						str = StatCollector.translateToLocalFormatted("playerShop_itemName", tileEntity.getStackInSlot(index).getDisplayName(),tileEntity.getSellPrice(lastSlotNumber));
+						str = StatCollector.translateToLocalFormatted("gui.playershop.label.item", tileEntity.getStackInSlot(index).getDisplayName(),tileEntity.getSellPrice(lastSlotNumber));
 					}else {
 						str = "売り切れ";
 					}

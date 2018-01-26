@@ -38,37 +38,39 @@ tile.ColorBlock.12.name=灰色
 tile.ColorBlock.13.name=水色
 tile.ColorBlock.14.name=紫
 tile.ColorBlock.15.name=謎
-tile.PlayerShopBlock.name=プレイヤーショップブロック
+tile.PlayerShopBlock.name=ショップブロック
 //エンティティー
 entity.forestmoonmod.Villager.name=村人
 //コンテイナー
 itemGroup.forestmoontab=エコノミクスクラフト
 container.forestmoon.PlayerShop=プレイヤーショップ
-shop_name=%sのお店
 //GUI
-buy_button=買う
-sell_button=売る
+gui.playershop.name=%sのお店
+gui.button.buy=買う
+gui.button.sell=売る
 shopingGui_num=個数：
-buy=売値:
-sell=買値:
-villagerBuy=売値:%d 買値:%d
-sellOnry=買値:%d
-buyOnry=売値:%d
-sales=売り上げ:%d
-doneButton=価格決定
-changeButton=モード変更
-salengGetButton=売り上げ取得
-itemChange=アイテム設定モード
-priceChange=価格設定モード
-playerShop_itemName=%s 値段:%d
-//定型文
+gui.label.buy=売値:
+gui.label.sell=買値:
+gui.villager.label.buy=売値:%d 買値:%d
+gui.label.sellOnry=買値:%d
+gui.label.buyOnry=売値:%d
+gui.label.sales=売り上げ:%d
+gui.button.done=価格決定
+gui.button.change=モード変更
+gui.button.saleng.get=売り上げ取得
+gui.label.mode.item=アイテム設定モード
+gui.label.mode.price=価格設定モード
+gui.playershop.label.item=%s 値段:%d
+gui.money=￥
+//コマンド
 command.error.1=§c入力された値が所持金よりも多いです
 command.error.2=§c入力された値が大きすぎます
 command.money=%sの所持金を%d円に変更しました
 command.money.error=§c/money [プレイヤー] [set|add] <値>
+command.money.help=/money [プレイヤー] [set|add] <値>
 command.coin=%sの所持金を%dコインに変更しました
 command.coin.error=§c/coin [プレイヤー] <値>
-money=￥
+command.coin.help=/coin [プレイヤー] <値>
 //村人役職
 villager.proffesion.flower=花屋
 villager.proffesion.fruit=食べ物屋
