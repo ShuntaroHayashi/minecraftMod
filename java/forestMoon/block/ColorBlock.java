@@ -15,9 +15,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-public class ColorBlock extends Block{
+public class ColorBlock extends Block {
 	private IIcon[] iicon = new IIcon[16];
-	public ColorBlock(){
+
+	public ColorBlock() {
 		super(Material.rock);
 		this.setCreativeTab(ForestMoon.forestmoontab);
 		this.setHardness(5.0F);
@@ -28,14 +29,14 @@ public class ColorBlock extends Block{
 
 		String name = "ColorBlock";
 		this.setBlockName(name);
-		this.setBlockTextureName("forestmoon:"+name);
+		this.setBlockTextureName("forestmoon:" + name);
 		GameRegistry.registerBlock(this, ItemColorBlock.class, name);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
-		for (int i = 0; i < 16; i ++) {
+		for (int i = 0; i < 16; i++) {
 			this.iicon[i] = register.registerIcon(this.getTextureName() + "-" + i);
 		}
 	}
@@ -49,7 +50,7 @@ public class ColorBlock extends Block{
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {
-		for (int i = 0; i < 16; i ++) {
+		for (int i = 0; i < 16; i++) {
 			list.add(new ItemStack(item, 1, i));
 		}
 	}

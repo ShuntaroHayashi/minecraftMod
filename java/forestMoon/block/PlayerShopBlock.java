@@ -18,13 +18,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class PlayerShopBlock extends Block implements ITileEntityProvider{
+public class PlayerShopBlock extends Block implements ITileEntityProvider {
 
-	public PlayerShopBlock(){
+	public PlayerShopBlock() {
 		super(Material.rock);
 		String name = "PlayerShopBlock";
 		this.setBlockName(name);
-		this.setBlockTextureName("forestmoon:"+name);
+		this.setBlockTextureName("forestmoon:" + name);
 		this.setCreativeTab(ForestMoon.forestmoontab);
 		this.setHardness(5.0F);
 		this.setResistance(2000.0F);
@@ -40,7 +40,8 @@ public class PlayerShopBlock extends Block implements ITileEntityProvider{
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
+			float hitY, float hitZ) {
 		// GUIを開く。
 		if (world.isRemote) {
 			PacketHandler.INSTANCE.sendToServer(new MessagePlayerShopSyncToServer(x, y, z));

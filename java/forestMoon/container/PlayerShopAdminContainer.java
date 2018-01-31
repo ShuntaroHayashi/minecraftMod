@@ -17,7 +17,6 @@ public class PlayerShopAdminContainer extends Container {
 	private static final int index2 = 54;// 81
 	/** このコンテナの全体のスロット数 */
 	private static final int index3 = 63;// 90
-	private String name;
 	private EntityPlayer player;
 	private int lastSlotNumber = -999;
 
@@ -51,33 +50,34 @@ public class PlayerShopAdminContainer extends Container {
 	}
 
 	@Override
-	public boolean canDragIntoSlot(Slot slot){
-		if(slot.getSlotIndex() < index1 && tileEntity.getAdminName().equals(player.getCommandSenderName())){
+	public boolean canDragIntoSlot(Slot slot) {
+		if (slot.getSlotIndex() < index1 && tileEntity.getAdminName().equals(player.getCommandSenderName())) {
 			return false;
 		}
 		return true;
 	}
 
 	@Override
-	public ItemStack slotClick(int p_75144_1_, int p_75144_2_, int p_75144_3_, EntityPlayer p_75144_4_){
-		if(!tileEntity.isSlotClickFlag() && 0<=p_75144_1_ && p_75144_1_ < 27) {
+	public ItemStack slotClick(int p_75144_1_, int p_75144_2_, int p_75144_3_, EntityPlayer p_75144_4_) {
+		if (!tileEntity.isSlotClickFlag() && 0 <= p_75144_1_ && p_75144_1_ < 27) {
 			lastSlotNumber = p_75144_1_;
 			return null;
-		}else {
+		} else {
 			ItemStack itemStack = super.slotClick(p_75144_1_, p_75144_2_, p_75144_3_, p_75144_4_);
 			return itemStack;
 		}
-		//最後にクリックされたスロットを保存
+		// 最後にクリックされたスロットを保存
 	}
 
 	public String slotItemToString(int index) {
 		String str = "";
 		if (index0 <= index && index < index1) {
 			try {
-				if(tileEntity.getStackInSlot(index) != null) {
-					str = StatCollector.translateToLocalFormatted("playerShop_itemName", tileEntity.getStackInSlot(index).getDisplayName(),tileEntity.getSellPrice(lastSlotNumber));
+				if (tileEntity.getStackInSlot(index) != null) {
+					str = StatCollector.translateToLocalFormatted("gui.playershop.label.item",
+							tileEntity.getStackInSlot(index).getDisplayName(), tileEntity.getSellPrice(lastSlotNumber));
 				}
-			}catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -117,8 +117,7 @@ public class PlayerShopAdminContainer extends Container {
 		return itemStack;
 	}
 
-
-	public void onContainerClosed(EntityPlayer p_75134_1_){
+	public void onContainerClosed(EntityPlayer p_75134_1_) {
 		super.onContainerClosed(p_75134_1_);
 	}
 
@@ -133,6 +132,5 @@ public class PlayerShopAdminContainer extends Container {
 	public int getLastSlotNumber() {
 		return lastSlotNumber;
 	}
-
 
 }

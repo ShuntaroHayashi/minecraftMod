@@ -7,6 +7,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import forestMoon.ExtendedPlayerProperties;
 import forestMoon.container.PlayerShopAdminContainer;
 import forestMoon.packet.PacketHandler;
+import forestMoon.packet.player.MessagePlayerPropertieToServer;
 import forestMoon.packet.shoping.MessagePlayerShopSyncToServer;
 import forestMoon.packet.shoping.MessageShopSettingFlagToServer;
 import forestMoon.tileEntity.TileEntityShop;
@@ -71,16 +72,17 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 			PacketHandler.INSTANCE
 					.sendToServer(new MessagePlayerShopSyncToServer(x, y, z, player.getCommandSenderName(),
 							tileEntity.getSellPrices(), tileEntity.getEarnings(), tileEntity.getItemStacks()));
-		} else if (tileEntity.getAdminName().equals(player.getCommandSenderName())) {
+		}
+		if (tileEntity.getAdminName().equals(player.getCommandSenderName())) {
 			shopSettingFlag = true;
 		}
 		if (shopSettingFlag) {
 			this.buttonList.add(this.doneBtn = new GuiButton(ButtonId.doneBtn.id, this.width / 2 + 100,
-					this.height / 2 - 60, 105, 20, StatCollector.translateToLocal("doneButton")));
+					this.height / 2 - 60, 105, 20, StatCollector.translateToLocal("gui.button.done")));
 			this.buttonList.add(this.changeBtn = new GuiButton(ButtonId.changeBtn.id, this.width / 2 + 100,
-					this.height / 2 - 30, 105, 20, StatCollector.translateToLocal("changeButton")));
+					this.height / 2 - 30, 105, 20, StatCollector.translateToLocal("gui.button.change")));
 			this.buttonList.add(this.salengGetBtn = new GuiButton(ButtonId.salengGetBtn.id, this.width / 2 + 100,
-					this.height / 2, 105, 20, StatCollector.translateToLocal("salengGetButton")));
+					this.height / 2, 105, 20, StatCollector.translateToLocal("gui.button.saleng.get")));
 
 			this.doneBtn.enabled = false;
 			this.changeBtn.enabled = true;
@@ -102,19 +104,25 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
 		fontRendererObj.drawString(mode, xSize + 18, 2, 16777215);
-		fontRendererObj.drawString(StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("sales"),
-				tileEntity.getEarnings()), 8, 84, 4210752);
-		fontRendererObj.drawString(StatCollector.translateToLocalFormatted("shop_name", tileEntity.getAdminName()), 8,
-				6, 4210752);
+		fontRendererObj.drawString(StatCollector.translateToLocalFormatted(
+				StatCollector.translateToLocal("gui.label.sales"), tileEntity.getEarnings()), 8, 84, 4210752);
 		fontRendererObj.drawString(
-				StatCollector.translateToLocal(StatCollector.translateToLocal("money") + properties.getMoney()), moneyX,
-				moneyY, 4210752);
+				StatCollector.translateToLocalFormatted("gui.playershop.name", tileEntity.getAdminName()), 8, 6,
+				4210752);
+		fontRendererObj.drawString(StatCollector.translateToLocal("gui.money") + properties.getMoney(), moneyX, moneyY,
+				4210752);
 		fontRendererObj.drawString(itemName, 8, 72, 4210752);
-		priceTextField.setEnabled(shopSettingMode);
+
+		try {
+
+			priceTextField.setEnabled(shopSettingMode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		priceTextField.drawTextBox();
 
 		// テキストフィールドに数値が入ってる場合にボタンを有効化
-		if(this.priceTextField.getText().trim().length() > 0) {
+		if (this.priceTextField.getText().trim().length() > 0) {
 			try {
 				int currentPrice = tileEntity.getSellPrice(container.getLastSlotNumber());
 				int price = Integer.parseInt(priceTextField.getText());
@@ -125,7 +133,8 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 		}
 		/** 現在の設定値とテキストフィールドの中身が違った場合はtrue **/
 		salengGetBtn.enabled = (tileEntity.getEarnings() > 0);
-		mode = shopSettingMode?StatCollector.translateToLocal("priceChange"):StatCollector.translateToLocal("itemChange");
+		mode = shopSettingMode ? StatCollector.translateToLocal("gui.label.mode.price")
+				: StatCollector.translateToLocal("gui.label.mode.item");
 
 		itemName = container.slotItemToString(container.getLastSlotNumber());
 
@@ -193,7 +202,7 @@ public class PlayerShopAdminGuiContainer extends GuiContainer {
 				properties.changeMoney(tileEntity.getEarnings());
 				tileEntity.setEarnings(0);
 				tileEntity.sendServer();
-				properties.syncPlayerData(player);
+				PacketHandler.INSTANCE.sendToServer(new MessagePlayerPropertieToServer(player));
 
 			}
 		}

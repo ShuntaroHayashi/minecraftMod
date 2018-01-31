@@ -14,14 +14,13 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityShop extends TileEntity implements IInventory {
-	protected ItemStack[] itemStacks = new ItemStack[27];//売り物
-	private String adminName = "NONE";//ショップ管理者名
-	private int earnings = 0;//売り上げ
-	private boolean slotClickFlag = true;//スロットにアクセスできるかのフラグ
-	private boolean shopSettingFlag = false;//ショップを設定中かのフラグ
-	private int[] sellPrices = new int[27];//価格一覧
-	private boolean breakFlag = true;//ブロックを破壊可能かのフラグ true:可能 false:不可能
-
+	protected ItemStack[] itemStacks = new ItemStack[27];// 売り物
+	private String adminName = "NONE";// ショップ管理者名
+	private int earnings = 0;// 売り上げ
+	private boolean slotClickFlag = true;// スロットにアクセスできるかのフラグ
+	private boolean shopSettingFlag = false;// ショップを設定中かのフラグ
+	private int[] sellPrices = new int[27];// 価格一覧
+	private boolean breakFlag = true;// ブロックを破壊可能かのフラグ true:可能 false:不可能
 
 	// データの書き込み
 	@Override
@@ -60,13 +59,13 @@ public class TileEntityShop extends TileEntity implements IInventory {
 		sellPrices = nbt.getIntArray("sellPrices");
 	}
 
-	//インベントリのサイズを返す
+	// インベントリのサイズを返す
 	@Override
 	public int getSizeInventory() {
 		return 27;
 	}
 
-	//スロットナンバーに応じたアイテムを返す
+	// スロットナンバーに応じたアイテムを返す
 	@Override
 	public ItemStack getStackInSlot(int slot) {
 		return itemStacks[slot];
@@ -201,16 +200,16 @@ public class TileEntityShop extends TileEntity implements IInventory {
 		}
 
 		if (worldObj.isRemote) {
-			PacketHandler.INSTANCE.sendToServer(
-					new MessagePlayerShopSyncToServer(xCoord, yCoord, zCoord, adminName, sellPrices, earnings, itemStacks));
+			PacketHandler.INSTANCE.sendToServer(new MessagePlayerShopSyncToServer(xCoord, yCoord, zCoord, adminName,
+					sellPrices, earnings, itemStacks));
 		}
 		return num;
 	}
 
 	public void sendServer() {
 		if (worldObj.isRemote) {
-			PacketHandler.INSTANCE.sendToServer(
-					new MessagePlayerShopSyncToServer(xCoord, yCoord, zCoord, adminName, sellPrices, earnings, itemStacks));
+			PacketHandler.INSTANCE.sendToServer(new MessagePlayerShopSyncToServer(xCoord, yCoord, zCoord, adminName,
+					sellPrices, earnings, itemStacks));
 		}
 	}
 
@@ -258,7 +257,6 @@ public class TileEntityShop extends TileEntity implements IInventory {
 	public void setBreakFlag(boolean breakFlag) {
 		this.breakFlag = breakFlag;
 	}
-	/* getter setter end*/
-
+	/* getter setter end */
 
 }

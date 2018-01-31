@@ -43,7 +43,7 @@ public class EntityPropertiesEventHandler {
 		if (event.world.isRemote && event.entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.entity;
 			PacketHandler.INSTANCE.sendToServer(new MessagePlayerJoinInAnnouncement(player));
-		}else if (event.world.isRemote && event.entity instanceof EntityECVillager) {
+		} else if (event.world.isRemote && event.entity instanceof EntityECVillager) {
 			PacketHandler.INSTANCE.sendToServer(new MessageVillagerSyncToServer(event.entity.getEntityId()));
 		}
 	}
@@ -54,9 +54,11 @@ public class EntityPropertiesEventHandler {
 		// 死亡時に呼ばれてるかどうか
 		if (event.wasDeath) {
 			// 古いカスタムデータ
-			IExtendedEntityProperties oldEntityProperties = event.original.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME);
+			IExtendedEntityProperties oldEntityProperties = event.original
+					.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME);
 			// 新しいカスタムデータ
-			IExtendedEntityProperties newEntityProperties = event.entityPlayer.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME);
+			IExtendedEntityProperties newEntityProperties = event.entityPlayer
+					.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME);
 			NBTTagCompound playerData = new NBTTagCompound();
 
 			// データの吸い出し

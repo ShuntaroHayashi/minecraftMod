@@ -10,8 +10,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class CommandCoin extends CommandBase {
@@ -23,7 +21,7 @@ public class CommandCoin extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender p_71518_1_) {
-		return "CommandCoin";
+		return "command.coin.help";
 	}
 
 	// OP権限のないユーザーにも使用可能にする
@@ -35,20 +33,38 @@ public class CommandCoin extends CommandBase {
 	public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_) {
 		Random random = new Random();
 		EntityPlayerMP player = getCommandSenderAsPlayer(p_71515_1_);
-		;
 		String scanMoney = "";
-		ChatComponentText chatText;
 		// 引数の確認
 		if (0 < p_71515_2_.length && p_71515_2_.length <= 2) {
 			if (p_71515_2_.length == 1) {
-				scanMoney = p_71515_2_[0];
+				try {
+					scanMoney = p_71515_2_[0];
+				}catch (Exception e) {
+					e.printStackTrace();
+					func_152373_a(p_71515_1_, this, "command.error", new Object[] {});
+					return;
+				}
 			} else if (p_71515_2_.length == 2) {
-				player = getPlayer(p_71515_1_, p_71515_2_[0]);
-				scanMoney = p_71515_2_[1];
+				try {
+					player = getPlayer(p_71515_1_, p_71515_2_[0]);
+					scanMoney = p_71515_2_[1];
+				}catch (Exception e) {
+					e.printStackTrace();
+					func_152373_a(p_71515_1_, this, "command.coin.error", new Object[] {});
+					return;
+				}
 			}
 			if (scanMoney.length() <= 10) {
+				long money = 0;
 				ExtendedPlayerProperties properties = ExtendedPlayerProperties.get(player);
-				long money = Integer.parseInt(scanMoney);
+				try {
+					money = Integer.parseInt(scanMoney);
+					money = money < 0 ? -1 * money : money;
+				}catch (NumberFormatException e) {
+					e.printStackTrace();
+					func_152373_a(p_71515_1_, this, "command.coin.error", new Object[] {});
+					return;
+				}
 				money -= (money % 100);
 				long chatMoney = money;
 				if (properties.getMoney() >= money) {
@@ -103,20 +119,15 @@ public class CommandCoin extends CommandBase {
 
 						}
 					}
-//					chatText = new ChatComponentText(StatCollector.translateToLocal("comandCoin_1")
-//							+ player.getCommandSenderName() + StatCollector.translateToLocal("comandCoin_2") + chatMoney
-//							+ StatCollector.translateToLocal("comandCoin_3"));
-					chatText = new ChatComponentText(StatCollector.translateToLocalFormatted("comandCoin", player.getCommandSenderName(),chatMoney));
+					 func_152373_a(p_71515_1_, this, "command.coin", new Object[] { player.getCommandSenderName(),chatMoney});
 				} else {
-					chatText = new ChatComponentText(StatCollector.translateToLocal("comandError_1"));
+					func_152373_a(p_71515_1_, this, "command.error.1", new Object[] {});
 				}
 			} else {
-				chatText = new ChatComponentText(StatCollector.translateToLocal("comandError_2"));
+				func_152373_a(p_71515_1_, this, "command.error.2", new Object[] {});
 			}
 		} else {
-			chatText = new ChatComponentText(StatCollector.translateToLocal("comandCoin_Error"));
+			func_152373_a(p_71515_1_, this, "command.coin.error", new Object[] {});
 		}
-		player.addChatMessage(chatText);
-
 	}
 }
