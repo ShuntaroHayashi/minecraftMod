@@ -43,7 +43,8 @@ public class LivingDeathEventHandler {
 		if (event.entityLiving.worldObj.isRemote) {
 			return;
 		}
-		if (event.source.getSourceOfDamage() instanceof EntityPlayerMP || event.source.getEntity() instanceof EntityPlayerMP) {
+		if (event.source.getSourceOfDamage() instanceof EntityPlayerMP
+				|| event.source.getEntity() instanceof EntityPlayerMP) {
 
 			EntityLivingBase living = event.entityLiving;
 			// ゾンビ/スケルトン/蜘蛛/クリーパー/ウィッチ/スライム/ケーブスパイダーだった場合

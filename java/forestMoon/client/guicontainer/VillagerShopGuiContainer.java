@@ -99,9 +99,8 @@ public class VillagerShopGuiContainer extends GuiContainer {
 		fontRendererObj.drawString(buyStr, 8, 64, 4210752);
 		fontRendererObj.drawString(StatCollector.translateToLocal(vShopMaster.getProfessionName(profession)), 8, 6,
 				4210752);
-		fontRendererObj.drawString(
-				StatCollector.translateToLocal(StatCollector.translateToLocal("gui.money") + properties.getMoney()), moneyX,
-				moneyY, 4210752);
+		fontRendererObj.drawString(StatCollector.translateToLocal("gui.money") + properties.getMoney(), moneyX, moneyY,
+				4210752);
 
 		int slotNumber = container.getLastSlotNumber();
 

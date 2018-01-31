@@ -149,9 +149,11 @@ public class VillagerShopContainer extends Container {
 		}
 		return false;
 	}
+
 	public int getVillagerSlotEndIndex() {
 		return index1;
 	}
+
 	public int getHotBarEndIndex() {
 		return index2;
 	}
